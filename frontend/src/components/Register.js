@@ -19,8 +19,9 @@ export default function Register() {
 
                     <div className="form-group">
                         <label className='mb-2'>Username</label>
-                        <input {...register("username", { required: true })} className="form-control" />
+                        <input {...register("username", { required: true, minLength: 6 })} className="form-control" />
                         {errors?.username?.type === "required" && <p>This field is required</p>}
+                        {errors?.username?.type === "minLength" && <p>Username should be at least 6 characters long</p>}
                     </div>
                     <div className="form-group">
                         <label className='mb-2'>Email</label>
@@ -30,10 +31,9 @@ export default function Register() {
                     </div>
                     <div className="form-group">
                         <label className='mb-2'>Password</label>
-                        <input {...register("password", { required: true, minLength: 6, maxLength: 40 })} type="password" className='form-control' />
+                        <input {...register("password", { required: true, minLength: 6 })} type="password" className='form-control' />
                         {errors?.password?.type === "required" && <p>This field is required</p>}
-                        {errors?.password?.type === "minLength" && <p>Password should be between 6 and 40 characters long</p>}
-                        {errors?.password?.type === "maxLength" && <p>Password should be between 6 and 40 characters long</p>}
+                        {errors?.password?.type === "minLength" && <p>Password should be at least 6 characters long</p>}
                     </div>
 
                     <div className="form-group">
