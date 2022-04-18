@@ -1,10 +1,10 @@
-package lt.vtmc.pbaa;
+package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PbaaApplicationTests {
+class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
