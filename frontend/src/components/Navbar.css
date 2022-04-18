@@ -1,7 +1,8 @@
-.btn-success{
+.btn-success {
     background-color: rgb(255, 197, 88) !important;
     width: 240px;
 }
-.btn-success:hover{
+
+.btn-success:hover {
     background-color: rgb(255, 175, 26) !important;
 }
