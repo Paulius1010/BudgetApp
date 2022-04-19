@@ -1,0 +1,66 @@
+package lt.vtmc.pbaa.models;
+
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity
+@Table(name="incomes")
+public class Income {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @NotBlank
+    private String incomeName;
+
+    @NotBlank
+    private LocalDate date;
+
+    @NotBlank
+    private BigDecimal amount;
+
+    public Income() {
+    }
+
+    public Income(String incomeName, LocalDate date, BigDecimal amount) {
+        this.incomeName = incomeName;
+        this.date = date;
+        this.amount = amount;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public String getIncomeName() {
+        return incomeName;
+    }
+
+    public void setIncomeName(String incomeName) {
+        this.incomeName = incomeName;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+}
