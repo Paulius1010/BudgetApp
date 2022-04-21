@@ -10,5 +10,6 @@ export default function Navbar() {
             <button type="button" className="btn btn-success col-lg-4 mx-3">BENDRA STAT.</button>
         </div>
         <hr></hr>
+
     </>
 }
