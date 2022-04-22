@@ -12,9 +12,6 @@ import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import './App.css'
 
-
-
-
 const App = () => {
 
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -38,80 +35,7 @@ const App = () => {
 
   return (
     <>
-      {/* <nav className="navbar navbar-default navbar-static-top">
-        <div className="container">
-          <a className="navbar-brand" href="#">Home</a>
-          <div className="navbar-header">
-            <a className="nav-item" href="#">Login</a>
-            <a href="#">Sign up</a>
-          </div>
-          <a className="navbar-nav ml-auto" href="#">Login</a>
-          <a className="navbar-nav ml-auto" href="#">Sign up</a>
-          <ul className="nav navbar-nav navbar-right collapse navbar-collapse">
-            <li className="active"><a href="#">Home</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Sign up</a></li>
-          </ul>
-        </div>
-    </nav> */}
-
-{/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <div className="container-fluid">
-    <a className="navbar-brand" href="#">Navbar</a>
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i className="fas fa-bars"></i>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div className="navbar-nav">
-        <a className="nav-link active" aria-current="page" href="#">Home</a>
-        <a className="nav-link" href="#">Features</a>
-        <a className="nav-link" href="#">Pricing</a>
-        <a className="nav-link disabled">Disabled</a>
-      </div>
-    </div>
-  </div>
-</nav> */}
-<div className="container">
-          <div className="row align-items-center position-relative">
-
-            <div className="col-lg-4">
-              <nav className="site-navigation text-right ml-auto " role="navigation">
-                <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                  <li className="active"><a href="index.html" className="nav-link">Home</a></li>
-                  <li><a href="project.html" className="nav-link">Projects</a></li>
-                  <li><a href="services.html" className="nav-link">Services</a></li>
-                </ul>
-              </nav>
-            </div>
-            <div className="col-lg-4 text-center">
-              <div className="site-logo">
-                <a href="index.html">Brand</a>
-              </div>
-
-
-              <div className="ml-auto toggle-button d-inline-block d-lg-none"><a href="#" className="site-menu-toggle py-5 js-menu-toggle text-black"><span className="icon-menu h3 text-black"></span></a></div>
-            </div>
-            <div className="col-lg-4">
-              <nav className="site-navigation text-left mr-auto " role="navigation">
-                <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                  <li><a href="about.html" className="nav-link">About</a></li>
-                  <li><a href="blog.html" className="nav-link">Blog</a></li>
-                  <li><a href="contact.html" className="nav-link">Contact</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-
-      <header className="container" >
+      {/* <header className="container" >
         <nav className="navbar navbar-expand navbar-light "  >
           {currentUser ? (
             <Link to={"/welcome"} className="navbar-brand ">
@@ -177,6 +101,87 @@ const App = () => {
             </div>
           )}
         </nav>
+      </header> */}
+
+      <div className="site-mobile-menu site-navbar-target">
+        <div className="site-mobile-menu-header">
+          <div className="site-mobile-menu-close mt-3">
+            <span className="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div className="site-mobile-menu-body"></div>
+      </div>
+
+      <header className="site-navbar site-navbar-target bg-white" role="banner">
+        <div className="container">
+          <div className="row align-items-center position-relative">
+            <div className="col-lg-4">
+              <nav className="site-navigation text-right ml-auto " role="navigation">
+                <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                  {currentUser ? (
+                    <>
+                      <li className="active">
+                        <Link to={"/welcome"} className="nav-link">
+                          Namai
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className="active">
+                        <Link to={"/"} className="nav-link">
+                          Namai
+                        </Link>
+                      </li>
+                    </>
+                  )}
+
+                  {currentUser ? (
+                    <>
+                      <div className="navbar-nav ml-auto">
+                        <li className="nav-item">
+                          <a href="/login" className="nav-link" onClick={logOut}>
+                            Log out
+                          </a>
+                        </li>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link to={"/login"} className="nav-link">
+                          Prisijungti
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={"/register"} className="nav-link">
+                          Registruotis
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </nav>
+            </div>
+
+            <div className="col-lg-4 text-center">
+              <div className="site-logo">
+                <a href="index.html">Brand</a>
+              </div>
+              <div className="ml-auto toggle-button d-inline-block d-lg-none"><a href="#" className="site-menu-toggle py-5 js-menu-toggle text-black"><span className="icon-menu h3 text-black"></span></a></div>
+            </div>
+
+            <div className="col-lg-4">
+              <nav className="site-navigation text-left mr-auto " role="navigation">
+                <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                  <li><a href="about.html" className="nav-link">Apie mus</a></li>
+                  <li><a href="blog.html" className="nav-link">Tinklaraštis</a></li>
+                  <li><a href="contact.html" className="nav-link">Kontaktai</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
       </header>
 
       <main className="container mt-3">
@@ -193,9 +198,10 @@ const App = () => {
         </Routes>
       </main>
 
-      <footer className="container">
+      {/* Commented the footer section for now */}
+      {/* <footer className="container">
         <p>footer</p>
-      </footer>
+      </footer> */}
     </>
   );
 };
