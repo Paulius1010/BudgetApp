@@ -5,6 +5,9 @@ import javax.validation.constraints.NotBlank;
 public class IncomeResponse {
 
     @NotBlank
+    private String incomeId;
+
+    @NotBlank
     private String incomeName;
 
     @NotBlank
@@ -16,7 +19,8 @@ public class IncomeResponse {
     public IncomeResponse() {
     }
 
-    public IncomeResponse(String incomeName, String date, String amount) {
+    public IncomeResponse(String incomeId, String incomeName, String date, String amount) {
+        this.incomeId = incomeId;
         this.incomeName = incomeName;
         this.date = date;
         this.amount = amount;

@@ -3,10 +3,7 @@ package lt.vtmc.pbaa.payload.requests;
 import javax.validation.constraints.NotBlank;
 
 
-public class IncomeRequest {
-
-//    @NotBlank
-//    private String userToken;
+public class IncomeInsertRequest {
 
     @NotBlank
     private String incomeName;
@@ -16,11 +13,6 @@ public class IncomeRequest {
 
     @NotBlank
     private String amount;
-
-
-//    public String getUserToken() {
-//        return userToken;
-//    }
 
     public String getIncomeName() {
         return incomeName;
