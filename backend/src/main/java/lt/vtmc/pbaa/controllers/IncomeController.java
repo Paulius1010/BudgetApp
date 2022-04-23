@@ -3,7 +3,7 @@ package lt.vtmc.pbaa.controllers;
 import lt.vtmc.pbaa.models.Income;
 import lt.vtmc.pbaa.payload.requests.IncomeRequest;
 import lt.vtmc.pbaa.payload.responses.IncomeResponse;
-import lt.vtmc.pbaa.security.services.IncomeService;
+import lt.vtmc.pbaa.services.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
