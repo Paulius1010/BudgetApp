@@ -9,10 +9,7 @@ import lt.vtmc.pbaa.repositories.UserRepository;
 import lt.vtmc.pbaa.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-<<<<<<< HEAD
-=======
 import org.springframework.security.core.context.SecurityContext;
->>>>>>> d2fe409c34e2147dcae102d4ea9748d3b06425fb
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -40,17 +37,11 @@ public class IncomeService {
    }
 
     public IncomeResponse saveIncome(IncomeRequest incomeRequest) {
-<<<<<<< HEAD
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalEmail = authentication.getName();
-        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
-=======
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    	String currentPrincipalEmail = authentication.getName();
-    	
+
 //      User user = userRepository.findById(jwtUtils.getUserIdFromJwtToken(incomeRequest.getUserToken())).orElse(null);
     	User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
->>>>>>> d2fe409c34e2147dcae102d4ea9748d3b06425fb
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Income income = new Income(
                 user,
