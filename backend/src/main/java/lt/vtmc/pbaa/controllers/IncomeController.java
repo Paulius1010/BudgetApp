@@ -13,21 +13,21 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/income")
 public class IncomeController {
-    private final IncomeService incomeService;
+	
+	private final IncomeService incomeService;
 
-    @Autowired
-    public IncomeController(IncomeService incomeService) {
-        this.incomeService = incomeService;
-    }
+	@Autowired
+	public IncomeController(IncomeService incomeService) {
+		this.incomeService = incomeService;
+	}
 
-    @GetMapping
-    public List<Income> getAllIncome() {
-        return this.incomeService.getAllIncomes();
-    }
+	@GetMapping
+	public List<Income> getAllIncome() {
+		return this.incomeService.getAllIncomes();
+	}
 
-
-    @PostMapping
-    public IncomeResponse insertIncome(@RequestBody IncomeRequest incomeRequest) {
-    return this.incomeService.saveIncome(incomeRequest);
-    }
+	@PostMapping
+	public IncomeResponse insertIncome(@RequestBody IncomeRequest incomeRequest) {
+		return this.incomeService.saveIncome(incomeRequest);
+	}
 }
