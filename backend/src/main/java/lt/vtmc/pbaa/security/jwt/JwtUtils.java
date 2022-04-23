@@ -2,6 +2,7 @@ package lt.vtmc.pbaa.security.jwt;
 
 import java.util.Date;
 
+import lt.vtmc.pbaa.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,11 @@ public class JwtUtils {
 
 	public String getUserNameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+	}
+
+	public Long getUserIdFromJwtToken(String token) {
+		String userId = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getId();
+		 return Long.getLong(userId);
 	}
 
 	public boolean validateJwtToken(String authToken) {

@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface IncomeRepository extends JpaRepository<Income, Long> {
 
-    List<Income> findById(String id);
+//    List<Income> findById(String id);
 }
