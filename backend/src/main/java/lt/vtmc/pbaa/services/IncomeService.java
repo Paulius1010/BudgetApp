@@ -1,4 +1,4 @@
-package lt.vtmc.pbaa.security.services;
+package lt.vtmc.pbaa.services;
 
 import lt.vtmc.pbaa.models.Income;
 import lt.vtmc.pbaa.models.User;
@@ -8,6 +8,9 @@ import lt.vtmc.pbaa.repositories.IncomeRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
 import lt.vtmc.pbaa.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,6 +20,7 @@ import java.util.List;
 
 @Service
 public class IncomeService {
+	
     private final IncomeRepository incomeRepository;
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
@@ -33,7 +37,11 @@ public class IncomeService {
    }
 
     public IncomeResponse saveIncome(IncomeRequest incomeRequest) {
-        User user = userRepository.findById(jwtUtils.getUserIdFromJwtToken(incomeRequest.getUserToken())).orElse(null);
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String currentPrincipalEmail = authentication.getName();
+    	
+//      User user = userRepository.findById(jwtUtils.getUserIdFromJwtToken(incomeRequest.getUserToken())).orElse(null);
+    	User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Income income = new Income(
                 user,

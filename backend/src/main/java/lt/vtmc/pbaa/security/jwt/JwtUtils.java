@@ -41,10 +41,10 @@ public class JwtUtils {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
-	public Long getUserIdFromJwtToken(String token) {
-		String userId = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getId();
-		 return Long.getLong(userId);
-	}
+//	public Long getUserIdFromJwtToken(String token) {
+//		String userId = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getId();
+//		return Long.getLong(userId);
+//	}
 
 	public boolean validateJwtToken(String authToken) {
 		try {

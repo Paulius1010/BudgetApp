@@ -5,8 +5,8 @@ import javax.validation.constraints.NotBlank;
 
 public class IncomeRequest {
 
-    @NotBlank
-    private String userToken;
+//    @NotBlank
+//    private String userToken;
 
     @NotBlank
     private String incomeName;
@@ -18,9 +18,9 @@ public class IncomeRequest {
     private String amount;
 
 
-    public String getUserToken() {
-        return userToken;
-    }
+//    public String getUserToken() {
+//        return userToken;
+//    }
 
     public String getIncomeName() {
         return incomeName;
