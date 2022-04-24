@@ -10,6 +10,8 @@ import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
+import Income from "./components/Income";
+import "./components/FontAwesomeIcon/Icons";
 import './App.css'
 
 const App = () => {
@@ -80,6 +82,11 @@ const App = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link to={"/income"} className="nav-link">
+                    Income
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <a href="/login" className="nav-link" onClick={logOut}>
                     Log out
                   </a>
@@ -114,6 +121,7 @@ const App = () => {
           <Route path="/admin" element={<BoardAdmin />} />
           <Route path="/register-success" element={<RegisterSuccess />} />
           <Route path="/welcome" element={<HomeLoggedIn />} />
+          <Route path="/income" element={<Income />} />
         </Routes>
       </main>
 
