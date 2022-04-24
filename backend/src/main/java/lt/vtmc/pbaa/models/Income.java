@@ -14,6 +14,10 @@ public class Income {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @NotBlank
     private String incomeName;
 
@@ -26,7 +30,8 @@ public class Income {
     public Income() {
     }
 
-    public Income(String incomeName, LocalDate date, BigDecimal amount) {
+    public Income(User user, String incomeName, LocalDate date, BigDecimal amount) {
+        this.user = user;
         this.incomeName = incomeName;
         this.date = date;
         this.amount = amount;

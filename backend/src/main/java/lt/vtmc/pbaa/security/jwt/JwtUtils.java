@@ -2,6 +2,7 @@ package lt.vtmc.pbaa.security.jwt;
 
 import java.util.Date;
 
+import lt.vtmc.pbaa.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
