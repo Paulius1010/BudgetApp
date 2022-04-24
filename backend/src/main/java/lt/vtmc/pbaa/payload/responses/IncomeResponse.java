@@ -1,19 +1,13 @@
 package lt.vtmc.pbaa.payload.responses;
 
-import javax.validation.constraints.NotBlank;
-
 public class IncomeResponse {
 
-    @NotBlank
     private String incomeId;
 
-    @NotBlank
     private String incomeName;
 
-    @NotBlank
     private String date;
 
-    @NotBlank
     private String amount;
 
     public IncomeResponse() {
@@ -26,6 +20,13 @@ public class IncomeResponse {
         this.amount = amount;
     }
 
+    public String getIncomeId() {
+        return incomeId;
+    }
+
+    public void setIncomeId(String incomeId) {
+        this.incomeId = incomeId;
+    }
 
     public String getIncomeName() {
         return incomeName;
@@ -50,5 +51,16 @@ public class IncomeResponse {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+
+    @Override
+    public String toString() {
+        return "IncomeResponse{" +
+                "incomeId='" + incomeId + '\'' +
+                ", incomeName='" + incomeName + '\'' +
+                ", date='" + date + '\'' +
+                ", amount='" + amount + '\'' +
+                '}';
     }
 }
