@@ -1,46 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import AuthService from "./services/auth.service";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
-import BoardModerator from "./components/BoardModerator";
+// import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import Income from "./components/Income";
 import "./components/FontAwesomeIcon/Icons";
 import './App.css'
+import Navbar from "./components/Navbar";
 
 const App = () => {
-
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
-
-  useEffect(() => {
-    const user = AuthService.getCurrentUser();
-
-    if (user) {
-      setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-    }
-
-  }, []);
-
-  const logOut = () => {
-    AuthService.logout();
-  };
-
   return (
     <>
-      <header className="container">
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+      {/* <header className="container" >
+        <nav className="navbar navbar-expand navbar-light "  >
           {currentUser ? (
-            <Link to={"/welcome"} className="navbar-brand">
+            <Link to={"/welcome"} className="navbar-brand ">
               Home
             </Link>
           ) : (
@@ -108,9 +88,23 @@ const App = () => {
             </div>
           )}
         </nav>
+      </header> */}
+
+      {/* This shows when the screen goes small and user clicks button to expand */}
+      <div className="site-mobile-menu site-navbar-target">
+        <div className="site-mobile-menu-header">
+          <div className="site-mobile-menu-close mt-3">
+            <span className="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div className="site-mobile-menu-body"></div>
+      </div>
+
+      <header>
+        <Navbar />
       </header>
 
-      <main className="container mt-3">
+      <main>
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -125,9 +119,10 @@ const App = () => {
         </Routes>
       </main>
 
-      <footer className="container">
+      {/* Commented the footer section for now */}
+      {/* <footer className="container">
         <p>footer</p>
-      </footer>
+      </footer> */}
     </>
   );
 };

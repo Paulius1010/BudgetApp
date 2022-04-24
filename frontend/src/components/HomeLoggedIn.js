@@ -1,7 +1,7 @@
 import React from 'react'
 import AuthService from "../services/auth.service";
 import Header from './Header'
-import Navbar from './Navbar'
+import NavbarAna from './NavbarAna'
 import SideBar from './SideBar'
 
 export default function HomeLoggedIn() {
@@ -18,7 +18,7 @@ export default function HomeLoggedIn() {
             </div>
             <div className='row'>
                 <div className='row col-8 ps-4'>
-                    <div className='col-12 mt-4'><Navbar /></div>
+                    <div className='col-12 mt-4'><NavbarAna /></div>
                     <h2>Some content</h2>
                 </div>
                 <div className='col-4'>

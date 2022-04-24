@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     const navigate = useNavigate();
     const onSubmit = data => {
         AuthService.register(data)
             .then(() => navigate("/register-success"))
     }
+    const password = useRef({});
+    password.current = watch("password", "");
 
     return (
         <section className="vh-100">
@@ -24,7 +26,6 @@ export default function Register() {
                                         <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
                                         <form onSubmit={handleSubmit(onSubmit)} className="mx-1 mx-md-4">
-
                                             <div className="d-flex flex-row align-items-center mb-4">
                                                 <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                                                 <div className="form-outline flex-fill mb-0">
@@ -59,26 +60,29 @@ export default function Register() {
                                                 <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                                                 <div className="form-outline flex-fill mb-0">
                                                     <label className='mb-2'>Repeat your password</label>
-                                                    <input {...register("confirmPassword", { required: true, minLength: 6 })} type="password" className='form-control' />
-                                                    {errors?.password?.type === "required" && <p>This field is required</p>}
-                                                    {errors?.password?.type === "minLength" && <p>Password should be at least 6 characters long</p>}
+                                                    <input
+                                                        {...register("password_repeat", {
+                                                            validate: value =>
+                                                                value === password.current || "The passwords do not match"
+                                                        })}
+                                                        // name="password_repeat"
+                                                        type="password"
+                                                        className='form-control'
+                                                    />
+                                                    {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
+                                                    {/* {errors?.password_repeat?.type === "required" && <p>This field is required</p>} */}
+                                                    {/* {errors?.password_repeat?.type === "minLength" && <p>Password should be at least 6 characters long</p>} */}
                                                 </div>
                                             </div>
 
                                             <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                                 <button type="submit" className="btn btn-primary btn-lg">Register</button>
                                             </div>
-
-
-
                                         </form>
-
 
                                     </div>
                                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
                                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" className="img-fluid" alt="Sample image" />
-
                                     </div>
                                 </div>
                             </div>
