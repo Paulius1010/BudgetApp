@@ -32,8 +32,9 @@ body.offcanvas-menu:before {
 }
 
 p {
-  color: #b3b3b3;
-  font-weight: 300;
+  /* I did not like this setting - Julius */
+  /* color: #b3b3b3; */
+  /* font-weight: 300; */
 }
 
 h1,
