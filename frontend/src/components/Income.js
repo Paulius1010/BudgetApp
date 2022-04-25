@@ -43,8 +43,8 @@ export default function Income() {
 
 
             <div className="bottom mt-3">
-                <div className="add">
-                    <div className="container">
+                <div className="container">
+                    <div className="add">
                         <div className="row text-center add__container">
 
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
@@ -67,10 +67,12 @@ export default function Income() {
                     </div>
                 </div>
 
-                <div className="row mt-5 list">
-                    <div className="col-12 income">
-                        <h2 className="income__title">Income</h2>
-                        <div className="container income__list"></div>
+                <div className="mt-5 list">
+                    <div className="container">
+                        <div className="col-12 income">
+                            <h2 className="income__title">Income</h2>
+                            <div className="container income__list"></div>
+                        </div>
                     </div>
                 </div>
             </div>

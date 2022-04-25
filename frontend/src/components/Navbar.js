@@ -53,6 +53,11 @@ export default function Navbar() {
 
                                 {currentUser ? (
                                     <>
+                                        <li className="nav-item">
+                                            <Link to={"/income"} className="nav-link">
+                                                Income
+                                            </Link>
+                                        </li>
                                         <li>
                                             <a href="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')} onClick={logOut}>
                                                 Atsijungti
