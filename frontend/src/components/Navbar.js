@@ -24,7 +24,6 @@ export default function Navbar() {
         AuthService.logout();
     };
 
-    let activeClassName = "active";
 
     return (
         <div className="site-navbar site-navbar-target bg-white" role="banner">
