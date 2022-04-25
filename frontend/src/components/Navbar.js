@@ -51,9 +51,9 @@ export default function Navbar() {
 
                                 {currentUser ? (
                                     <>
-                                        <li className="nav-item">
-                                            <Link to={"/income"} className="nav-link">
-                                                Income
+                                        <li className="active">
+                                            <Link to={"/income"} className="nav-link" >
+                                                Pajamos
                                             </Link>
                                         </li>
                                         <li>
