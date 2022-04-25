@@ -3,6 +3,7 @@ package lt.vtmc.pbaa.services;
 import lt.vtmc.pbaa.models.Income;
 import lt.vtmc.pbaa.models.User;
 import lt.vtmc.pbaa.payload.requests.IncomeInsertRequest;
+import lt.vtmc.pbaa.payload.requests.IncomeUpdateRequest;
 import lt.vtmc.pbaa.payload.responses.IncomeResponse;
 import lt.vtmc.pbaa.repositories.IncomeRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IncomeService {
@@ -49,5 +51,44 @@ public class IncomeService {
                 incomeRequest.getIncomeName(),
                 incomeRequest.getDate(),
                 incomeRequest.getAmount());
+    }
+
+    public IncomeResponse updateIncome(IncomeUpdateRequest incomeUpdateRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalEmail = authentication.getName();
+        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+        List<Income> userIncomes = getIncomesByUser(user);
+        Income updatingIncome = incomeRepository.getById(Long.valueOf(incomeUpdateRequest.getIncomeId()));
+        if (!userIncomes.contains(updatingIncome)) {
+            throw new RuntimeException("User has not this income");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        updatingIncome.setIncomeName(incomeUpdateRequest.getIncomeName());
+        updatingIncome.setDate(LocalDate.parse(incomeUpdateRequest.getDate(), formatter));
+        updatingIncome.setAmount(BigDecimal.valueOf(Double.parseDouble(incomeUpdateRequest.getAmount())));
+        incomeRepository.save(updatingIncome);
+        return new IncomeResponse(
+                updatingIncome.getId().toString(),
+                incomeUpdateRequest.getIncomeName(),
+                incomeUpdateRequest.getDate(),
+                incomeUpdateRequest.getAmount());
+    }
+
+    private List<Income> getIncomesByUser(User user) {
+        List<Income> allIncomes = incomeRepository.findAll();
+        return allIncomes.stream().filter(income -> income.getUser().equals(user)).collect(Collectors.toList());
+    }
+
+    public IncomeResponse deleteIncome(String id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalEmail = authentication.getName();
+        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+        List<Income> userIncomes = getIncomesByUser(user);
+        Income deletingIncome = incomeRepository.getById(Long.valueOf(id));
+        if (!userIncomes.contains(deletingIncome)) {
+            throw new RuntimeException("User has not this income");
+        }
+        incomeRepository.delete(deletingIncome);
+        return null;
     }
 }

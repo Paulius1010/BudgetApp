@@ -30,20 +30,20 @@ public class IncomeController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public IncomeResponse insertIncome(@RequestBody IncomeInsertRequest incomeRequest) {
-		return this.incomeService.saveIncome(incomeRequest);
+	public IncomeResponse insertIncome(@RequestBody IncomeInsertRequest incomeInsertRequest) {
+		return this.incomeService.saveIncome(incomeInsertRequest);
 	}
 
-//	@PutMapping
-//	@ResponseStatus(HttpStatus.OK)
-//	public IncomeResponse updateIncome(@RequestBody IncomeUpdateRequest incomeUpdateRequest) {
-//		return this.incomeService.updateIncome(incomeUpdateRequest);
-//	}
-//
-//	@DeleteMapping
-//	@ResponseStatus(HttpStatus.OK)
-//	public IncomeResponse updateIncome(@RequestBody IncomeUpdateRequest incomeUpdateRequest) {
-//		return this.incomeService.deleteIncome(incomeUpdateRequest);
-//	}
+	@PutMapping
+	@ResponseStatus(HttpStatus.OK)
+	public IncomeResponse updateIncome(@RequestBody IncomeUpdateRequest incomeUpdateRequest) {
+		return this.incomeService.updateIncome(incomeUpdateRequest);
+	}
+
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public IncomeResponse updateIncome(@PathVariable String id) {
+		return this.incomeService.deleteIncome(id);
+	}
 
 }

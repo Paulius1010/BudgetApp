@@ -37,6 +37,10 @@ public class Income {
         this.amount = amount;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public Long getId() {
         return Id;
     }
