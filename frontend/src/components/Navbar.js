@@ -51,6 +51,11 @@ export default function Navbar() {
 
                                 {currentUser ? (
                                     <>
+                                        <li className="nav-item">
+                                            <Link to={"/income"} className="nav-link">
+                                                Income
+                                            </Link>
+                                        </li>
                                         <li>
                                             <a href="/" className="nav-link" onClick={logOut}>
                                                 Atsijungti
