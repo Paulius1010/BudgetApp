@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import "../navbar bootstrap/bootstrap.module.min.css"
 
@@ -24,6 +24,8 @@ export default function Navbar() {
         AuthService.logout();
     };
 
+    let activeClassName = "active";
+
     return (
         <div className="site-navbar site-navbar-target bg-white" role="banner">
             <div className="container">
@@ -33,18 +35,18 @@ export default function Navbar() {
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                 {currentUser ? (
                                     <>
-                                        <li className="active">
-                                            <Link to={"/welcome"} className="nav-link">
+                                        <li >
+                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Namai
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </>
                                 ) : (
                                     <>
-                                        <li className="active">
-                                            <Link to={"/"} className="nav-link">
+                                        <li >
+                                            <NavLink to={"/"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Namai
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </>
                                 )}
@@ -52,22 +54,22 @@ export default function Navbar() {
                                 {currentUser ? (
                                     <>
                                         <li>
-                                            <a href="/" className="nav-link" onClick={logOut}>
+                                            <a href="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')} onClick={logOut}>
                                                 Atsijungti
                                             </a>
                                         </li>
                                     </>
                                 ) : (
                                     <>
-                                        <li>
-                                            <Link to={"/login"} className="nav-link">
+                                        <li >
+                                            <NavLink to={"/login"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Prisijungti
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                         <li>
-                                            <Link to={"/register"} className="nav-link">
+                                            <NavLink to={"/register"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Registruotis
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                     </>
                                 )}
@@ -85,7 +87,7 @@ export default function Navbar() {
                     <div className="col-lg-4">
                         <nav className="site-navigation text-left mr-auto " role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                <li><a href="about.html" className="nav-link">Apie mus</a></li>
+                                <li><a href="about.html" className="nav-link" >Apie mus</a></li>
                                 <li><a href="blog.html" className="nav-link">Tinklaraštis</a></li>
                                 <li><a href="contact.html" className="nav-link">Kontaktai</a></li>
                             </ul>
