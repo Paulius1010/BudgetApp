@@ -46,4 +46,8 @@ public class IncomeController {
 		return this.incomeService.deleteIncome(id);
 	}
 
+	@GetMapping("/user/{id}")
+	public List<Income> getAllIncomeByUserId(@PathVariable Long id) {
+		return this.incomeService.getAllIncomeByUser(id);
+	}
 }
