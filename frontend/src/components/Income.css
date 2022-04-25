@@ -106,6 +106,7 @@ button {
 
 .add__type,
 .add__description,
+.add__date,
 .add__value {
     -webkit-transition: border .3s;
     transition: border .3s;

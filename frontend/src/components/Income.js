@@ -50,6 +50,7 @@ export default function Income() {
                             <div className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input type="text" className="form-control add__description" placeholder="Description" />
 
+                                <input type="date" className="form-control add__date" placeholder="Date" />
 
                                 <input type="number" className="form-control add__value" placeholder="Value" />
 

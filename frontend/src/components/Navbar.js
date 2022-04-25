@@ -53,9 +53,9 @@ export default function Navbar() {
 
                                 {currentUser ? (
                                     <>
-                                        <li className="nav-item">
-                                            <Link to={"/income"} className="nav-link">
-                                                Income
+                                        <li>
+                                            <Link to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Pajamos
                                             </Link>
                                         </li>
                                         <li>
