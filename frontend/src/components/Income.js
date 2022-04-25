@@ -68,6 +68,7 @@ export default function Income() {
                                     placeholder="Aprašymas"
                                     onChange={e => setIncomeName(e.target.value)}
                                 />
+                                <input type="date" className="form-control add__date" placeholder="Date" />
 
                                 <input type="number"
                                     className="form-control add__value"
