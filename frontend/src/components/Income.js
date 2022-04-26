@@ -13,7 +13,7 @@ toast.configure()
 export default function Income() {
 
     const notify = () => {
-        toast.success('Success!', {
+        toast.success('Pridėta!', {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
