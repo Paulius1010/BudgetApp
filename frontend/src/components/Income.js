@@ -19,6 +19,10 @@ export default function Income() {
     const currentUser = AuthService.getCurrentUser();
 
     const addIncome = async () => {
+        if(incomeName.length == 0){
+            errorMessage();
+            return;
+        }
         const response = await fetch(
             "http://localhost:8080/api/income/",
             {
@@ -34,16 +38,32 @@ export default function Income() {
                 })
             }
         )
+
+        if (response.status === 201) {
+            successMessage();
+        }
+        else (errorMessage())
+
     }
 
 
+    
     toast.configure()
-    const notify = () => {
+    const successMessage = () => {
         toast.success('Pridėta!', {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
-            pauseOnHover: false
+            pauseOnHover: false,
+            hideProgressBar: true
+        })}
+    const errorMessage = () => {
+        toast.error('Klaida!', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false,
+            hideProgressBar: true
         })}
 
 
