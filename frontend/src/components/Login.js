@@ -32,27 +32,27 @@ export default function Login() {
                                     <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                                         <form onSubmit={handleSubmit(onSubmit)}>
 
-                                            <p className="text-center h1 fw-normal mb-5 mx-1 mx-md-4 mt-4">Sign in</p>
+                                            <p className="text-center h1 fw-normal mb-5 mx-1 mx-md-4 mt-4">Prisijungimas</p>
 
                                             <div className="form-outline mb-4">
-                                                <label className="form-label" htmlFor="form3Example3">Email address</label>
+                                                <label className="form-label" htmlFor="form3Example3">El. paštas</label>
                                                 <input {...register("email", { required: true })} className="form-control" />
-                                                {errors?.email?.type === "required" && <p>This field is required</p>}
+                                                {errors?.email?.type === "required" && <p>Įveskite el. paštą</p>}
                                             </div>
 
                                             <div className="form-outline mb-3">
 
-                                                <label className="form-label" htmlFor="form3Example4">Password</label>
+                                                <label className="form-label" htmlFor="form3Example4">Slaptažodis</label>
                                                 <input {...register("password", { required: true })} type="password" className='form-control' />
-                                                {errors?.password?.type === "required" && <p>This field is required</p>}
+                                                {errors?.password?.type === "required" && <p>Įveskite Slaptažodį</p>}
                                                 {message && message}
                                             </div>
 
                                             <div className="text-lg-start mt-4 pt-2">
                                                 <button type="submit" className="btn btn-primary btn-lg"
-                                                    style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>Log in</button>
+                                                    style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>Prisijungti</button>
 
-                                                <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <Link to={"/register"} className="link-danger">Register</Link></p>
+                                                <p className="small fw-bold mt-2 pt-1 mb-0">Dar nesate užsiregistravęs? <Link to={"/register"} className="link-danger">Registruotis</Link></p>
                                             </div>
                                         </form>
                                     </div>
