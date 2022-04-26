@@ -1,16 +1,28 @@
 import React from 'react'
 import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 
 
-
+toast.configure()
 export default function Income() {
+
+    const notify = () => {
+        toast.success('Success!', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false
+        })
+    }
     return (
+
+        
         <>
             <div className="jumbotron-fluid text-center">
                 <div className="container">
@@ -56,7 +68,7 @@ export default function Income() {
 
                                 <div className="input-group-append">
 
-                                    <button className="btn" type="button">
+                                    <button className="btn" type="button" onClick={notify}>
                                         <FontAwesomeIcon icon="circle-check" className='add__btn' />
 
                                     </button>
