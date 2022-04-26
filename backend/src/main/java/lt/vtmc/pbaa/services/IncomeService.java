@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,5 +91,11 @@ public class IncomeService {
         }
         incomeRepository.delete(deletingIncome);
         return null;
+    }
+    
+    public List<Income> getAllIncomeByUser(Long id) {
+    	Optional<User> user = userRepository.findById(id);
+    	
+    	return incomeRepository.findByUser(user);
     }
 }
