@@ -127,8 +127,8 @@ export default function Income() {
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
                                 />
-                                {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {/* {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>} */}
 
                                 <input
                                     {...register("date", { required: true })}
@@ -152,6 +152,23 @@ export default function Income() {
                             </form>
 
                         </div>
+                        
+                        <div className="row ">
+                            
+                                <div className="col-sm-4 col-4">
+                                    {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                    {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                </div>
+                                <div className="col-sm-4 col-4">
+                                    {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                </div>
+                                <div className="col-sm-4 col-4">
+                                    {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                </div>
+                                
+                            
+                        </div>
+
                     </div>
                 </div>
 
