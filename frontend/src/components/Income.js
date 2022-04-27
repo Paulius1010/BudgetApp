@@ -65,25 +65,25 @@ export default function Income() {
         })
     }
 
-    const editIncome = async (income) => {
-        const response = await fetch(
-            "http://localhost:8080/api/income/",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${currentUser.accessToken}`
-                },
-                body: JSON.stringify({
-                    "incomeName": null,
-                    "date": null,
-                    "amount": null
-                })
-            }
-        )
+    // const editIncome = async (income) => {
+    //     const response = await fetch(
+    //         "http://localhost:8080/api/income/",
+    //         {
+    //             method: "POST",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${currentUser.accessToken}`
+    //             },
+    //             body: JSON.stringify({
+    //                 "incomeName": null,
+    //                 "date": null,
+    //                 "amount": null
+    //             })
+    //         }
+    //     )
 
-        setForceRender(!forceRender)
-    }
+    //     setForceRender(!forceRender)
+    // }
 
     const removeIncome = async (id) => {
         const response = await fetch(
@@ -215,6 +215,8 @@ export default function Income() {
                                             incomeName={income.incomeName}
                                             date={income.date}
                                             amount={income.amount}
+                                            forceRender={forceRender}
+                                            setForceRender={setForceRender}
                                         />&nbsp;
                                         <button onClick={() => removeIncome(income.id)}>Pašalinti</button>
                                     </div>

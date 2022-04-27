@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from "react-hook-form"
 import AuthService from "../services/auth.service"
 
-export default function EditIncomeModal({ id, incomeName, date, amount }) {
+export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
@@ -23,6 +23,8 @@ export default function EditIncomeModal({ id, incomeName, date, amount }) {
                 })
             }
         )
+
+        setForceRender(!forceRender)
     }
 
     return (
@@ -31,15 +33,18 @@ export default function EditIncomeModal({ id, incomeName, date, amount }) {
                 type="button"
                 className="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
+                data-bs-target="#staticBackdrop"
+            >
                 Redaguoti
             </button>
 
             <div
                 className="modal fade"
-                id="exampleModal"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
+                aria-labelledby="staticBackdropLabel"
                 aria-hidden="true"
             >
                 <div className="modal-dialog modal-dialog-centered">
@@ -47,7 +52,8 @@ export default function EditIncomeModal({ id, incomeName, date, amount }) {
                         <div className="modal-header">
                             <h5
                                 className="modal-title"
-                                id="exampleModalLabel">
+                                id="staticBackdropLabel"
+                            >
                                 Įrašo redagavimas
                             </h5>
                             <button
