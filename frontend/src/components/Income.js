@@ -182,21 +182,21 @@ export default function Income() {
                             </form>
 
                         </div>
-                        
+
                         <div className="row ">
-                            
-                                <div className="col-sm-4 col-4">
-                                    {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                    {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
-                                </div>
-                                <div className="col-sm-4 col-4">
-                                    {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                </div>
-                                <div className="col-sm-4 col-4">
-                                    {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                </div>
-                                
-                            
+
+                            <div className="col-sm-4 col-4">
+                                {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                            </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                            </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                            </div>
+
+
                         </div>
 
                     </div>
@@ -215,8 +215,12 @@ export default function Income() {
                                         {income.incomeName}&nbsp;
                                         {income.date}&nbsp;
                                         {income.amount}&euro;&nbsp;
-                                        <button>Redaguoti</button>&nbsp;
-                                        <button onClick={() => removeIncome(income.id)}>Pašalinti</button>
+                                        <button className="btn" type="submit">
+                                            <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
+                                        </button>&nbsp;
+                                        <button onClick={() => removeIncome(income.id)} className="btn" type="submit">
+                                            <FontAwesomeIcon icon="trash" className='add__btn' />
+                                        </button>
                                     </p>
                                 )
                             })}
