@@ -1,10 +1,19 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
 import AuthService from "../services/auth.service"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+
+    // This is used to figure out today's date, and format it accordingly
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
 
     const onSubmit = async (data) => {
         const response = await fetch(
@@ -24,7 +33,35 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
             }
         )
 
+        if (response.status === 200) {
+            successMessage();
+        }
+        else {
+            (errorMessage('Klaida!'))
+        }
+
         setForceRender(!forceRender)
+    }
+
+    // Popup message configuration
+    toast.configure()
+    const successMessage = () => {
+        toast.success('Pakeitimai išsaugoti', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false,
+            hideProgressBar: true
+        })
+    }
+    const errorMessage = (msg) => {
+        toast.error(msg, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false,
+            hideProgressBar: true
+        })
     }
 
     return (
@@ -78,15 +115,22 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 defaultValue={incomeName}
                             />
                             {errors?.incomeName?.type === "required" && <p>Laukas negali būti tuščias</p>}
+                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
 
                             <input
-                                {...register("date", { required: true })}
+                                {...register("date",
+                                    {
+                                        required: true,
+                                        max: today
+                                    })
+                                }
                                 type="date"
                                 className="form-control add__date mt-2"
                                 placeholder="Data"
                                 defaultValue={date}
                             />
                             {errors?.date?.type === "required" && <p>Laukas negali būti tuščias</p>}
+                            {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
 
                             <input
                                 {...register("amount",
@@ -101,6 +145,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 defaultValue={amount}
                             />
                             {errors?.amount?.type === "required" && <p>Laukas negali būti tuščias</p>}
+                            {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
 
                             <div className="modal-footer">
                                 <button
@@ -113,7 +158,6 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
-                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

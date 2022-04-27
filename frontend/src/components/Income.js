@@ -65,26 +65,6 @@ export default function Income() {
         })
     }
 
-    // const editIncome = async (income) => {
-    //     const response = await fetch(
-    //         "http://localhost:8080/api/income/",
-    //         {
-    //             method: "POST",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': `Bearer ${currentUser.accessToken}`
-    //             },
-    //             body: JSON.stringify({
-    //                 "incomeName": null,
-    //                 "date": null,
-    //                 "amount": null
-    //             })
-    //         }
-    //     )
-
-    //     setForceRender(!forceRender)
-    // }
-
     const removeIncome = async (id) => {
         const response = await fetch(
             `http://localhost:8080/api/income/${id}`,
