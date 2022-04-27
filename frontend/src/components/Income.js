@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 
@@ -31,7 +34,34 @@ export default function Income() {
             }
         )
 
+        if (response.status === 201) {
+            successMessage();
+        }
+        else {
+            (errorMessage('Klaida!'))
+        }
+
         setForceRender(!forceRender)
+    }
+
+    toast.configure()
+    const successMessage = () => {
+        toast.success('Pridėta!', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false,
+            hideProgressBar: true
+        })
+    }
+    const errorMessage = (msg) => {
+        toast.error(msg, {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false,
+            hideProgressBar: true
+        })
     }
 
     const editIncome = async (income) => {
