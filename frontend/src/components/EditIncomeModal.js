@@ -82,7 +82,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                             <input
                                 {...register("date", { required: true })}
                                 type="date"
-                                className="form-control add__date"
+                                className="form-control add__date mt-2"
                                 placeholder="Data"
                                 defaultValue={date}
                             />
@@ -96,7 +96,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                     })
                                 }
                                 type="number"
-                                className="form-control add__value"
+                                className="form-control add__value mt-2"
                                 placeholder="Kiekis"
                                 defaultValue={amount}
                             />
