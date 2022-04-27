@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Register() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     const navigate = useNavigate();
@@ -14,10 +13,10 @@ export default function Register() {
             .catch(error => {
                 setUsedLogin(error.response.data.message.length)
                 console.log(error.response.data.message.length)
-                if (error.response.data.message.length === 34) {
-                    console.log("something")
-                    console.log("something: " + usedLogin)
-                }
+                // if (error.response.data.message.length === 34) {
+                //     console.log("something")
+                //     console.log("something: " + usedLogin)
+                // }
             })
     }
     const password = useRef({});
