@@ -102,14 +102,14 @@ export default function EditIncomeModal({ id, incomeName, date, amount }) {
                                     className="btn btn-secondary"
                                     data-bs-dismiss="modal"
                                 >
-                                    Close
+                                    Uždaryti
                                 </button>
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
                                     data-bs-dismiss="modal"
                                 >
-                                    Save changes
+                                    Išsaugoti
                                 </button>
                             </div>
                         </form>
