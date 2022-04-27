@@ -3,9 +3,9 @@ import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
+import EditIncomeModal from './EditIncomeModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -44,6 +44,7 @@ export default function Income() {
         setForceRender(!forceRender)
     }
 
+    // Popup message configuration
     toast.configure()
     const successMessage = () => {
         toast.success('Pridėta!', {
@@ -157,8 +158,6 @@ export default function Income() {
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
                                 />
-                                {/* {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>} */}
 
                                 <input
                                     {...register("date", { required: true })}
@@ -182,23 +181,19 @@ export default function Income() {
                             </form>
 
                         </div>
-                        
-                        <div className="row ">
-                            
-                                <div className="col-sm-4 col-4">
-                                    {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                    {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
-                                </div>
-                                <div className="col-sm-4 col-4">
-                                    {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                </div>
-                                <div className="col-sm-4 col-4">
-                                    {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                </div>
-                                
-                            
-                        </div>
 
+                        <div className="row ">
+                            <div className="col-sm-4 col-4">
+                                {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                            </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                            </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -211,13 +206,18 @@ export default function Income() {
                             {/* Display user's income on the page */}
                             {allIncome.map(income => {
                                 return (
-                                    <p>
+                                    <div>
                                         {income.incomeName}&nbsp;
                                         {income.date}&nbsp;
                                         {income.amount}&euro;&nbsp;
-                                        <button>Redaguoti</button>&nbsp;
+                                        <EditIncomeModal
+                                            id={income.id}
+                                            incomeName={income.incomeName}
+                                            date={income.date}
+                                            amount={income.amount}
+                                        />&nbsp;
                                         <button onClick={() => removeIncome(income.id)}>Pašalinti</button>
-                                    </p>
+                                    </div>
                                 )
                             })}
                         </div>
