@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import AuthService from "../services/auth.service"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
@@ -68,11 +69,11 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
         <>
             <button
                 type="button"
-                className="btn btn-primary"
+                className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
             >
-                Redaguoti
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
 
             <div

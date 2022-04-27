@@ -206,18 +206,36 @@ export default function Income() {
                             {allIncome.map(income => {
                                 return (
                                     <div key={income.id}>
-                                        {income.incomeName}&nbsp;
-                                        {income.date}&nbsp;
-                                        {income.amount}&euro;&nbsp;
-                                        <EditIncomeModal
-                                            id={income.id}
-                                            incomeName={income.incomeName}
-                                            date={income.date}
-                                            amount={income.amount}
-                                            forceRender={forceRender}
-                                            setForceRender={setForceRender}
-                                        />
-                                        <button onClick={() => removeIncome(income.id)}>Pašalinti</button>
+                                        <div className='row'>
+                                            <div className='col-4'>
+                                                {income.incomeName}&nbsp;
+                                            </div>
+                                            <div className='col-4'>
+                                                {income.date}&nbsp;
+                                            </div>
+                                            <div className='col-2'>
+                                                {income.amount}&euro;&nbsp;
+                                            </div>
+
+                                            <div className='col-2'>
+                                                <EditIncomeModal
+                                                    id={income.id}
+                                                    incomeName={income.incomeName}
+                                                    date={income.date}
+                                                    amount={income.amount}
+                                                    forceRender={forceRender}
+                                                    setForceRender={setForceRender}
+                                                />
+
+                                                <button
+                                                    onClick={() => removeIncome(income.id)}
+                                                    className="btn"
+                                                    type="button"
+                                                >
+                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 )
                             })}
