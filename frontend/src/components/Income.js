@@ -3,9 +3,9 @@ import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
+import EditIncomeModal from './EditIncomeModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -15,6 +15,13 @@ export default function Income() {
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+
+    // This is used to figure out today's date, and format it accordingly
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
 
     // Add user's income to database from the inputs
     const onSubmit = async (data) => {
@@ -44,6 +51,7 @@ export default function Income() {
         setForceRender(!forceRender)
     }
 
+    // Popup message configuration
     toast.configure()
     const successMessage = () => {
         toast.success('Pridėta!', {
@@ -62,26 +70,6 @@ export default function Income() {
             pauseOnHover: false,
             hideProgressBar: true
         })
-    }
-
-    const editIncome = async (income) => {
-        const response = await fetch(
-            "http://localhost:8080/api/income/",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${currentUser.accessToken}`
-                },
-                body: JSON.stringify({
-                    "incomeName": null,
-                    "date": null,
-                    "amount": null
-                })
-            }
-        )
-
-        setForceRender(!forceRender)
     }
 
     const removeIncome = async (id) => {
@@ -157,18 +145,26 @@ export default function Income() {
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
                                 />
-                                {/* {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>} */}
 
                                 <input
-                                    {...register("date", { required: true })}
+                                    {...register("date",
+                                        {
+                                            required: true,
+                                            max: today
+                                        })
+                                    }
                                     type="date"
                                     className="form-control add__date"
                                     placeholder="Data"
                                 />
 
                                 <input
-                                    {...register("amount", { required: true, min: 0.01 })}
+                                    {...register("amount",
+                                        {
+                                            required: true,
+                                            min: 1
+                                        })
+                                    }
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
@@ -182,23 +178,21 @@ export default function Income() {
                             </form>
 
                         </div>
-                        
-                        <div className="row ">
-                            
-                                <div className="col-sm-4 col-4">
-                                    {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                    {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
-                                </div>
-                                <div className="col-sm-4 col-4">
-                                    {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                </div>
-                                <div className="col-sm-4 col-4">
-                                    {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                </div>
-                                
-                            
-                        </div>
 
+                        <div className="row ">
+                            <div className="col-sm-4 col-4">
+                                {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                            </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
+                            </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -211,13 +205,20 @@ export default function Income() {
                             {/* Display user's income on the page */}
                             {allIncome.map(income => {
                                 return (
-                                    <p>
+                                    <div key={income.id}>
                                         {income.incomeName}&nbsp;
                                         {income.date}&nbsp;
                                         {income.amount}&euro;&nbsp;
-                                        <button>Redaguoti</button>&nbsp;
+                                        <EditIncomeModal
+                                            id={income.id}
+                                            incomeName={income.incomeName}
+                                            date={income.date}
+                                            amount={income.amount}
+                                            forceRender={forceRender}
+                                            setForceRender={setForceRender}
+                                        />
                                         <button onClick={() => removeIncome(income.id)}>Pašalinti</button>
-                                    </p>
+                                    </div>
                                 )
                             })}
                         </div>
