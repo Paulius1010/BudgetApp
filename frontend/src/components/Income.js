@@ -16,6 +16,13 @@ export default function Income() {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
+    // This is used to figure out today's date, and format it accordingly
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
     // Add user's income to database from the inputs
     const onSubmit = async (data) => {
         const response = await fetch(
@@ -140,14 +147,24 @@ export default function Income() {
                                 />
 
                                 <input
-                                    {...register("date", { required: true })}
+                                    {...register("date",
+                                        {
+                                            required: true,
+                                            max: today
+                                        })
+                                    }
                                     type="date"
                                     className="form-control add__date"
                                     placeholder="Data"
                                 />
 
                                 <input
-                                    {...register("amount", { required: true, min: 0.01 })}
+                                    {...register("amount",
+                                        {
+                                            required: true,
+                                            min: 1
+                                        })
+                                    }
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
@@ -169,9 +186,11 @@ export default function Income() {
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
                             </div>
                         </div>
                     </div>
@@ -186,7 +205,7 @@ export default function Income() {
                             {/* Display user's income on the page */}
                             {allIncome.map(income => {
                                 return (
-                                    <div>
+                                    <div key={income.id}>
                                         {income.incomeName}&nbsp;
                                         {income.date}&nbsp;
                                         {income.amount}&euro;&nbsp;
@@ -197,7 +216,7 @@ export default function Income() {
                                             amount={income.amount}
                                             forceRender={forceRender}
                                             setForceRender={setForceRender}
-                                        />&nbsp;
+                                        />
                                         <button onClick={() => removeIncome(income.id)}>Pašalinti</button>
                                     </div>
                                 )

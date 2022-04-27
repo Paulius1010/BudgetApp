@@ -70,14 +70,14 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                 type="button"
                 className="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
+                data-bs-target={"#id" + id}
             >
                 Redaguoti
             </button>
 
             <div
                 className="modal fade"
-                id="staticBackdrop"
+                id={"id" + id}
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
                 tabIndex="-1"
