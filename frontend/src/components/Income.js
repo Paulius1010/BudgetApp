@@ -211,17 +211,31 @@ export default function Income() {
                             {/* Display user's income on the page */}
                             {allIncome.map(income => {
                                 return (
+
                                     <p>
-                                        {income.incomeName}&nbsp;
-                                        {income.date}&nbsp;
-                                        {income.amount}&euro;&nbsp;
-                                        <button className="btn" type="submit">
-                                            <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
-                                        </button>&nbsp;
-                                        <button onClick={() => removeIncome(income.id)} className="btn" type="submit">
-                                            <FontAwesomeIcon icon="trash" className='add__btn' />
-                                        </button>
+                                        <div className='row'>
+                                            <div className='col-4'>
+                                                {income.incomeName}&nbsp;
+                                            </div>
+                                            <div className='col-4'>
+                                                {income.date}&nbsp;
+                                            </div>
+                                            <div className='col-2'>
+                                                {income.amount}&euro;&nbsp;
+                                            </div>
+
+                                            <div className='col-2'>
+                                                <button className="btn" type="submit">
+                                                    <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
+                                                </button>&nbsp;
+
+                                                <button onClick={() => removeIncome(income.id)} className="btn" type="submit">
+                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
+                                                </button>
+                                            </div>
+                                        </div>
                                     </p>
+
                                 )
                             })}
                         </div>
