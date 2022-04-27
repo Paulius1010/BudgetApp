@@ -1,7 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
+
 
 export default function Register() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -9,10 +10,18 @@ export default function Register() {
     const onSubmit = data => {
         AuthService.register(data)
             .then(() => navigate("/register-success"))
+            .catch(error => {
+                setUsedLogin(error.response.data.message.length)
+                console.log(error.response.data.message.length)
+                if(error.response.data.message.length == 34){
+                    console.log("something")
+                    console.log("something: " + usedLogin)
+                }
+             })
     }
     const password = useRef({});
     password.current = watch("password", "");
-
+    const [usedLogin, setUsedLogin] = useState("")
     return (
         <section className="vh-100">
             <div className="container h-100">
@@ -33,6 +42,7 @@ export default function Register() {
                                                     <input {...register("username", { required: true, minLength: 6 })} className="form-control" />
                                                     {errors?.username?.type === "required" && <p>This field is required</p>}
                                                     {errors?.username?.type === "minLength" && <p>Username should be at least 6 characters long</p>}
+                                                    {usedLogin == 34 && <p>Username is already in use!</p>}
                                                 </div>
                                             </div>
 
@@ -43,6 +53,7 @@ export default function Register() {
                                                     <input {...register("email", { required: true, pattern: /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ })} className="form-control" />
                                                     {errors?.email?.type === "required" && <p>This field is required</p>}
                                                     {errors?.email?.type === "pattern" && <p>Must be a valid email address</p>}
+                                                    {usedLogin == 31 && <p>Email is already in use!</p>}
                                                 </div>
                                             </div>
 

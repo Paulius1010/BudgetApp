@@ -20,7 +20,7 @@ export default function Income() {
 
     const addIncome = async () => {
         if(incomeName.length == 0){
-            errorMessage();
+            errorMessage('Visi laukai turi būti užpildyti!');
             return;
         }
         const response = await fetch(
@@ -42,7 +42,7 @@ export default function Income() {
         if (response.status === 201) {
             successMessage();
         }
-        else (errorMessage())
+        else (errorMessage('Klaida!'))
 
     }
 
@@ -57,8 +57,8 @@ export default function Income() {
             pauseOnHover: false,
             hideProgressBar: true
         })}
-    const errorMessage = () => {
-        toast.error('Klaida!', {
+    const errorMessage = (msg) => {
+        toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
