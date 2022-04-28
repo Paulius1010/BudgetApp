@@ -13,6 +13,9 @@ import Income from "./components/Income";
 import "./components/FontAwesomeIcon/Icons";
 import './App.css'
 import Navbar from "./components/Navbar";
+import AboutUs from "./components/AboutUs";
+import Contacts from "./components/Contacts.js";
+import Blog from "./components/Blog.js";
 
 const App = () => {
   return (
@@ -116,6 +119,9 @@ const App = () => {
           <Route path="/register-success" element={<RegisterSuccess />} />
           <Route path="/welcome" element={<HomeLoggedIn />} />
           <Route path="/income" element={<Income />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </main>
 
