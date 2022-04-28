@@ -91,9 +91,21 @@ export default function Navbar() {
                     <div className="col-lg-4">
                         <nav className="site-navigation text-left mr-auto " role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                <li><a href="about.html" className="nav-link" >Apie mus</a></li>
-                                <li><a href="blog.html" className="nav-link">Tinklaraštis</a></li>
-                                <li><a href="contact.html" className="nav-link">Kontaktai</a></li>
+                                <li>
+                                    <NavLink to={"/aboutus"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        Apie mus
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/blog"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        Tinklaraštis
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/contacts"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        Kontaktai
+                                    </NavLink>
+                                </li>
                             </ul>
                         </nav>
                     </div>
