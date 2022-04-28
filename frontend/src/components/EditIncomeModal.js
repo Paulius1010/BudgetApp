@@ -143,6 +143,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 type="number"
                                 className="form-control add__value mt-2"
                                 placeholder="Kiekis"
+                                step="0.01"
                                 defaultValue={amount}
                             />
                             {errors?.amount?.type === "required" && <p>Laukas negali būti tuščias</p>}

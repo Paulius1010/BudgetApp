@@ -123,9 +123,9 @@ export default function Income() {
                                     <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__income">
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
-                                            <div className="col-5 budget__income-value">+ {allIncome.reduce((n, {amount}) => n + amount, 0)}</div>
+                                            <div className="col-5 budget__income-value">+ {allIncome.reduce((n, { amount }) => n + amount, 0)}</div>
                                             <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
- 
+
                                         </div>
                                     </div>
                                 </div>
@@ -170,6 +170,7 @@ export default function Income() {
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
+                                    step="0.01"
                                 />
 
                                 <div className="input-group-append">
@@ -206,7 +207,7 @@ export default function Income() {
 
                             {/* Display user's income on the page */}
                             {allIncome.map(income => {
-                                
+
                                 return (
                                     <div key={income.id}>
                                         <div className='row'>
