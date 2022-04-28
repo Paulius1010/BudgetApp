@@ -91,6 +91,21 @@ export default function Navbar() {
                     <div className="col-lg-4">
                         <nav className="site-navigation text-left mr-auto " role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                                <li>
+                                    <NavLink to={"/aboutus"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        Apie mus
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/blog"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        Tinklaraštis
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={"/contacts"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        Kontaktai
+                                    </NavLink>
+                                </li>
 
                                 {currentUser ? (
                                     <>
@@ -159,7 +174,6 @@ export default function Navbar() {
                                 <li>
                                     <a href="contact.html" className="nav-link">Kontaktai</a>
                                 </li> */}
-
                             </ul>
                         </nav>
                     </div>
