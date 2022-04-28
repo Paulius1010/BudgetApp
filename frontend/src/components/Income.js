@@ -15,6 +15,8 @@ export default function Income() {
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    // Sums user's income
+    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0)
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -121,6 +123,12 @@ export default function Income() {
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
                                             <div className="col-5 budget__income-value">+ {allIncome.reduce((n, { amount }) => n + amount, 0)}</div>
+                                            <div
+                                                className="col-5 budget__income-value">
+                                                {/* Round the number to two decimal places */}
+                                                + {Math.round(incomeSum * 100) / 100
+                                                }
+                                            </div>
                                             <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
 
                                         </div>
@@ -167,6 +175,7 @@ export default function Income() {
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
+                                    step="0.01"
                                 />
 
                                 <div className="input-group-append">
