@@ -91,22 +91,6 @@ export default function Navbar() {
                     <div className="col-lg-4">
                         <nav className="site-navigation text-left mr-auto " role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                <li>
-                                    <NavLink to={"/aboutus"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
-                                        Apie mus
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to={"/blog"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
-                                        Tinklaraštis
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to={"/contacts"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
-                                        Kontaktai
-                                    </NavLink>
-                                </li>
-
                                 {currentUser ? (
                                     <>
                                         <li >
@@ -118,7 +102,7 @@ export default function Navbar() {
                                 ) : (
                                     <>
                                         <li >
-                                            <NavLink to={"/about"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/aboutus"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Apie mus
                                             </NavLink>
                                         </li>
@@ -154,7 +138,7 @@ export default function Navbar() {
                                 ) : (
                                     <>
                                         <li >
-                                            <NavLink to={"/contact"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/contacts"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Kontaktai
                                             </NavLink>
                                         </li>
