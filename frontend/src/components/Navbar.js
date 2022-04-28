@@ -82,7 +82,27 @@ export default function Navbar() {
                     </div>
                     <div className="col-lg-4 text-center">
                         <div className="site-logo">
-                            <a href="/">taupyk</a>
+
+                            {currentUser ? (
+                                <>
+                                    <div >
+                                        <NavLink to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                            taupyk
+                                        </NavLink>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div >
+                                        <NavLink to={"/"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            taupyk
+                                        </NavLink>
+                                    </div>
+                                </>
+                            )}
+
+
+
                         </div>
                         <div className="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
                             className="site-menu-toggle py-5 js-menu-toggle text-black"><span className="icon-menu h3 text-black"></span></a>
