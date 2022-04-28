@@ -86,7 +86,7 @@ export default function Navbar() {
                             {currentUser ? (
                                 <>
                                     <div >
-                                        <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                        <NavLink to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                             taupyk
                                         </NavLink>
                                     </div>
