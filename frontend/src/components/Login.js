@@ -13,7 +13,7 @@ export default function Login() {
             navigate("/income")
             window.location.reload();
         })
-        .catch(() => setMessage("Email or password is incorrect"));
+        .catch(() => setMessage("El. paštas arba slaptažodis yra neteisingas"));
 
     return (
 
