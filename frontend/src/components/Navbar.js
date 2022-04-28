@@ -53,9 +53,9 @@ export default function Navbar() {
                                 {currentUser ? (
                                     <>
                                         <li>
-                                            <Link to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                            <NavLink to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Pajamos
-                                            </Link>
+                                            </NavLink>
                                         </li>
                                         <li>
                                             <a href="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')} onClick={logOut}>
@@ -91,9 +91,75 @@ export default function Navbar() {
                     <div className="col-lg-4">
                         <nav className="site-navigation text-left mr-auto " role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                <li><a href="about.html" className="nav-link" >Apie mus</a></li>
-                                <li><a href="blog.html" className="nav-link">Tinklaraštis</a></li>
-                                <li><a href="contact.html" className="nav-link">Kontaktai</a></li>
+
+                                {currentUser ? (
+                                    <>
+                                        <li >
+                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li >
+                                            <NavLink to={"/about"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                                Apie mus
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                )}
+
+                                {currentUser ? (
+                                    <>
+                                        <li >
+                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li >
+                                            <NavLink to={"/blog"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                                Tinklaraštis
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                )}
+
+                                {currentUser ? (
+                                    <>
+                                        <li >
+                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li >
+                                            <NavLink to={"/contact"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                                Kontaktai
+                                            </NavLink>
+                                        </li>
+                                    </>
+                                )}
+
+                                {/* <li>
+                                    <a href="about.html" className="nav-link" >Apie mus</a>
+                                </li>
+
+
+                                <li>
+                                    <a href="blog.html" className="nav-link">Tinklaraštis</a>
+                                </li>
+
+
+                                <li>
+                                    <a href="contact.html" className="nav-link">Kontaktai</a>
+                                </li> */}
+
                             </ul>
                         </nav>
                     </div>
