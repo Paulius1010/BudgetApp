@@ -7,18 +7,15 @@ import lt.vtmc.pbaa.payload.requests.IncomeUpdateRequest;
 import lt.vtmc.pbaa.payload.responses.IncomeResponse;
 import lt.vtmc.pbaa.repositories.IncomeRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
-import lt.vtmc.pbaa.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class IncomeService {
@@ -27,18 +24,13 @@ public class IncomeService {
     private final UserRepository userRepository;
 
     @Autowired
-    public IncomeService(IncomeRepository incomeRepository, UserRepository userRepository, JwtUtils jwtUtils) {
+    public IncomeService(IncomeRepository incomeRepository, UserRepository userRepository) {
         this.incomeRepository = incomeRepository;
         this.userRepository = userRepository;
     }
 
-   public List<Income> getAllIncomes() {
-        return incomeRepository.findAll();
-   }
-
     public IncomeResponse saveIncome(IncomeInsertRequest incomeRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalEmail = authentication.getName();
+        String currentPrincipalEmail = getCurrentPrincipalEmail();
     	User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         Income income = new Income(
@@ -55,10 +47,12 @@ public class IncomeService {
     }
 
     public IncomeResponse updateIncome(IncomeUpdateRequest incomeUpdateRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalEmail = authentication.getName();
-        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
-        List<Income> userIncomes = getIncomesByUser(user);
+        String currentPrincipalEmail = getCurrentPrincipalEmail();
+        Optional<User> user = userRepository.findByEmail(currentPrincipalEmail);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User does not exist");
+        }
+        List<Income> userIncomes = getAllIncomeByUser(user.get().getId());
         Income updatingIncome = incomeRepository.getById(Long.valueOf(incomeUpdateRequest.getIncomeId()));
         if (!userIncomes.contains(updatingIncome)) {
             throw new RuntimeException("User has not this income");
@@ -75,16 +69,13 @@ public class IncomeService {
                 incomeUpdateRequest.getAmount());
     }
 
-    private List<Income> getIncomesByUser(User user) {
-        List<Income> allIncomes = incomeRepository.findAll();
-        return allIncomes.stream().filter(income -> income.getUser().equals(user)).collect(Collectors.toList());
-    }
-
     public IncomeResponse deleteIncome(String id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalEmail = authentication.getName();
-        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
-        List<Income> userIncomes = getIncomesByUser(user);
+        String currentPrincipalEmail = getCurrentPrincipalEmail();
+        Optional<User> user = userRepository.findByEmail(currentPrincipalEmail);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User does not exist");
+        }
+        List<Income> userIncomes = getAllIncomeByUser(user.get().getId());
         Income deletingIncome = incomeRepository.getById(Long.valueOf(id));
         if (!userIncomes.contains(deletingIncome)) {
             throw new RuntimeException("User has not this income");
@@ -92,10 +83,14 @@ public class IncomeService {
         incomeRepository.delete(deletingIncome);
         return null;
     }
-    
+
+    private String getCurrentPrincipalEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
     public List<Income> getAllIncomeByUser(Long id) {
     	Optional<User> user = userRepository.findById(id);
-    	
     	return incomeRepository.findByUser(user);
     }
 }

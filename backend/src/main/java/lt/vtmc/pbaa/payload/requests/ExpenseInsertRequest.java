@@ -2,10 +2,13 @@ package lt.vtmc.pbaa.payload.requests;
 
 import javax.validation.constraints.NotBlank;
 
-public class IncomeInsertRequest {
+public class ExpenseInsertRequest {
 
     @NotBlank
-    private String incomeName;
+    private String expenseName;
+
+    @NotBlank
+    private Integer categoryId;
 
     @NotBlank
     private String date;
@@ -13,12 +16,19 @@ public class IncomeInsertRequest {
     @NotBlank
     private String amount;
 
-    public String getIncomeName() {
-        return incomeName;
+    public ExpenseInsertRequest() {
+    }
+
+    public String getExpenseName() {
+        return expenseName;
     }
 
     public String getDate() {
         return date;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
     public String getAmount() {
@@ -27,8 +37,9 @@ public class IncomeInsertRequest {
 
     @Override
     public String toString() {
-        return "IncomeInsertRequest{" +
-                ", incomeName='" + incomeName + '\'' +
+        return "ExpenseInsertRequest{" +
+                "expenseName='" + expenseName + '\'' +
+                ", categoryId='" + categoryId + '\'' +
                 ", date='" + date + '\'' +
                 ", amount='" + amount + '\'' +
                 '}';

@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="incomes")
-public class Income {
+@Table(name="expenses")
+public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +17,12 @@ public class Income {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "categories_id")
+    private ExpensesCategory expensesCategory;
+
     @NotBlank
-    private String incomeName;
+    private String expenseName;
 
     @NotBlank
     private LocalDate date;
@@ -26,14 +30,19 @@ public class Income {
     @NotBlank
     private BigDecimal amount;
 
-    public Income() {
+    public Expense() {
     }
 
-    public Income(User user, String incomeName, LocalDate date, BigDecimal amount) {
+    public Expense(User user, ExpensesCategory expensesCategory, String expenseName, LocalDate date, BigDecimal amount) {
         this.user = user;
-        this.incomeName = incomeName;
+        this.expensesCategory = expensesCategory;
+        this.expenseName = expenseName;
         this.date = date;
         this.amount = amount;
+    }
+
+    public void setExpensesCategory(ExpensesCategory expensesCategory) {
+        this.expensesCategory = expensesCategory;
     }
 
     public User getUser() {
@@ -48,12 +57,12 @@ public class Income {
         Id = id;
     }
 
-    public String getIncomeName() {
-        return incomeName;
+    public String getExpenseName() {
+        return expenseName;
     }
 
-    public void setIncomeName(String incomeName) {
-        this.incomeName = incomeName;
+    public void setExpenseName(String expenseName) {
+        this.expenseName = expenseName;
     }
 
     public LocalDate getDate() {
@@ -70,5 +79,9 @@ public class Income {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public ExpensesCategory getExpensesCategory() {
+        return expensesCategory;
     }
 }
