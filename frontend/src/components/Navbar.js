@@ -71,7 +71,6 @@ export default function Navbar() {
                                         </li>
                                         <li>
                                             <a href="/"
-                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
@@ -87,7 +86,6 @@ export default function Navbar() {
                                         </li>
                                         <li>
                                             <a href="/"
-                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
