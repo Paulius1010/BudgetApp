@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar";
 import AboutUs from "./components/AboutUs";
 import Contacts from "./components/Contacts.js";
 import Blog from "./components/Blog.js";
+import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
   return (
@@ -122,6 +123,7 @@ const App = () => {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="*" element={<ErrorPage/>}/>
         </Routes>
       </main>
 
