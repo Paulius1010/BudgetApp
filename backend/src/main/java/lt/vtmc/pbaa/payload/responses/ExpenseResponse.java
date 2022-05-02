@@ -2,11 +2,11 @@ package lt.vtmc.pbaa.payload.responses;
 
 public class ExpenseResponse {
 
-    private String expenseId;
+    private Long expenseId;
 
     private String expenseName;
 
-    private Integer expenseCategoryId;
+    private Long expenseCategoryId;
 
     private String date;
 
@@ -15,7 +15,7 @@ public class ExpenseResponse {
     public ExpenseResponse() {
     }
 
-    public ExpenseResponse(String expenseId, String expenseName, Integer expenseCategoryId, String date, String amount) {
+    public ExpenseResponse(Long expenseId, String expenseName, Long expenseCategoryId, String date, String amount) {
         this.expenseId = expenseId;
         this.expenseName = expenseName;
         this.expenseCategoryId = expenseCategoryId;
@@ -23,11 +23,11 @@ public class ExpenseResponse {
         this.amount = amount;
     }
 
-    public String getExpenseId() {
+    public Long getExpenseId() {
         return expenseId;
     }
 
-    public void setExpenseId(String expenseId) {
+    public void setExpenseId(Long expenseId) {
         this.expenseId = expenseId;
     }
 
@@ -39,11 +39,11 @@ public class ExpenseResponse {
         this.expenseName = expenseName;
     }
 
-    public Integer getExpenseCategoryId() {
+    public Long getExpenseCategoryId() {
         return expenseCategoryId;
     }
 
-    public void setExpenseCategoryId(Integer expenseCategoryId) {
+    public void setExpenseCategoryId(Long expenseCategoryId) {
         this.expenseCategoryId = expenseCategoryId;
     }
 

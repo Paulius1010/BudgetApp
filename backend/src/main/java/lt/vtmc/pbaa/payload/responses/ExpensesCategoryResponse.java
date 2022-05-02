@@ -1,21 +1,16 @@
-package lt.vtmc.pbaa.models;
+package lt.vtmc.pbaa.payload.responses;
 
-import javax.persistence.*;
+public class ExpensesCategoryResponse {
 
-@Entity
-@Table(name = "categories")
-public class ExpensesCategory {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    public ExpensesCategory() {
+    public ExpensesCategoryResponse() {
     }
 
-    public ExpensesCategory(String name) {
+    public ExpensesCategoryResponse(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -37,7 +32,7 @@ public class ExpensesCategory {
 
     @Override
     public String toString() {
-        return "ExpenseCategory{" +
+        return "ExpensesCategoryResponse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

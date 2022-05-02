@@ -37,7 +37,7 @@ public class ExpenseController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ExpenseResponse deleteExpense(@PathVariable String id) {
+    public ExpenseResponse deleteExpense(@PathVariable Long id) {
         return this.expenseService.deleteExpense(id);
     }
 

@@ -45,7 +45,7 @@ public class ExpenseService {
                 BigDecimal.valueOf(Double.parseDouble(expenseInsertRequest.getAmount())));
         expenseRepository.save(expense);
         return new ExpenseResponse(
-                expense.getId().toString(),
+                expense.getId(),
                 expenseInsertRequest.getExpenseName(),
                 expenseInsertRequest.getCategoryId(),
                 expenseInsertRequest.getDate(),
@@ -59,7 +59,7 @@ public class ExpenseService {
             throw new RuntimeException("User does not exist");
         }
         List<Expense> userIncomes = getAllExpenseByUser(user.get().getId());
-        Expense updatingExpense = expenseRepository.getById(Long.valueOf(expenseUpdateRequest.getExpenseId()));
+        Expense updatingExpense = expenseRepository.getById(expenseUpdateRequest.getExpenseId());
         if (!userIncomes.contains(updatingExpense)) {
             throw new RuntimeException("User has not this income");
         }
@@ -70,21 +70,21 @@ public class ExpenseService {
         updatingExpense.setAmount(BigDecimal.valueOf(Double.parseDouble(expenseUpdateRequest.getAmount())));
         expenseRepository.save(updatingExpense);
         return new ExpenseResponse(
-                updatingExpense.getId().toString(),
+                updatingExpense.getId(),
                 expenseUpdateRequest.getExpenseName(),
                 expenseUpdateRequest.getCategoryId(),
                 expenseUpdateRequest.getDate(),
                 expenseUpdateRequest.getAmount());
     }
 
-    public ExpenseResponse deleteExpense(String id) {
+    public ExpenseResponse deleteExpense(Long id) {
         String currentPrincipalEmail = getCurrentPrincipalEmail();
         Optional<User> user = userRepository.findByEmail(currentPrincipalEmail);
         if (user.isEmpty()) {
             throw new RuntimeException("User does not exist");
         }
         List<Expense> userExpenses = getAllExpenseByUser(user.get().getId());
-        Expense deletingExpense = expenseRepository.getById(Long.valueOf(id));
+        Expense deletingExpense = expenseRepository.getById(id);
         if (!userExpenses.contains(deletingExpense)) {
             throw new RuntimeException("User has not this expense");
         }

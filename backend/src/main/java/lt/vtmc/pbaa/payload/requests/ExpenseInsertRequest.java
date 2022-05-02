@@ -8,7 +8,7 @@ public class ExpenseInsertRequest {
     private String expenseName;
 
     @NotBlank
-    private Integer categoryId;
+    private Long categoryId;
 
     @NotBlank
     private String date;
@@ -27,7 +27,7 @@ public class ExpenseInsertRequest {
         return date;
     }
 
-    public Integer getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 

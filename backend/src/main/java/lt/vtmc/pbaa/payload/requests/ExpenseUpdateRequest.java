@@ -5,13 +5,13 @@ import javax.validation.constraints.NotBlank;
 public class ExpenseUpdateRequest {
 
     @NotBlank
-    private String expenseId;
+    private Long expenseId;
 
     @NotBlank
     private String expenseName;
 
     @NotBlank
-    private Integer categoryId;
+    private Long categoryId;
 
     @NotBlank
     private String date;
@@ -27,7 +27,7 @@ public class ExpenseUpdateRequest {
         return date;
     }
 
-    public Integer getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
@@ -35,7 +35,7 @@ public class ExpenseUpdateRequest {
         return amount;
     }
 
-    public String getExpenseId() {
+    public Long getExpenseId() {
         return expenseId;
     }
 
