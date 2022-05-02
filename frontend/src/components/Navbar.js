@@ -26,16 +26,26 @@ export default function Navbar() {
 
 
     return (
-        <div className="site-navbar site-navbar-target bg-white" role="banner">
+        <div className="site-navbar site-navbar-target bg-white"
+            role="banner">
             <div className="container">
                 <div className="row align-items-center position-relative">
                     <div className="col-lg-4">
-                        <nav className="site-navigation text-right ml-auto " role="navigation">
+                        <nav className="site-navigation text-right ml-auto "
+                            role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                {currentUser ? (
+                                {showAdminBoard ? (
+                                    <li >
+                                        <NavLink to={"/"}
+                                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            Namai
+                                        </NavLink>
+                                    </li>
+                                ) : currentUser ? (
                                     <>
                                         <li >
-                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                            <NavLink to={"/welcome"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Namai
                                             </NavLink>
                                         </li>
@@ -43,22 +53,42 @@ export default function Navbar() {
                                 ) : (
                                     <>
                                         <li >
-                                            <NavLink to={"/"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Namai
                                             </NavLink>
                                         </li>
                                     </>
                                 )}
 
-                                {currentUser ? (
+                                {showAdminBoard ? (
                                     <>
                                         <li>
-                                            <NavLink to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                            <NavLink to={"/register"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Vartotojų registracija
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <a href="/"
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li>
+                                    </>
+                                ) : currentUser ? (
+                                    <>
+                                        <li>
+                                            <NavLink to={"/income"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Pajamos
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <a href="/" className={({ isActive }) => (isActive ? 'active' : 'inactive')} onClick={logOut}>
+                                            <a href="/"
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                                onClick={logOut}>
                                                 Atsijungti
                                             </a>
                                         </li>
@@ -66,12 +96,14 @@ export default function Navbar() {
                                 ) : (
                                     <>
                                         <li >
-                                            <NavLink to={"/login"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/login"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Prisijungti
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink to={"/register"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/register"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Registruotis
                                             </NavLink>
                                         </li>
@@ -82,11 +114,20 @@ export default function Navbar() {
                     </div>
                     <div className="col-lg-4 text-center">
                         <div className="site-logo">
-
-                            {currentUser ? (
+                            {showAdminBoard ? (
                                 <>
                                     <div >
-                                        <NavLink to={"/income"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                        <NavLink to={"/"}
+                                            className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                            taupyk
+                                        </NavLink>
+                                    </div>
+                                </>
+                            ) : currentUser ? (
+                                <>
+                                    <div >
+                                        <NavLink to={"/income"}
+                                            className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                             taupyk
                                         </NavLink>
                                     </div>
@@ -94,90 +135,48 @@ export default function Navbar() {
                             ) : (
                                 <>
                                     <div >
-                                        <NavLink to={"/"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                        <NavLink to={"/"}
+                                            className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                             taupyk
                                         </NavLink>
                                     </div>
                                 </>
                             )}
-
-
-
                         </div>
-                        <div className="ml-auto toggle-button d-inline-block d-lg-none"><a href="#"
-                            className="site-menu-toggle py-5 js-menu-toggle text-black"><span className="icon-menu h3 text-black"></span></a>
+                        <div className="ml-auto toggle-button d-inline-block d-lg-none">
+                            <a href="#"
+                                className="site-menu-toggle py-5 js-menu-toggle text-black"
+                            >
+                                <span className="icon-menu h3 text-black"></span>
+                            </a>
                         </div>
                     </div>
                     <div className="col-lg-4">
-                        <nav className="site-navigation text-left mr-auto " role="navigation">
+                        <nav className="site-navigation text-left mr-auto "
+                            role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
-                                {currentUser ? (
+                                {!currentUser && (
                                     <>
                                         <li >
-                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-
-                                            </NavLink>
-                                        </li>
-                                    </>
-                                ) : (
-                                    <>
-                                        <li >
-                                            <NavLink to={"/aboutus"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/aboutus"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Apie mus
                                             </NavLink>
                                         </li>
-                                    </>
-                                )}
-
-                                {currentUser ? (
-                                    <>
                                         <li >
-                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-
-                                            </NavLink>
-                                        </li>
-                                    </>
-                                ) : (
-                                    <>
-                                        <li >
-                                            <NavLink to={"/blog"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/blog"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Tinklaraštis
                                             </NavLink>
                                         </li>
-                                    </>
-                                )}
-
-                                {currentUser ? (
-                                    <>
                                         <li >
-                                            <NavLink to={"/welcome"} className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-
-                                            </NavLink>
-                                        </li>
-                                    </>
-                                ) : (
-                                    <>
-                                        <li >
-                                            <NavLink to={"/contacts"} className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
+                                            <NavLink to={"/contacts"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Kontaktai
                                             </NavLink>
                                         </li>
                                     </>
                                 )}
-
-                                {/* <li>
-                                    <a href="about.html" className="nav-link" >Apie mus</a>
-                                </li>
-
-
-                                <li>
-                                    <a href="blog.html" className="nav-link">Tinklaraštis</a>
-                                </li>
-
-
-                                <li>
-                                    <a href="contact.html" className="nav-link">Kontaktai</a>
-                                </li> */}
                             </ul>
                         </nav>
                     </div>
@@ -186,6 +185,6 @@ export default function Navbar() {
 
             {/* Insert the break element everywhere but homepage */}
             {location.pathname === "/" ? "" : < hr />}
-        </div>
+        </div >
     )
 }
