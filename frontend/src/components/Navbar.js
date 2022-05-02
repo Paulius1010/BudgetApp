@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import "../navbar bootstrap/bootstrap.module.min.css"
 
@@ -142,7 +142,7 @@ export default function Navbar() {
                             )}
                         </div>
                         <div className="ml-auto toggle-button d-inline-block d-lg-none">
-                            <a href="#"
+                            <a href="vtmc.lt"
                                 className="site-menu-toggle py-5 js-menu-toggle text-black"
                             >
                                 <span className="icon-menu h3 text-black"></span>
