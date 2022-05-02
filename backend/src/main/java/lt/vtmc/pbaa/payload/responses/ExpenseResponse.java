@@ -6,7 +6,7 @@ public class ExpenseResponse {
 
     private String expenseName;
 
-    private Long expenseCategoryId;
+    private Long categoryId;
 
     private String date;
 
@@ -15,10 +15,10 @@ public class ExpenseResponse {
     public ExpenseResponse() {
     }
 
-    public ExpenseResponse(Long expenseId, String expenseName, Long expenseCategoryId, String date, String amount) {
+    public ExpenseResponse(Long expenseId, String expenseName, Long categoryId, String date, String amount) {
         this.expenseId = expenseId;
         this.expenseName = expenseName;
-        this.expenseCategoryId = expenseCategoryId;
+        this.categoryId = categoryId;
         this.date = date;
         this.amount = amount;
     }
@@ -39,12 +39,12 @@ public class ExpenseResponse {
         this.expenseName = expenseName;
     }
 
-    public Long getExpenseCategoryId() {
-        return expenseCategoryId;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setExpenseCategoryId(Long expenseCategoryId) {
-        this.expenseCategoryId = expenseCategoryId;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getDate() {
@@ -68,7 +68,7 @@ public class ExpenseResponse {
         return "ExpenseResponse{" +
                 "expenseId='" + expenseId + '\'' +
                 ", expenseName='" + expenseName + '\'' +
-                ", expenseCategory='" + expenseCategoryId + '\'' +
+                ", expenseCategory='" + categoryId + '\'' +
                 ", date='" + date + '\'' +
                 ", amount='" + amount + '\'' +
                 '}';

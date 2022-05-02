@@ -51,5 +51,5 @@ public class ExpensesCategoryService {
         expensesCategoryRepository.save(expensesCategory);
         return new ExpensesCategoryResponse(expensesCategory.getId(), expensesCategory.getName());
     }
-    
+
 }
