@@ -1,7 +1,9 @@
 package lt.vtmc.pbaa.controllers;
 
 import java.util.HashSet;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,22 +17,26 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lt.vtmc.pbaa.models.ERole;
+import lt.vtmc.pbaa.models.Income;
 import lt.vtmc.pbaa.models.Role;
 import lt.vtmc.pbaa.models.User;
 import lt.vtmc.pbaa.payload.requests.LoginRequest;
 import lt.vtmc.pbaa.payload.requests.SignupRequest;
+import lt.vtmc.pbaa.payload.responses.IncomeResponse;
 import lt.vtmc.pbaa.payload.responses.JwtResponse;
 import lt.vtmc.pbaa.payload.responses.MessageResponse;
 import lt.vtmc.pbaa.repositories.RoleRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
 import lt.vtmc.pbaa.security.jwt.JwtUtils;
 import lt.vtmc.pbaa.security.services.UserDetailsImpl;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -114,4 +120,24 @@ public class AuthController {
 		userRepository.save(user);
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
+	
+//    public void deleteUser(Long id) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalEmail = authentication.getName();
+//        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+//        Optional<User> userRoles = userRepository.findById(id);
+//        userRepository.delete(userRepository.getById(Long.valueOf(id)));
+//
+//    }
+	
+
+	
+	@DeleteMapping("/users/{id}")
+	public void deleteUser(@PathVariable Long id) {
+		userRepository.deleteById(id);
+	}
+	
+
+	
+	
 }
