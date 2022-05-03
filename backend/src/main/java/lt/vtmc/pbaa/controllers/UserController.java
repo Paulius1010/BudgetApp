@@ -3,6 +3,8 @@ package lt.vtmc.pbaa.controllers;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,4 +27,12 @@ public class UserController {
 	public ResponseEntity<Optional<User>> getUserByEmail(@PathVariable String email) {
 		return ResponseEntity.ok().body(userService.getUserByEmail(email));
 	}
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ADMIN')")
+	@DeleteMapping("/users/{id}")
+	public void deleteUser(@PathVariable Long id) {
+		userService.deleteUserById(id);
+	}
+
+
 }

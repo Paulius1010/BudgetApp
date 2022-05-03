@@ -129,13 +129,7 @@ public class AuthController {
 //        userRepository.delete(userRepository.getById(Long.valueOf(id)));
 //
 //    }
-	
 
-	
-	@DeleteMapping("/users/{id}")
-	public void deleteUser(@PathVariable Long id) {
-		userRepository.deleteById(id);
-	}
 	
 
 	
