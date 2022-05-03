@@ -66,7 +66,13 @@ export default function Navbar() {
                                         <li>
                                             <NavLink to={"/register"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-                                                Vartotojų registracija
+                                                Vartotojai
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to={"/category"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Kategorijos
                                             </NavLink>
                                         </li>
                                         <li>
@@ -90,6 +96,12 @@ export default function Navbar() {
                                                 Išlaidos
                                             </NavLink>
                                         </li>
+                                        {/* <li>
+                                            <NavLink to={"/category"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Kategorijos
+                                            </NavLink>
+                                        </li> */}
                                         <li>
                                             <a href="/"
                                                 onClick={logOut}>

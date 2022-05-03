@@ -11,6 +11,7 @@ import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import Income from "./components/Income";
 import Expense from "./components/Expense";
+import Category from "./components/Category";
 import "./components/FontAwesomeIcon/Icons";
 import './App.css'
 import Navbar from "./components/Navbar";
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/welcome" element={<HomeLoggedIn />} />
           <Route path="/income" element={<Income />} />
           <Route path="/expense" element={<Expense />} />
+          <Route path="/category" element={<Category />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/blog" element={<Blog />} />
