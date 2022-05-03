@@ -7,7 +7,6 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 // import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
-import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import Income from "./components/Income";
 import Expense from "./components/Expense";
@@ -18,6 +17,7 @@ import Navbar from "./components/Navbar";
 import AboutUs from "./components/AboutUs";
 import Contacts from "./components/Contacts.js";
 import Blog from "./components/Blog.js";
+import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
   return (
@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/user" element={<BoardUser />} />
           {/* <Route path="/mod" element={<BoardModerator />} /> */}
           <Route path="/admin" element={<BoardAdmin />} />
-          <Route path="/register-success" element={<RegisterSuccess />} />
+          {/* <Route path="/register-success" element={<RegisterSuccess />} /> */}
           <Route path="/welcome" element={<HomeLoggedIn />} />
           <Route path="/income" element={<Income />} />
           <Route path="/expense" element={<Expense />} />
@@ -53,6 +53,7 @@ const App = () => {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="*" element={<ErrorPage/>}/>
         </Routes>
       </main>
 

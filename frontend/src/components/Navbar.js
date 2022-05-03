@@ -200,7 +200,7 @@ export default function Navbar() {
             </div>
 
             {/* Insert the break element everywhere but homepage */}
-            {location.pathname === "/" ? "" : < hr />}
-        </div >
+            {/* {location.pathname === "/" ? "" : < hr />} */}
+        </div>
     )
 }
