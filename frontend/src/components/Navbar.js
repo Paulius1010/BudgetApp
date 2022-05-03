@@ -67,7 +67,13 @@ export default function Navbar() {
                                         <li>
                                             <NavLink to={"/register"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-                                                Vartotojų registracija
+                                                Vartotojai
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to={"/category"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Kategorijos
                                             </NavLink>
                                         </li>
                                         <li>
@@ -85,6 +91,18 @@ export default function Navbar() {
                                                 Pajamos
                                             </NavLink>
                                         </li>
+                                        <li>
+                                            <NavLink to={"/expense"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Išlaidos
+                                            </NavLink>
+                                        </li>
+                                        {/* <li>
+                                            <NavLink to={"/category"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Kategorijos
+                                            </NavLink>
+                                        </li> */}
                                         <li>
                                             <a href="/"
                                                 onClick={logOut}>
@@ -183,7 +201,7 @@ export default function Navbar() {
             </div>
 
             {/* Insert the break element everywhere but homepage */}
-            {location.pathname === "/" ? "" : < hr />}
-        </div >
+            {/* {location.pathname === "/" ? "" : < hr />} */}
+        </div>
     );
 }

@@ -1,0 +1,8 @@
+.centerError{
+    text-align: center;
+    margin: 0 auto;
+}
+.error{
+    width: 600px;
+    height: auto;
+}

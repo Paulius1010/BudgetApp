@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react'
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Register() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -9,7 +11,8 @@ export default function Register() {
     const [usedLogin, setUsedLogin] = useState("")
     const onSubmit = data => {
         AuthService.register(data)
-            .then(() => navigate("/register-success"))
+            .then(() => successMessage())
+            .then(() => navigate("/login"))
             .catch(error => {
                 setUsedLogin(error.response.data.message.length)
                 console.log(error.response.data.message.length)
@@ -19,6 +22,20 @@ export default function Register() {
                 // }
             })
     }
+
+    // Popup message configuration
+    toast.configure()
+    const successMessage = () => {
+        toast.success('Registracija sėkminga! Galite prisijungti prie savo paskyros', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 3000,
+            theme: "colored",
+            pauseOnHover: false,
+            hideProgressBar: true,
+            keepAfterRouteChange: true
+        })
+    }
+
     const password = useRef({});
     password.current = watch("password", "");
 
