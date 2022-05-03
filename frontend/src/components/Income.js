@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
@@ -75,7 +75,7 @@ export default function Income() {
     }
 
     const removeIncome = async (id) => {
-        const response = await fetch(
+        await fetch(
             `http://localhost:8080/api/income/${id}`,
             {
                 method: "DELETE",
@@ -122,7 +122,6 @@ export default function Income() {
                                     <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__income">
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
-                                            <div className="col-5 budget__income-value">+ {allIncome.reduce((n, { amount }) => n + amount, 0)}</div>
                                             <div
                                                 className="col-5 budget__income-value">
                                                 {/* Round the number to two decimal places */}

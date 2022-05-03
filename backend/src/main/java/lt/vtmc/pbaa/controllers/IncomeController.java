@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin
@@ -22,11 +21,6 @@ public class IncomeController {
 	@Autowired
 	public IncomeController(IncomeService incomeService) {
 		this.incomeService = incomeService;
-	}
-
-	@GetMapping
-	public List<Income> getAllIncome() {
-		return this.incomeService.getAllIncomes();
 	}
 
 	@PostMapping
@@ -43,15 +37,10 @@ public class IncomeController {
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public IncomeResponse updateIncome(@PathVariable String id) {
+	public IncomeResponse deleteIncome(@PathVariable String id) {
 		return this.incomeService.deleteIncome(id);
 	}
 
-//	@GetMapping("/user/{id}")
-//	public List<Income> getAllIncomeByUserId(@PathVariable Long id) {
-//		return this.incomeService.getAllIncomeByUser(id);
-//	}
-	
 	@GetMapping("/user/{id}")
 	public ResponseEntity<List<Income>> getAllIncomeByUserId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(this.incomeService.getAllIncomeByUser(id));

@@ -10,6 +10,10 @@ export default function Login() {
     const navigate = useNavigate();
     const onSubmit = data => AuthService.login(data.email, data.password)
         .then(() => {
+            // if () {
+
+            // }
+            console.log(data)
             navigate("/income")
             window.location.reload();
         })
