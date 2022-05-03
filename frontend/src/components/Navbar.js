@@ -85,6 +85,12 @@ export default function Navbar() {
                                             </NavLink>
                                         </li>
                                         <li>
+                                            <NavLink to={"/expense"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Išlaidos
+                                            </NavLink>
+                                        </li>
+                                        <li>
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
