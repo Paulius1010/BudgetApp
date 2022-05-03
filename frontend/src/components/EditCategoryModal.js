@@ -5,20 +5,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
+export default function EditCategoryModal({ id, name, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-    // This is used to figure out today's date, and format it accordingly
-    let today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
 
     const onSubmit = async (data) => {
         const response = await fetch(
-            "http://localhost:8080/api/income/",
+            "http://localhost:8080/api/categories/",
             {
                 method: "PUT",
                 headers: {
@@ -26,10 +20,8 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 },
                 body: JSON.stringify({
-                    "incomeId": id,
-                    "incomeName": data.incomeName,
-                    "date": data.date,
-                    "amount": data.amount
+                    "id": id,
+                    "name": data.name
                 })
             }
         )
@@ -73,7 +65,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn__income' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
 
             <div
@@ -104,7 +96,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
 
                         <form onSubmit={handleSubmit(onSubmit)} className="modal-body">
                             <input
-                                {...register("incomeName",
+                                {...register("name",
                                     {
                                         required: true,
                                         minLength: 4
@@ -113,41 +105,10 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 type="text"
                                 className="form-control add__description"
                                 placeholder="Aprašymas"
-                                defaultValue={incomeName}
+                                defaultValue={name}
                             />
-                            {errors?.incomeName?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
-
-                            <input
-                                {...register("date",
-                                    {
-                                        required: true,
-                                        max: today
-                                    })
-                                }
-                                type="date"
-                                className="form-control add__date mt-2"
-                                placeholder="Data"
-                                defaultValue={date}
-                            />
-                            {errors?.date?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
-
-                            <input
-                                {...register("amount",
-                                    {
-                                        required: true,
-                                        min: 1
-                                    })
-                                }
-                                type="number"
-                                className="form-control add__value mt-2"
-                                placeholder="Kiekis"
-                                step="0.01"
-                                defaultValue={amount}
-                            />
-                            {errors?.amount?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                            {errors?.name?.type === "required" && <p>Laukas negali būti tuščias</p>}
+                            {errors?.name?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
 
                             <div className="modal-footer">
                                 <button

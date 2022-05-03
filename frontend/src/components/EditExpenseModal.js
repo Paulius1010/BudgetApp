@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
+export default function EditExpenseModal({ id, expenseName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
@@ -18,7 +18,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
 
     const onSubmit = async (data) => {
         const response = await fetch(
-            "http://localhost:8080/api/income/",
+            "http://localhost:8080/api/expense/",
             {
                 method: "PUT",
                 headers: {
@@ -26,8 +26,8 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 },
                 body: JSON.stringify({
-                    "incomeId": id,
-                    "incomeName": data.incomeName,
+                    "expenseId": id,
+                    "expenseName": data.expenseName,
                     "date": data.date,
                     "amount": data.amount
                 })
@@ -73,7 +73,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn__income' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
 
             <div
@@ -104,7 +104,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
 
                         <form onSubmit={handleSubmit(onSubmit)} className="modal-body">
                             <input
-                                {...register("incomeName",
+                                {...register("expenseName",
                                     {
                                         required: true,
                                         minLength: 4
@@ -113,10 +113,10 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 type="text"
                                 className="form-control add__description"
                                 placeholder="Aprašymas"
-                                defaultValue={incomeName}
+                                defaultValue={expenseName}
                             />
-                            {errors?.incomeName?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
+                            {errors?.expenseName?.type === "required" && <p>Laukas negali būti tuščias</p>}
+                            {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
 
                             <input
                                 {...register("date",
