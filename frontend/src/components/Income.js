@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
@@ -75,7 +75,7 @@ export default function Income() {
     }
 
     const removeIncome = async (id) => {
-        const response = await fetch(
+        await fetch(
             `http://localhost:8080/api/income/${id}`,
             {
                 method: "DELETE",
