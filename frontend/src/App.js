@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -11,13 +11,16 @@ import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import Income from "./components/Income";
 import "./components/FontAwesomeIcon/Icons";
-import './App.css'
+import './App.css';
 import Navbar from "./components/Navbar";
 import AboutUs from "./components/AboutUs";
 import Contacts from "./components/Contacts.js";
 import Blog from "./components/Blog.js";
+import { RenderContext } from './components/RenderContext';
 
 const App = () => {
+  const [render, setRender] = useState(false);
+
   return (
     <>
       {/* This shows when the screen goes small and user clicks button to expand */}
@@ -30,27 +33,29 @@ const App = () => {
         <div className="site-mobile-menu-body"></div>
       </div>
 
-      <header>
-        <Navbar />
-      </header>
+      <RenderContext.Provider value={{ render, setRender }}>
+        <header>
+          <Navbar />
+        </header>
 
-      <main>
-        <Routes>
-          <Route path={"/"} element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/user" element={<BoardUser />} />
-          {/* <Route path="/mod" element={<BoardModerator />} /> */}
-          <Route path="/admin" element={<BoardAdmin />} />
-          <Route path="/register-success" element={<RegisterSuccess />} />
-          <Route path="/welcome" element={<HomeLoggedIn />} />
-          <Route path="/income" element={<Income />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/blog" element={<Blog />} />
-        </Routes>
-      </main>
+        <main>
+          <Routes>
+            <Route path={"/"} element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/user" element={<BoardUser />} />
+            {/* <Route path="/mod" element={<BoardModerator />} /> */}
+            <Route path="/admin" element={<BoardAdmin />} />
+            <Route path="/register-success" element={<RegisterSuccess />} />
+            <Route path="/welcome" element={<HomeLoggedIn />} />
+            <Route path="/income" element={<Income />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/blog" element={<Blog />} />
+          </Routes>
+        </main>
+      </RenderContext.Provider>
 
       {/* Commented the footer section for now */}
       {/* <footer className="container">
