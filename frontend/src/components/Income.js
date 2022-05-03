@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import "./Income.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
@@ -122,8 +124,8 @@ export default function Income() {
                                 <h1 className="display-4 pt-3">
                                 </h1>
 
-                                <div className="row">
-                                    <div className="col-12 col-sm-10 col-md-8 col-lg-9 my-2 budget__income">
+                                <div>
+                                    <div className="my-2 budget__income">
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
                                             <div
@@ -145,10 +147,10 @@ export default function Income() {
 
             <div className="bottom mt-3">
                 <div className="container">
-                    <div className="add col-9">
+                    <div className="add">
                         <div className="row text-center add__container">
 
-                            <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
+                            <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
                                 <input
                                     {...register("incomeName", { required: true, minLength: 4 })}
                                     type="text"
@@ -183,7 +185,9 @@ export default function Income() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon="circle-check" className='add__btn' />
+                                        {/* <FontAwesomeIcon icon="circle-check" className='add__btn' /> */}
+                                        {/* <FontAwesomeIcon icon="circle-plus" /> */}
+                                        <FontAwesomeIcon icon= {faCirclePlus} className='add__btn'/>
                                     </button>
                                 </div>
                             </form>
@@ -244,7 +248,7 @@ export default function Income() {
                                                     className="btn"
                                                     type="button"
                                                 >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
+                                                    <FontAwesomeIcon icon="trash" className='add__btn' style={{"width":"20px"}}/>
                                                 </button>
                                             </div>
                                         </div>
