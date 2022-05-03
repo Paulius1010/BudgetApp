@@ -54,8 +54,8 @@ body {
 }
 
 .budget__income,
-.budget__expenses {
-    /* border-radius: 2em; */
+.budget__expense {
+    /* border-radius: 0.3em; */
     /* box-shadow: 0 10px 6px -6px #777; */
     color: #fff;
     font-size: 1.2em;
@@ -69,24 +69,24 @@ body {
     background-color: #89BA16;
 }
 
-.budget__expenses {
+.budget__expense {
     background-color: #e74c3c;
 }
 
 .budget__income-value,
-.budget__expenses-value {
+.budget__expense-value {
     letter-spacing: 1px;
 }
 
 .budget__income-percentage,
-.budget__expenses-percentage {
+.budget__expense-percentage {
     padding: 0;
 }
 
-.budget__expenses-percentage {
+/* .budget__expense-percentage {
     background-color: rgba(255, 255, 255, .2);
     border-radius: 2em;
-}
+} */
 
 /**************
 		 FORM
@@ -124,11 +124,22 @@ button {
     border: 1px solid #2ecc71;
 }
 
-.add__btn {
+
+.add__btn__income {
     color: #89BA16;
     width: 25px;
     height: auto;
-    /* background-color: #e9e9e9; */
+}
+
+.add__btn__expense {
+    color: #e74c3c;
+    background-color: #e9e9e9;
+    /* border-color: #575757; */
+}
+
+.add__btn {
+    color: #777;
+    background-color: #e9e9e9;
     /* border-color: #575757; */
 }
 
@@ -186,9 +197,9 @@ h2 {
     color: #2ecc71;
 }
 
-.expenses__title,
-.expenses .item__value,
-.expenses .item__delete-btn {
+.expense__title,
+.expense .item__value,
+.expense .item__delete-btn {
     color: #e74c3c;
 }
 

@@ -9,6 +9,8 @@ import BoardUser from "./components/BoardUser";
 import BoardAdmin from "./components/BoardAdmin";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import Income from "./components/Income";
+import Expense from "./components/Expense";
+import Category from "./components/Category";
 import "./components/FontAwesomeIcon/Icons";
 import './App.css'
 import Navbar from "./components/Navbar";
@@ -20,79 +22,6 @@ import ErrorPage from "./components/ErrorPage";
 const App = () => {
   return (
     <>
-      {/* <header className="container" >
-        <nav className="navbar navbar-expand navbar-light "  >
-          {currentUser ? (
-            <Link to={"/welcome"} className="navbar-brand ">
-              Home
-            </Link>
-          ) : (
-            <Link to={"/"} className="navbar-brand">
-              Home
-            </Link>
-          )}
-          <div className="navbar-nav mr-auto">
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board
-                </Link>
-              </li>
-            )}
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
-            )}
-            {currentUser && (
-              <>
-                <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
-                    User board
-                  </Link>
-                </li>
-              </>
-            )}
-          </div>
-          {currentUser ? (
-            <>
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={"/profile"} className="nav-link">
-                    {currentUser.username}
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={"/income"} className="nav-link">
-                    Income
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <a href="/login" className="nav-link" onClick={logOut}>
-                    Log out
-                  </a>
-                </li>
-              </div>
-            </>
-          ) : (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Sign up
-                </Link>
-              </li>
-            </div>
-          )}
-        </nav>
-      </header> */}
-
       {/* This shows when the screen goes small and user clicks button to expand */}
       <div className="site-mobile-menu site-navbar-target">
         <div className="site-mobile-menu-header">
@@ -119,6 +48,8 @@ const App = () => {
           {/* <Route path="/register-success" element={<RegisterSuccess />} /> */}
           <Route path="/welcome" element={<HomeLoggedIn />} />
           <Route path="/income" element={<Income />} />
+          <Route path="/expense" element={<Expense />} />
+          <Route path="/category" element={<Category />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/blog" element={<Blog />} />
