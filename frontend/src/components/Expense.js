@@ -5,18 +5,18 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
-import EditIncomeModal from './EditIncomeModal';
+import EditExpenseModal from './EditExpenseModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 
-export default function Income() {
-    const [allIncome, setAllIncome] = useState([])
+export default function Expense() {
+    const [allExpense, setAllExpense] = useState([])
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
-    // Sums user's income
-    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0)
+    // Sums user's expense
+    const expenseSum = allExpense.reduce((n, { amount }) => n + amount, 0)
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -25,10 +25,10 @@ export default function Income() {
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
-    // Add user's income to database from the inputs
+    // Add user's expense to database from the inputs
     const onSubmit = async (data) => {
         const response = await fetch(
-            "http://localhost:8080/api/income/",
+            "http://localhost:8080/api/expense/",
             {
                 method: "POST",
                 headers: {
@@ -36,7 +36,7 @@ export default function Income() {
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 },
                 body: JSON.stringify({
-                    "incomeName": data.incomeName,
+                    "expenseName": data.expenseName,
                     "date": data.date,
                     "amount": data.amount
                 })
@@ -74,9 +74,9 @@ export default function Income() {
         })
     }
 
-    const removeIncome = async (id) => {
+    const removeExpense = async (id) => {
         await fetch(
-            `http://localhost:8080/api/income/${id}`,
+            `http://localhost:8080/api/expense/${id}`,
             {
                 method: "DELETE",
                 headers: {
@@ -89,10 +89,10 @@ export default function Income() {
         setForceRender(!forceRender)
     }
 
-    // Fetch all user's income from database to display down below
+    // Fetch all user's expense from database to display down below
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
+            const response = await fetch(`http://localhost:8080/api/expense/user/${currentUser.id}`,
                 {
                     method: "GET",
                     headers: {
@@ -101,7 +101,7 @@ export default function Income() {
                     }
                 });
             const data = await response.json();
-            setAllIncome(data);
+            setAllExpense(data);
         }
 
         fetchData();
@@ -119,16 +119,16 @@ export default function Income() {
                                 </h1>
 
                                 <div className="row">
-                                    <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__income">
+                                    <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__expense">
                                         <div className="row">
-                                            <div className="col-4 budget__income-text">Pajamos</div>
+                                            <div className="col-4 budget__expense-text">Išlaidos</div>
                                             <div
-                                                className="col-5 budget__income-value">
+                                                className="col-5 budget__expense-value">
                                                 {/* Round the number to two decimal places */}
-                                                + {Math.round(incomeSum * 100) / 100
+                                                - {Math.round(expenseSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
+                                            <div className="col-3 budget__expense-percentage">&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@ export default function Income() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input
-                                    {...register("incomeName", { required: true, minLength: 4 })}
+                                    {...register("expenseName", { required: true, minLength: 4 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
@@ -179,7 +179,7 @@ export default function Income() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon="circle-check" className='add__btn__income' />
+                                        <FontAwesomeIcon icon="circle-check" className='add__btn__expense' />
                                     </button>
                                 </div>
                             </form>
@@ -188,8 +188,8 @@ export default function Income() {
 
                         <div className="row ">
                             <div className="col-sm-4 col-4">
-                                {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.expenseName?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
@@ -205,38 +205,38 @@ export default function Income() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 income">
-                            <h2 className="income__title">Pajamos</h2>
-                            <div className="container income__list"></div>
+                        <div className="col-12 expense">
+                            <h2 className="expense__title">Išlaidos</h2>
+                            <div className="container expense__list"></div>
 
-                            {/* Display user's income on the page */}
-                            {allIncome.map(income => {
+                            {/* Display user's expense on the page */}
+                            {allExpense.map(expense => {
 
                                 return (
-                                    <div key={income.id}>
+                                    <div key={expense.id}>
                                         <div className='row'>
                                             <div className='col-4'>
-                                                {income.incomeName}&nbsp;
+                                                {expense.expenseName}&nbsp;
                                             </div>
                                             <div className='col-4'>
-                                                {income.date}&nbsp;
+                                                {expense.date}&nbsp;
                                             </div>
                                             <div className='col-2'>
-                                                {income.amount}&euro;&nbsp;
+                                                {expense.amount}&euro;&nbsp;
                                             </div>
 
                                             <div className='col-2'>
-                                                <EditIncomeModal
-                                                    id={income.id}
-                                                    incomeName={income.incomeName}
-                                                    date={income.date}
-                                                    amount={income.amount}
+                                                <EditExpenseModal
+                                                    id={expense.id}
+                                                    expenseName={expense.expenseName}
+                                                    date={expense.date}
+                                                    amount={expense.amount}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
                                                 />
 
                                                 <button
-                                                    onClick={() => removeIncome(income.id)}
+                                                    onClick={() => removeExpense(expense.id)}
                                                     className="btn"
                                                     type="button"
                                                 >
