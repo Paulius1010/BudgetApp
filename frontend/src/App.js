@@ -7,7 +7,6 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 // import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
-import RegisterSuccess from "./components/RegisterSuccess";
 import HomeLoggedIn from "./components/HomeLoggedIn";
 import Income from "./components/Income";
 import "./components/FontAwesomeIcon/Icons";
@@ -117,7 +116,7 @@ const App = () => {
           <Route path="/user" element={<BoardUser />} />
           {/* <Route path="/mod" element={<BoardModerator />} /> */}
           <Route path="/admin" element={<BoardAdmin />} />
-          <Route path="/register-success" element={<RegisterSuccess />} />
+          {/* <Route path="/register-success" element={<RegisterSuccess />} /> */}
           <Route path="/welcome" element={<HomeLoggedIn />} />
           <Route path="/income" element={<Income />} />
           <Route path="/aboutus" element={<AboutUs />} />

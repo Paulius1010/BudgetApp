@@ -8,7 +8,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
-import {css} from 'glamor'
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -60,9 +59,6 @@ export default function Income() {
     toast.configure()
     const successMessage = () => {
         toast.success('Pridėta!', {
-            // className: css({
-            //     background: "#89BA16 !important"
-            // }),
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
