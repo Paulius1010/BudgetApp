@@ -219,14 +219,14 @@ export default function Income() {
                                             <div className='col-4'>
                                                 {income.incomeName}&nbsp;
                                             </div>
-                                            <div className='col-4'>
+                                            <div className='col-3' style={{paddingRight: 0}}>
                                                 {income.date}&nbsp;
                                             </div>
-                                            <div className='col-2'>
+                                            <div className='col-3' style={{paddingLeft: '7%'}}>
                                                 {income.amount}&euro;&nbsp;
                                             </div>
 
-                                            <div className='col-2'>
+                                            <div className='col-2' style={{paddingRight: 0, paddingLeft: '7.5%'}}>
                                                 <EditIncomeModal
                                                     id={income.id}
                                                     incomeName={income.incomeName}
