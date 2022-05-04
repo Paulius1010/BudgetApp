@@ -18,6 +18,7 @@ import AboutUs from "./components/AboutUs";
 import Contacts from "./components/Contacts.js";
 import Blog from "./components/Blog.js";
 import ErrorPage from "./components/ErrorPage";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -58,9 +59,9 @@ const App = () => {
       </main>
 
       {/* Commented the footer section for now */}
-      {/* <footer className="container">
-        <p>footer</p>
-      </footer> */}
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
