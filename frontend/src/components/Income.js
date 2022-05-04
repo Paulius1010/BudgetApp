@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
+import DeleteIncomeModal from './DeleteIncomeModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -18,6 +19,7 @@ export default function Income() {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
     const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0)
+    const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false)
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -108,6 +110,9 @@ export default function Income() {
         fetchData();
     }, [forceRender]);
 
+const submitDelete=id => {
+    setAllIncome(allIncome.filter(income=>income.id!==id))
+}
 
     return (
         <>
@@ -234,6 +239,11 @@ export default function Income() {
                                                     amount={income.amount}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
+                                                />
+
+                                                <DeleteIncomeModal 
+                                                showModal={displayDeleteIncomeModal}
+                                                
                                                 />
 
                                                 <button
