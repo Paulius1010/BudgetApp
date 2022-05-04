@@ -1,27 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react';
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { RenderContext } from './RenderContext';
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
-    const onSubmit = data => AuthService.login(data.email, data.password)
-        .then(() => {
-            // if () {
+    const { render, setRender } = useContext(RenderContext);
 
-            // }
-            console.log(data)
-            navigate("/income")
-            window.location.reload();
-        })
-        .catch(() => setMessage("El. paštas arba slaptažodis yra neteisingas"));
+    const onSubmit = data => {
+        AuthService.login(data.email, data.password)
+            .then(() => {
+                fetch(`http://localhost:8080/api/user/${data.email}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.roles.some(role => role.name === "ROLE_ADMIN")) {
+                            navigate("/admin");
+                            setRender(!render);
+                        } else {
+                            navigate("/income");
+                            setRender(!render);
+                        }
+                    });
+            })
+            .catch(() => setMessage("El. paštas arba slaptažodis yra neteisingas"));
+    };
 
     return (
-
-
         <section className="vh-100">
             <div className="container h-100">
                 <div className="row d-flex justify-content-center align-items-center h-5">
@@ -66,12 +74,7 @@ export default function Login() {
                 </div>
             </div>
         </section >
-
-
-
-
-
-    )
+    );
 }
 
 {/* < div className = "col-md-12" >
@@ -94,14 +97,5 @@ export default function Login() {
                     </div>
                 </form>
             </div>
-        </div > */}
-
-
-
-
-
-
-
-
-
-
+        </div > */
+}

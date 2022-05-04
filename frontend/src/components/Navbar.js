@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import "../navbar bootstrap/bootstrap.module.min.css"
+import "../navbar bootstrap/bootstrap.module.min.css";
+import { RenderContext } from "./RenderContext";
 
 export default function Navbar() {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
     const location = useLocation();
+    const { render } = useContext(RenderContext);
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -18,12 +20,11 @@ export default function Navbar() {
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
 
-    }, []);
+    }, [render]);
 
     const logOut = () => {
         AuthService.logout();
     };
-
 
     return (
         <div className="site-navbar site-navbar-target bg-white"
@@ -66,7 +67,13 @@ export default function Navbar() {
                                         <li>
                                             <NavLink to={"/register"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-                                                Vartotojų registracija
+                                                Vartotojai
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink to={"/category"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Kategorijos
                                             </NavLink>
                                         </li>
                                         <li>
@@ -84,6 +91,18 @@ export default function Navbar() {
                                                 Pajamos
                                             </NavLink>
                                         </li>
+                                        <li>
+                                            <NavLink to={"/expense"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Išlaidos
+                                            </NavLink>
+                                        </li>
+                                        {/* <li>
+                                            <NavLink to={"/category"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Kategorijos
+                                            </NavLink>
+                                        </li> */}
                                         <li>
                                             <a href="/"
                                                 onClick={logOut}>
@@ -182,7 +201,7 @@ export default function Navbar() {
             </div>
 
             {/* Insert the break element everywhere but homepage */}
-            {location.pathname === "/" ? "" : < hr />}
-        </div >
-    )
+            {/* {location.pathname === "/" ? "" : < hr />} */}
+        </div>
+    );
 }
