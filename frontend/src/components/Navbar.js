@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import "../navbar bootstrap/bootstrap.module.min.css";
+import "../navbar bootstrap/bootstrap.module.min.css"
+import "./Navbar.css"
 import { RenderContext } from "./RenderContext";
 
 export default function Navbar() {

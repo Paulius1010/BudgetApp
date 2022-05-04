@@ -13,9 +13,9 @@ export default function HomeLoggedIn() {
                 <h2>Sveiki {currentUser.email}</h2>
             </div>
 
-            <div>
+            {/* <div>
                 <Header />
-            </div>
+            </div> */}
             <div className='row'>
                 <div className='row col-8 ps-4'>
                     <div className='col-12 mt-4'><NavbarAna /></div>
