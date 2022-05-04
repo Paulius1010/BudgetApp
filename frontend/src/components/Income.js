@@ -124,12 +124,12 @@ export default function Income() {
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
                                             <div
-                                                className="col-5 budget__income-value">
+                                                className="col-3 budget__income-value">
                                                 {/* Round the number to two decimal places */}
                                                 + {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
+                                            <div className="col-5 budget__income-percentage">&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
