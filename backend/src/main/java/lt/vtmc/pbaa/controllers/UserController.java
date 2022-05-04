@@ -28,11 +28,10 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.getUserByEmail(email));
 	}
 	
+	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ADMIN')")
-	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable Long id) {
 		userService.deleteUserById(id);
 	}
-
 
 }

@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -80,11 +81,36 @@ public class AuthController {
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
+		//check if username in use
 //		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 //			return ResponseEntity
 //					.badRequest()
 //					.body(new MessageResponse("Error: Username is already in use!"));
 //		}
+
+		// Create new user's account
+		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+				encoder.encode(signUpRequest.getPassword()));
+		
+		Set<Role> roles = new HashSet<>();
+		Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		roles.add(userRole);
+
+		user.setRoles(roles);
+		userRepository.save(user);
+		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+	}
+	
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ADMIN')")
+	@PostMapping("/signupAdmin")
+	public ResponseEntity<?> registerUserForAdmin(@Valid @RequestBody SignupRequest signUpRequest) {
+
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Email is already in use!"));
+		}
 
 		// Create new user's account
 		User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
@@ -120,16 +146,6 @@ public class AuthController {
 		userRepository.save(user);
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
-	
-//    public void deleteUser(Long id) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentPrincipalEmail = authentication.getName();
-//        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
-//        Optional<User> userRoles = userRepository.findById(id);
-//        userRepository.delete(userRepository.getById(Long.valueOf(id)));
-//
-//    }
-
 	
 
 	
