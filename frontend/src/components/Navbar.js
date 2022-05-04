@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import "../navbar bootstrap/bootstrap.module.min.css"
+import "./Navbar.css"
 
 export default function Navbar() {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
