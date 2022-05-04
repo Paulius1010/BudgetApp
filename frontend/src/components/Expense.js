@@ -7,17 +7,43 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditExpenseModal from './EditExpenseModal';
+import Select from 'react-select';
+
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 
 export default function Expense() {
     const [allExpense, setAllExpense] = useState([])
+    const [allCategory, setAllCategory] = useState([])
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's expense
     const expenseSum = allExpense.reduce((n, { amount }) => n + amount, 0)
+
+        // Fetch all categories from database to display down below
+            const fetchData = async () => {
+                const response = fetch(`http://localhost:8080/api/categories`,
+                    {
+                        method: "GET",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentUser.accessToken}`
+                        }
+                    });
+                const data = response.json();
+                setAllCategory(data);
+            }
+         fetchData();
+
+         const DropDown = () => (
+            <div className="container">
+                  <Select options={ allCategory } />
+                </div>
+
+          );
+
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -226,7 +252,7 @@ export default function Expense() {
                         <div className="col-12 expense">
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list"></div>
-
+                            {allCategory.length}
                             {/* Display user's expense on the page */}
                             {allExpense.map(expense => {
 
