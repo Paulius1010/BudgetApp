@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./IncomeAndExpense.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
@@ -37,6 +38,7 @@ export default function Expense() {
                 },
                 body: JSON.stringify({
                     "expenseName": data.expenseName,
+                    "categoryId": data.categoryId,
                     "date": data.date,
                     "amount": data.amount
                 })
@@ -118,14 +120,14 @@ export default function Expense() {
                                 <h1 className="display-4 pt-3">
                                 </h1>
 
-                                <div className="row">
-                                    <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__expense">
+                                <div>
+                                    <div className="my-2 budget__expense">
                                         <div className="row">
                                             <div className="col-4 budget__expense-text">Išlaidos</div>
                                             <div
                                                 className="col-5 budget__expense-value">
                                                 {/* Round the number to two decimal places */}
-                                                - {Math.round(expenseSum * 100) / 100
+                                                {Math.round(expenseSum * 100) / 100
                                                 }
                                             </div>
                                             <div className="col-3 budget__expense-percentage">&euro;&nbsp;</div>
@@ -165,6 +167,18 @@ export default function Expense() {
                                 />
 
                                 <input
+                                    {...register("categoryId",
+                                        {
+                                            required: true,
+                                            min: 1
+                                        })
+                                    }
+                                    type="text"
+                                    className="form-control add__value"
+                                    placeholder="Kategorija"
+                                    step="0.01"
+                                />
+                                <input
                                     {...register("amount",
                                         {
                                             required: true,
@@ -179,7 +193,7 @@ export default function Expense() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon="circle-check" className='add__btn__expense' />
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__expense' />
                                     </button>
                                 </div>
                             </form>
@@ -191,6 +205,10 @@ export default function Expense() {
                                 {errors?.expenseName?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
                             </div>
+                            <div className="col-sm-4 col-4">
+                                {errors?.categoryId?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.categoryId?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                            </div>                            
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}

@@ -126,7 +126,7 @@ export default function Income() {
                                             <div
                                                 className="col-5 budget__income-value">
                                                 {/* Round the number to two decimal places */}
-                                                + {Math.round(incomeSum * 100) / 100
+                                                {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
                                             <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
@@ -241,7 +241,7 @@ export default function Income() {
                                                     className="btn"
                                                     type="button"
                                                 >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{"width":"20px"}}/>
+                                                    <FontAwesomeIcon icon="trash" className='add__btn' style={{"width":"20px"}}/>
                                                 </button>
                                             </div>
                                         </div>
