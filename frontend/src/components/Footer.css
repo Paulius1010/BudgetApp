@@ -21,11 +21,11 @@
 }
 
 .contact_footer{
-    color: black !important;
+    color: #89BA16 !important;
 }
 
 .contact_footer:hover{
-    color: #5c800a;
+    color: #5c800a !important;
 }
 
 .footer__brand__link{

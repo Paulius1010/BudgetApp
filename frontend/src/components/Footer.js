@@ -14,8 +14,8 @@ export default function Footer(){
                     <div className="col-8">
                         <div style={{marginLeft:"15px"}}>Copyright © 2022 taupyk. All rights reserved.</div>
                     </div>
-                    <div className="col-1 contact_footer">
-                        <NavLink to={"/contacts"}>Susisiekite</NavLink>
+                    <div className="col-1">
+                        <NavLink to={"/contacts"} className="contact_footer">Susisiekite</NavLink>
                     </div>
                     <div className="col-3 brand__align">
                         <ul id="brands">
