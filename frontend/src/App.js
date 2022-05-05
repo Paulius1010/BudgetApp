@@ -19,6 +19,7 @@ import Contacts from "./components/Contacts.js";
 import Blog from "./components/Blog.js";
 import { RenderContext } from './components/RenderContext';
 import ErrorPage from "./components/ErrorPage";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [render, setRender] = useState(false);
@@ -63,9 +64,9 @@ const App = () => {
       </RenderContext.Provider>
 
       {/* Commented the footer section for now */}
-      {/* <footer className="container">
-        <p>footer</p>
-      </footer> */}
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

@@ -1,5 +1,6 @@
 :root {
     --toastify-color-success: #89BA16 !important;
+    
 }
 
 body {
@@ -70,7 +71,7 @@ body {
 }
 
 .budget__expense {
-    background-color: #e74c3c;
+    background-color: #ff8484;
 }
 
 .budget__income-value,
