@@ -4,6 +4,7 @@ import AuthService from "../services/auth.service"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import CategoryDropDown from './CategoryDropDown';
 
 export default function EditExpenseModal({ id, expenseName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
@@ -132,6 +133,16 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                             />
                             {errors?.date?.type === "required" && <p>Laukas negali būti tuščias</p>}
                             {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
+
+                            <CategoryDropDown {...register("categoryId",
+                                        {
+                                            required: true,
+                                        })
+                                    }
+                                    // type="text"
+                                    // className="form-control add__value"
+                                    // placeholder="Kategorija"
+                                />
 
                             <input
                                 {...register("amount",

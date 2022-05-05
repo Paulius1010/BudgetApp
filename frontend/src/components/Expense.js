@@ -166,20 +166,17 @@ export default function Expense() {
                                     className="form-control add__date"
                                     placeholder="Data"
                                 />
-                                <CategoryDropDown />
-
-                                {/* <input
-                                    {...register("categoryId",
+                                <CategoryDropDown {...register("categoryId",
                                         {
                                             required: true,
-                                            min: 1
                                         })
                                     }
-                                    type="text"
-                                    className="form-control add__value"
-                                    placeholder="Kategorija"
-                                    step="0.01"
-                                /> */}
+                                    // type="text"
+                                    // className="form-control add__value"
+                                    // placeholder="Kategorija"
+                                />
+
+                            
                                 <input
                                     {...register("amount",
                                         {
@@ -203,19 +200,20 @@ export default function Expense() {
                         </div>
 
                         <div className="row ">
-                            <div className="col-sm-4 col-4">
+                            <div className="col-sm-3 col-3">
                                 {errors?.expenseName?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
                             </div>
-                            <div className="col-sm-4 col-4">
+                            <div className="col-sm-3 col-3">
+                                {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.date?.type === "max" && <p>Naujesnių nei šiandien įrašų negali būti</p>}
+                            </div>
+                            {/* <div className="col-sm-3 col-3">
                                 {errors?.categoryId?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.categoryId?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
-                            </div>                            
-                            <div className="col-sm-4 col-4">
-                                {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
-                            </div>
-                            <div className="col-sm-4 col-4">
+                            </div>                             */}
+
+                            <div className="col-sm-3 col-3">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
                             </div>
@@ -228,20 +226,23 @@ export default function Expense() {
                         <div className="col-12 expense">
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list"></div>
-                            {/* {allCategory.length} */}
                             {/* Display user's expense on the page */}
                             {allExpense.map(expense => {
 
                                 return (
                                     <div key={expense.id}>
                                         <div className='row'>
-                                            <div className='col-4'>
+                                            <div className='col-3'>
                                                 {expense.expenseName}&nbsp;
                                             </div>
-                                            <div className='col-4'>
+                                            <div className='col-3'>
                                                 {expense.date}&nbsp;
                                             </div>
-                                            <div className='col-2'>
+
+                                            <div className='col-3'>
+                                                {expense.expensesCategory.name}&nbsp;
+                                            </div>
+                                            <div className='col-1'>
                                                 {expense.amount}&euro;&nbsp;
                                             </div>
 
@@ -251,6 +252,7 @@ export default function Expense() {
                                                     expenseName={expense.expenseName}
                                                     date={expense.date}
                                                     amount={expense.amount}
+                                                    category={expense.expensesCategory.name}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
                                                 />

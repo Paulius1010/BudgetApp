@@ -194,7 +194,7 @@ export default function Income() {
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
+                                {errors?.date?.type === "max" && <p>Naujesnių nei šiandien įrašų negali būti</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
