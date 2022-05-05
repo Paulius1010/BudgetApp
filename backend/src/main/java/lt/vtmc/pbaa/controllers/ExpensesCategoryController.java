@@ -46,7 +46,7 @@ public class ExpensesCategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpensesCategory>> getAllExpensesCategories() {
+    public ResponseEntity<List<ExpensesCategoryResponse>> getAllExpensesCategories() {
         return ResponseEntity.ok().body(this.expensesCategoryService.getAllExpensesCategories());
     }
 
