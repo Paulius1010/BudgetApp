@@ -93,6 +93,14 @@ export default function Income() {
         setDisplayDeleteIncomeModal(false);
     };
 
+    const showDeleteModal = () => {
+        setDisplayDeleteIncomeModal(true);
+    };
+
+    const hideConfirmationModal = () => {
+        setDisplayDeleteIncomeModal(false);
+    };
+
     // Fetch all user's income from database to display down below
     useEffect(() => {
         const fetchData = async () => {
@@ -242,11 +250,13 @@ export default function Income() {
 
                                                 <DeleteIncomeModal
                                                     showModal={displayDeleteIncomeModal}
-
+                                                    hideModal={hideConfirmationModal}
+                                                    confirmModal={removeIncome}
+                                                    id={income.id}
                                                 />
 
                                                 <button
-                                                    onClick={() => removeIncome(income.id)}
+                                                    onClick={() => showDeleteModal()}
                                                     className="btn"
                                                     type="button"
                                                     style={{paddingTop: 0, paddingBottom: 10}}
@@ -263,6 +273,5 @@ export default function Income() {
                 </div>
             </div>
         </>
-
     );
 }
