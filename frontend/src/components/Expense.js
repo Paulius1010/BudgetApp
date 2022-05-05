@@ -14,6 +14,7 @@ import CategoryDropDown from './CategoryDropDown';
 
 export default function Expense() {
     const [allExpense, setAllExpense] = useState([])
+    const [allCategory, setAllCategory] = useState([])
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -26,6 +27,25 @@ export default function Expense() {
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
+
+
+
+        const fetchCategoryData = async () => {
+            const response = await fetch(`http://localhost:8080/api/categories`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+            const data = await response.json();
+            setAllCategory(data);
+        }
+
+        fetchCategoryData();
+  
+
 
     // Add user's expense to database from the inputs
     const onSubmit = async (data) => {
@@ -166,7 +186,7 @@ export default function Expense() {
                                     className="form-control add__date"
                                     placeholder="Data"
                                 />
-                                <CategoryDropDown {...register("categoryId",
+                                {/* <CategoryDropDown {...register("categoryId",
                                         {
                                             required: true,
                                         })
@@ -174,8 +194,20 @@ export default function Expense() {
                                     // type="text"
                                     // className="form-control add__value"
                                     // placeholder="Kategorija"
-                                />
-
+                                /> */}
+                                <select {...register("categoryId",
+                                        {
+                                            required: true,
+                                        })
+                                    }
+                                    className="form-control add__description"
+                                    type="text"
+                                    placeholder="Kategorija"
+                                    >
+                                    {allCategory.map((option) => (
+                                    <option value={option.id}>{option.name}</option>
+                                         ))}
+                                </select>
                             
                                 <input
                                     {...register("amount",
