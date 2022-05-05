@@ -124,12 +124,12 @@ export default function Income() {
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
                                             <div
-                                                className="col-5 budget__income-value">
+                                                className="col-3 budget__income-value">
                                                 {/* Round the number to two decimal places */}
                                                 + {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
+                                            <div className="col-5 budget__income-percentage">&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@ export default function Income() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 income">
+                        <div className="col-12 income" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="income__title">Pajamos</h2>
                             <div className="container income__list"></div>
 
@@ -219,14 +219,14 @@ export default function Income() {
                                             <div className='col-4'>
                                                 {income.incomeName}&nbsp;
                                             </div>
-                                            <div className='col-4'>
+                                            <div className='col-3' style={{paddingRight: 0}}>
                                                 {income.date}&nbsp;
                                             </div>
-                                            <div className='col-2'>
+                                            <div className='col-3' style={{paddingLeft: '7%'}}>
                                                 {income.amount}&euro;&nbsp;
                                             </div>
 
-                                            <div className='col-2'>
+                                            <div className='col-2' style={{paddingRight: 0, textAlign: 'right'}}>
                                                 <EditIncomeModal
                                                     id={income.id}
                                                     incomeName={income.incomeName}
@@ -240,6 +240,7 @@ export default function Income() {
                                                     onClick={() => removeIncome(income.id)}
                                                     className="btn"
                                                     type="button"
+                                                    style={{paddingTop: 0, paddingBottom: 10}}
                                                 >
                                                     <FontAwesomeIcon icon="trash" className='add__btn__income' style={{"width":"20px"}}/>
                                                 </button>
