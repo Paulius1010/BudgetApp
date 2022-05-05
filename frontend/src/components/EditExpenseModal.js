@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from "react-hook-form"
 import AuthService from "../services/auth.service"
 import { toast } from 'react-toastify';
@@ -6,9 +6,10 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CategoryDropDown from './CategoryDropDown';
 
-export default function EditExpenseModal({ id, expenseName, date, amount, forceRender, setForceRender }) {
+export default function EditExpenseModal({ id, expenseName, categoryId, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const [allCategory, setAllCategory] = useState([])
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -16,6 +17,24 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
+
+
+
+    const fetchCategoryData = async () => {
+        const response = await fetch(`http://localhost:8080/api/categories`,
+            {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentUser.accessToken}`
+                }
+            });
+        const data = await response.json();
+        setAllCategory(data);
+
+    }
+
+    fetchCategoryData();
 
     const onSubmit = async (data) => {
         const response = await fetch(
@@ -29,6 +48,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                 body: JSON.stringify({
                     "expenseId": id,
                     "expenseName": data.expenseName,
+                    "categoryId": data.categoryId,
                     "date": data.date,
                     "amount": data.amount
                 })
@@ -134,7 +154,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                             {errors?.date?.type === "required" && <p>Laukas negali būti tuščias</p>}
                             {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
 
-                            <CategoryDropDown {...register("categoryId",
+                            {/* <CategoryDropDown {...register("categoryId",
                                         {
                                             required: true,
                                         })
@@ -142,8 +162,21 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                                     // type="text"
                                     // className="form-control add__value"
                                     // placeholder="Kategorija"
-                                />
-
+                                /> */}
+                            <select {...register("categoryId",
+                                        {
+                                            required: true,
+                                        })
+                                    }
+                                    className="form-control add__description"
+                                    type="text"
+                                    placeholder="Kategorija"
+                                    defaultValue={categoryId}
+                                    >
+                                    {allCategory.map((option) => (
+                                    <option value={option.id}>{option.name}</option>
+                                         ))}
+                                </select>
                             <input
                                 {...register("amount",
                                     {

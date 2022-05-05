@@ -7,11 +7,9 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditExpenseModal from './EditExpenseModal';
-import CategoryDropDown from './CategoryDropDown';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
-
 export default function Expense() {
     const [allExpense, setAllExpense] = useState([])
     const [allCategory, setAllCategory] = useState([])
@@ -29,22 +27,23 @@ export default function Expense() {
     today = yyyy + '-' + mm + '-' + dd;
 
 
+    // useEffect(() => {
+    //     const fetchCategoryData = async () => {
+    //         const response = await fetch(`http://localhost:8080/api/categories`,
+    //             {
+    //                 method: "GET",
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${currentUser.accessToken}`
+    //                 }
+    //             });
+    //         const data = await response.json();
+    //         setAllCategory(data);
+    //     }
 
-        const fetchCategoryData = async () => {
-            const response = await fetch(`http://localhost:8080/api/categories`,
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${currentUser.accessToken}`
-                    }
-                });
-            const data = await response.json();
-            setAllCategory(data);
-        }
+    //     fetchCategoryData();
+    // }, [forceRender]);
 
-        fetchCategoryData();
-  
 
 
     // Add user's expense to database from the inputs
@@ -126,6 +125,21 @@ export default function Expense() {
             const data = await response.json();
             setAllExpense(data);
         }
+
+        const fetchCategoryData = async () => {
+            const response = await fetch(`http://localhost:8080/api/categories`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+            const data = await response.json();
+            setAllCategory(data);
+        }
+
+        fetchCategoryData();
 
         fetchData();
     }, [forceRender]);
@@ -240,10 +254,10 @@ export default function Expense() {
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.date?.type === "max" && <p>Naujesnių nei šiandien įrašų negali būti</p>}
                             </div>
-                            {/* <div className="col-sm-3 col-3">
+                            <div className="col-sm-3 col-3">
                                 {errors?.categoryId?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.categoryId?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
-                            </div>                             */}
+                            </div>                            
 
                             <div className="col-sm-3 col-3">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
