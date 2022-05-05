@@ -206,7 +206,7 @@ export default function Income() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 income">
+                        <div className="col-12 income" style={{paddingLeft: 0}}>
                             <h2 className="income__title">Pajamos</h2>
                             <div className="container income__list"></div>
 
@@ -226,7 +226,7 @@ export default function Income() {
                                                 {income.amount}&euro;&nbsp;
                                             </div>
 
-                                            <div className='col-2' style={{paddingRight: 0, paddingLeft: '7.5%'}}>
+                                            <div className='col-2' style={{paddingRight: 0, paddingLeft: '6%'}}>
                                                 <EditIncomeModal
                                                     id={income.id}
                                                     incomeName={income.incomeName}
@@ -240,6 +240,7 @@ export default function Income() {
                                                     onClick={() => removeIncome(income.id)}
                                                     className="btn"
                                                     type="button"
+                                                    style={{paddingTop: 0, paddingBottom: 10}}
                                                 >
                                                     <FontAwesomeIcon icon="trash" className='add__btn__income' style={{"width":"20px"}}/>
                                                 </button>

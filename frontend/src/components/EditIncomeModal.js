@@ -72,6 +72,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
+                style={{paddingTop: 0, paddingBottom: 10}}
             >
                 <FontAwesomeIcon icon="pen-to-square" className='add__btn__income' />
             </button>
