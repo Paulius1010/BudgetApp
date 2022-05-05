@@ -1,0 +1,37 @@
+.brd{
+    border: solid 1px black;
+    /* color: #8aa82d; */
+}
+
+.hero_config{
+    height: 900px;
+    object-fit: cover;
+    object-position: -150px -90px;
+    filter: brightness(70%);
+}
+
+.first_section{
+    height: 45rem;
+}
+
+.text_config{
+   font-size: 35px;
+   font-family: "Arial Black";
+   /* font-family: "Bahnschrift SemiBold"; */
+   font-style: bold;
+}
+
+.text2_config{
+    text-align: end;
+    font-style: italic;
+}
+
+.quote_config{
+    position: relative;
+    z-index: 1;
+    left: 200px;
+    top: 160px;
+    width: 460px;
+    color: white;
+    
+}
