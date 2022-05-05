@@ -23,8 +23,26 @@ const Home = () => {
                     </div>
                 </div>
                 {/* why use a budget app row */}
-                <div className="row brd">
-
+                <div className="row bg-white justify-content-center">
+                    {/* d-flex justify-content-center if needed for bot div */}
+                    <div className="container">
+                        <div className="col-7 bg-white second_section container" style={{marginTop: "-150px"}}> 
+                            <div className="row">
+                                <div className="col-12" id="second_section_header">Kodėl verta sekti savo biudžetą?</div>
+                            </div>
+                            <div className="row">
+                                <div className="col-4 brd">
+                                    content
+                                </div>
+                                <div className="col-4 brd">
+                                    content
+                                </div>
+                                <div className="col-4 brd">
+                                    content
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 {/* benefits for you row */}
                 <div className="row brd">

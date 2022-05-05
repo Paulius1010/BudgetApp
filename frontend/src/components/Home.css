@@ -6,12 +6,25 @@
 .hero_config{
     height: 900px;
     object-fit: cover;
-    object-position: -150px -90px;
+    object-position: -58px -90px;
     filter: brightness(70%);
 }
 
 .first_section{
     height: 45rem;
+}
+
+.second_section{
+    height: 30rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#second_section_header{
+    padding-top: 20px;
+    padding-left: 30px;
+    font-family: "Calibri";
+    font-size: 30px;
 }
 
 .text_config{
@@ -29,9 +42,10 @@
 .quote_config{
     position: relative;
     z-index: 1;
-    left: 200px;
-    top: 160px;
+    left: 46%;
+    top: 24%;
     width: 460px;
     color: white;
+    overflow-wrap: break-word;
     
 }
