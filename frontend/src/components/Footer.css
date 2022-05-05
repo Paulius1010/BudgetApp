@@ -6,6 +6,20 @@
     padding: 24px 0 0 0;
 }
 
+#brands li{
+    display: inline-block;
+    padding: 0 20px 0 20px;
+    /* display: inline; */
+}
+
+.brand__icon{
+    height: 30px;
+}
+
+.brand__align{
+    text-align: end;
+}
+
 .contact_footer{
     color: black !important;
 }
@@ -20,14 +34,4 @@
 
 .footer__brand__link:hover{
     color: #5c800a;
-}
-
-#brands li{
-    display: inline-block;
-    padding: 0 20px 0 20px;
-    /* display: inline; */
-}
-
-.brand__icon{
-    height: 30px;
 }
