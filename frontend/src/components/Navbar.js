@@ -32,8 +32,8 @@ export default function Navbar() {
             role="banner">
             <div className="container">
                 <div className="row align-items-center position-relative">
-                    <div className="col-lg-4">
-                        <nav className="site-navigation text-right ml-auto "
+                    <div className="col-lg-4" style={{paddingLeft: 0}}>
+                        <nav className="site-navigation ml-auto "
                             role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                 {showAdminBoard ? (
