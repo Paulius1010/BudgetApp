@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditExpenseModal from './EditExpenseModal';
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -118,8 +119,8 @@ export default function Expense() {
                                 <h1 className="display-4 pt-3">
                                 </h1>
 
-                                <div className="row">
-                                    <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__expense">
+                                <div>
+                                    <div className="my-2 budget__expense">
                                         <div className="row">
                                             <div className="col-4 budget__expense-text">Išlaidos</div>
                                             <div
@@ -179,7 +180,7 @@ export default function Expense() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon="circle-check" className='add__btn__expense' />
+                                        <FontAwesomeIcon icon= {faCirclePlus} className='add__btn__expense'/>
                                     </button>
                                 </div>
                             </form>
