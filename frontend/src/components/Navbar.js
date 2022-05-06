@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
 import "../navbar bootstrap/bootstrap.module.min.css"
+import "./Navbar.css"
+import { RenderContext } from "./RenderContext";
 
 export default function Navbar() {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
     const location = useLocation();
+    const { render } = useContext(RenderContext);
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -18,12 +21,11 @@ export default function Navbar() {
             setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
         }
 
-    }, []);
+    }, [render]);
 
     const logOut = () => {
         AuthService.logout();
     };
-
 
     return (
         <div className="site-navbar site-navbar-target bg-white"
@@ -35,7 +37,7 @@ export default function Navbar() {
                             role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                 {showAdminBoard ? (
-                                    <li >
+                                    <li id="button-hover">
                                         <NavLink to={"/"}
                                             className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                             Namai
@@ -43,7 +45,7 @@ export default function Navbar() {
                                     </li>
                                 ) : currentUser ? (
                                     <>
-                                        <li >
+                                        <li id="button-hover">
                                             <NavLink to={"/welcome"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Namai
@@ -52,7 +54,7 @@ export default function Navbar() {
                                     </>
                                 ) : (
                                     <>
-                                        <li >
+                                        <li id="button-hover">
                                             <NavLink to={"/"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Namai
@@ -63,19 +65,19 @@ export default function Navbar() {
 
                                 {showAdminBoard ? (
                                     <>
-                                        <li>
+                                        <li id="button-hover">
                                             <NavLink to={"/register"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Vartotojai
                                             </NavLink>
                                         </li>
-                                        <li>
+                                        <li id="button-hover">
                                             <NavLink to={"/category"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Kategorijos
                                             </NavLink>
                                         </li>
-                                        <li>
+                                        <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
@@ -84,13 +86,13 @@ export default function Navbar() {
                                     </>
                                 ) : currentUser ? (
                                     <>
-                                        <li>
+                                        <li id="button-hover">
                                             <NavLink to={"/income"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Pajamos
                                             </NavLink>
                                         </li>
-                                        <li>
+                                        <li id="button-hover">
                                             <NavLink to={"/expense"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Išlaidos
@@ -102,7 +104,7 @@ export default function Navbar() {
                                                 Kategorijos
                                             </NavLink>
                                         </li> */}
-                                        <li>
+                                        <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
@@ -111,13 +113,13 @@ export default function Navbar() {
                                     </>
                                 ) : (
                                     <>
-                                        <li >
+                                        <li id="button-hover">
                                             <NavLink to={"/login"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Prisijungti
                                             </NavLink>
                                         </li>
-                                        <li>
+                                        <li id="button-hover">
                                             <NavLink to={"/register"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Registruotis
@@ -173,19 +175,19 @@ export default function Navbar() {
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                 {!currentUser && (
                                     <>
-                                        <li >
+                                        <li id="button-hover">
                                             <NavLink to={"/aboutus"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Apie mus
                                             </NavLink>
                                         </li>
-                                        <li >
+                                        <li id="button-hover">
                                             <NavLink to={"/blog"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Tinklaraštis
                                             </NavLink>
                                         </li>
-                                        <li >
+                                        <li id="button-hover">
                                             <NavLink to={"/contacts"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Kontaktai
@@ -202,5 +204,5 @@ export default function Navbar() {
             {/* Insert the break element everywhere but homepage */}
             {/* {location.pathname === "/" ? "" : < hr />} */}
         </div>
-    )
+    );
 }
