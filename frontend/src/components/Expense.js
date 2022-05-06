@@ -27,22 +27,21 @@ export default function Expense() {
     today = yyyy + '-' + mm + '-' + dd;
 
 
-    // useEffect(() => {
-    //     const fetchCategoryData = async () => {
-    //         const response = await fetch(`http://localhost:8080/api/categories`,
-    //             {
-    //                 method: "GET",
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'Authorization': `Bearer ${currentUser.accessToken}`
-    //                 }
-    //             });
-    //         const data = await response.json();
-    //         setAllCategory(data);
-    //     }
-
-    //     fetchCategoryData();
-    // }, [forceRender]);
+    useEffect(() => {
+        const fetchCategoryData = async () => {
+            const categoryResponse = await fetch(`http://localhost:8080/api/categories`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+            const categoryData = await categoryResponse.json();
+            setAllCategory(categoryData);
+        }
+        fetchCategoryData();
+    }, [forceRender]);
 
 
 
@@ -71,7 +70,6 @@ export default function Expense() {
         else {
             (errorMessage('Klaida!'))
         }
-
         setForceRender(!forceRender)
     }
 
@@ -107,7 +105,6 @@ export default function Expense() {
                 }
             }
         )
-
         setForceRender(!forceRender)
     }
 
@@ -125,22 +122,6 @@ export default function Expense() {
             const data = await response.json();
             setAllExpense(data);
         }
-
-        const fetchCategoryData = async () => {
-            const response = await fetch(`http://localhost:8080/api/categories`,
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${currentUser.accessToken}`
-                    }
-                });
-            const data = await response.json();
-            setAllCategory(data);
-        }
-
-        fetchCategoryData();
-
         fetchData();
     }, [forceRender]);
 
@@ -154,7 +135,6 @@ export default function Expense() {
                             <div className="budget__title">
                                 <h1 className="display-4 pt-3">
                                 </h1>
-
                                 <div>
                                     <div className="my-2 budget__expense">
                                         <div className="row">
@@ -166,7 +146,6 @@ export default function Expense() {
                                                 }
                                             </div>
                                             <div className="col-3 budget__expense-percentage">&euro;&nbsp;</div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -180,7 +159,6 @@ export default function Expense() {
                 <div className="container">
                     <div className="add">
                         <div className="row text-center add__container">
-
                             <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input
                                     {...register("expenseName", { required: true, minLength: 4 })}
@@ -200,15 +178,7 @@ export default function Expense() {
                                     className="form-control add__date"
                                     placeholder="Data"
                                 />
-                                {/* <CategoryDropDown {...register("categoryId",
-                                        {
-                                            required: true,
-                                        })
-                                    }
-                                    // type="text"
-                                    // className="form-control add__value"
-                                    // placeholder="Kategorija"
-                                /> */}
+
                                 <select {...register("categoryId",
                                         {
                                             required: true,
@@ -301,6 +271,7 @@ export default function Expense() {
                                                     category={expense.expensesCategory.name}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
+                                                    allCategory={allCategory}
                                                 />
 
                                                 <button
