@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
+import DeleteIncomeModal from './DeleteIncomeModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -15,6 +16,7 @@ export default function Income() {
     const [allIncome, setAllIncome] = useState([])
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
+    const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
     const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0)
@@ -85,10 +87,20 @@ export default function Income() {
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 }
             }
-        )
+        );
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+        setDisplayDeleteIncomeModal(false);
+    };
+
+    const showDeleteModal = () => {
+        setDisplayDeleteIncomeModal(true);
+    };
+
+    const hideConfirmationModal = () => {
+        setDisplayDeleteIncomeModal(false);
+    };
+
 
     // Fetch all user's income from database to display down below
     useEffect(() => {
@@ -236,10 +248,18 @@ export default function Income() {
                                                     setForceRender={setForceRender}
                                                 />
 
+                                                <DeleteIncomeModal
+                                                    showModal={displayDeleteIncomeModal}
+                                                    hideModal={hideConfirmationModal}
+                                                    confirmModal={removeIncome}
+                                                    id={income.id}
+                                                />
+
                                                 <button
-                                                    onClick={() => removeIncome(income.id)}
+                                                    onClick={() => showDeleteModal()}
                                                     className="btn"
                                                     type="button"
+                                                    style={{paddingTop: 0, paddingBottom: 10}}
                                                 >
                                                     <FontAwesomeIcon icon="trash" className='add__btn' style={{"width":"20px"}}/>
                                                 </button>
