@@ -72,6 +72,7 @@ body {
 
 .budget__expense {
     background-color: #e74c3c;
+
 }
 
 .budget__income-value,
@@ -193,6 +194,10 @@ h2 {
 .income .item__value,
 .income .item__delete-btn {
     color: #2ecc71;
+}
+
+.income__list{
+    margin: 0 auto;
 }
 
 .expense__title,

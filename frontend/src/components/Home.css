@@ -1,0 +1,51 @@
+.brd{
+    border: solid 1px black;
+    /* color: #8aa82d; */
+}
+
+.hero_config{
+    height: 900px;
+    object-fit: cover;
+    object-position: -58px -90px;
+    filter: brightness(70%);
+}
+
+.first_section{
+    height: 45rem;
+}
+
+.second_section{
+    height: 30rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#second_section_header{
+    padding-top: 20px;
+    padding-left: 30px;
+    font-family: "Calibri";
+    font-size: 30px;
+}
+
+.text_config{
+   font-size: 35px;
+   font-family: "Arial Black";
+   /* font-family: "Bahnschrift SemiBold"; */
+   font-style: bold;
+}
+
+.text2_config{
+    text-align: end;
+    font-style: italic;
+}
+
+.quote_config{
+    position: relative;
+    z-index: 1;
+    left: 46%;
+    top: 24%;
+    width: 460px;
+    color: white;
+    overflow-wrap: break-word;
+    
+}

@@ -6,22 +6,6 @@
     padding: 24px 0 0 0;
 }
 
-.contact_footer{
-    color: black !important;
-}
-
-.contact_footer:hover{
-    color: #5c800a;
-}
-
-.footer__brand__link{
-    color: #89BA16;
-}
-
-.footer__brand__link:hover{
-    color: #5c800a;
-}
-
 #brands li{
     display: inline-block;
     padding: 0 20px 0 20px;
@@ -30,4 +14,24 @@
 
 .brand__icon{
     height: 30px;
+}
+
+.brand__align{
+    text-align: end;
+}
+
+.contact_footer{
+    color: #89BA16 !important;
+}
+
+.contact_footer:hover{
+    color: #5c800a !important;
+}
+
+.footer__brand__link{
+    color: #89BA16;
+}
+
+.footer__brand__link:hover{
+    color: #5c800a;
 }

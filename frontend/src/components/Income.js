@@ -220,7 +220,7 @@ export default function Income() {
                     <div className="container">
                         <div className="col-12 income">
                             <h2 className="income__title">Pajamos</h2>
-                            <div className="container income__list"></div>
+                            <div className="container income__list">
 
                             {/* Display user's income on the page */}
                             {allIncome.map(income => {
@@ -268,6 +268,7 @@ export default function Income() {
                                     </div>
                                 )
                             })}
+                            </div>
                         </div>
                     </div>
                 </div>
