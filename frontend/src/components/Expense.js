@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react'
-import "./IncomeAndExpense.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect } from 'react';
+import "./IncomeAndExpense.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import AuthService from "../services/auth.service"
+import 'react-toastify/dist/ReactToastify.css';
+import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditExpenseModal from './EditExpenseModal';
-import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 export default function Expense() {
-    const [allExpense, setAllExpense] = useState([])
-    const [allCategory, setAllCategory] = useState([])
-    const [forceRender, setForceRender] = useState(false)
+    const [allExpense, setAllExpense] = useState([]);
+    const [allCategory, setAllCategory] = useState([]);
+    const [forceRender, setForceRender] = useState(false);
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's expense
-    const expenseSum = allExpense.reduce((n, { amount }) => n + amount, 0)
+    const expenseSum = allExpense.reduce((n, { amount }) => n + amount, 0);
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -40,7 +39,7 @@ export default function Expense() {
                 });
             const categoryData = await categoryResponse.json();
             setAllCategory(categoryData);
-        }
+        };
         fetchCategoryData();
     }, [forceRender]);
 
@@ -63,19 +62,19 @@ export default function Expense() {
                     "amount": data.amount
                 })
             }
-        )
+        );
 
         if (response.status === 201) {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+    };
 
     // Popup message configuration
-    toast.configure()
+    toast.configure();
     const successMessage = () => {
         toast.success('Pridėta!', {
             position: toast.POSITION.TOP_CENTER,
@@ -83,8 +82,8 @@ export default function Expense() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -92,8 +91,8 @@ export default function Expense() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
 
     const removeExpense = async (id) => {
         await fetch(
@@ -105,9 +104,9 @@ export default function Expense() {
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 }
             }
-        )
-        setForceRender(!forceRender)
-    }
+        );
+        setForceRender(!forceRender);
+    };
 
     // Fetch all user's expense from database to display down below
     useEffect(() => {
@@ -122,7 +121,7 @@ export default function Expense() {
                 });
             const data = await response.json();
             setAllExpense(data);
-        }
+        };
         fetchData();
     }, [forceRender]);
 
@@ -182,19 +181,19 @@ export default function Expense() {
                                 />
 
                                 <select {...register("categoryId",
-                                        {
-                                            required: true,
-                                        })
-                                    }
+                                    {
+                                        required: true,
+                                    })
+                                }
                                     className="form-control add__description"
                                     type="text"
                                     placeholder="Kategorija"
-                                    >
+                                >
                                     {allCategory.map((option) => (
-                                    <option value={option.id}>{option.name}</option>
-                                         ))}
+                                        <option value={option.id}>{option.name}</option>
+                                    ))}
                                 </select>
-                            
+
                                 <input
                                     {...register("amount",
                                         {
@@ -210,7 +209,7 @@ export default function Expense() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon= {faCirclePlus} className='add__btn__expense'/>
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__expense' />
                                     </button>
                                 </div>
                             </form>
@@ -229,7 +228,7 @@ export default function Expense() {
                             <div className="col-sm-3 col-3">
                                 {errors?.categoryId?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.categoryId?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
-                            </div>                            
+                            </div>
 
                             <div className="col-sm-3 col-3">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
@@ -286,7 +285,7 @@ export default function Expense() {
                                             </div>
                                         </div>
                                     </div>
-                                )
+                                );
                             })}
                         </div>
                     </div>
@@ -294,5 +293,5 @@ export default function Expense() {
             </div>
         </>
 
-    )
+    );
 }
