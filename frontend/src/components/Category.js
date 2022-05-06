@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./IncomeAndExpense.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
@@ -67,7 +68,7 @@ export default function Category() {
 
     const removeCategory = async (id) => {
         await fetch(
-            `http://localhost:8080/api/categories`,
+            `http://localhost:8080/api/categories/${id}`,
             {
                 method: "DELETE",
                 headers: {
@@ -109,8 +110,8 @@ export default function Category() {
                                 <h1 className="display-4 pt-3">
                                 </h1>
 
-                                <div className="row">
-                                    <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__expense">
+                                <div>
+                                    <div className="budget__expense">
                                         <div className="row">
                                             <div className="col-6 budget__expense-text">Išlaidų kategorijos</div>
 
@@ -144,7 +145,7 @@ export default function Category() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon="circle-check" className='add__btn__expense' />
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__expense' />
                                     </button>
                                 </div>
                             </form>

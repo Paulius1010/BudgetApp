@@ -25,29 +25,28 @@ public class ExpensesCategoryController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ExpensesCategoryResponse insertExpensesCategory(@RequestBody ExpensesCategoryInsertRequest expensesCategoryInsertRequest) {
         return this.expensesCategoryService.saveExpensesCategory(expensesCategoryInsertRequest);
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ExpensesCategoryResponse updateExpensesCategory(@RequestBody ExpensesCategoryUpdateRequest expensesCategoryUpdateRequest) {
         return this.expensesCategoryService.updateExpensesCategory(expensesCategoryUpdateRequest);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ExpensesCategoryResponse deleteExpensesCategory(@PathVariable Long id) {
         return this.expensesCategoryService.deleteExpensesCategory(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<List<ExpensesCategory>> getAllExpensesCategories() {
+    public ResponseEntity<List<ExpensesCategoryResponse>> getAllExpensesCategories() {
         return ResponseEntity.ok().body(this.expensesCategoryService.getAllExpensesCategories());
     }
 

@@ -71,7 +71,8 @@ body {
 }
 
 .budget__expense {
-    background-color: #f68181;
+    background-color: #e74c3c;
+
 }
 
 .budget__income-value,
@@ -84,10 +85,6 @@ body {
     padding: 0;
 }
 
-/* .budget__expense-percentage {
-    background-color: rgba(255, 255, 255, .2);
-    border-radius: 2em;
-} */
 
 /**************
 		 FORM

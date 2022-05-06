@@ -104,7 +104,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                                 }
                                 type="text"
                                 className="form-control add__description"
-                                placeholder="Aprašymas"
+                                placeholder="Kategorijos pavadinimas"
                                 defaultValue={name}
                             />
                             {errors?.name?.type === "required" && <p>Laukas negali būti tuščias</p>}

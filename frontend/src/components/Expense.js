@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./IncomeAndExpense.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
@@ -10,9 +11,9 @@ import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
-
 export default function Expense() {
     const [allExpense, setAllExpense] = useState([])
+    const [allCategory, setAllCategory] = useState([])
     const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -26,6 +27,25 @@ export default function Expense() {
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
+
+    useEffect(() => {
+        const fetchCategoryData = async () => {
+            const categoryResponse = await fetch(`http://localhost:8080/api/categories`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+            const categoryData = await categoryResponse.json();
+            setAllCategory(categoryData);
+        }
+        fetchCategoryData();
+    }, [forceRender]);
+
+
+
     // Add user's expense to database from the inputs
     const onSubmit = async (data) => {
         const response = await fetch(
@@ -38,6 +58,7 @@ export default function Expense() {
                 },
                 body: JSON.stringify({
                     "expenseName": data.expenseName,
+                    "categoryId": data.categoryId,
                     "date": data.date,
                     "amount": data.amount
                 })
@@ -50,7 +71,6 @@ export default function Expense() {
         else {
             (errorMessage('Klaida!'))
         }
-
         setForceRender(!forceRender)
     }
 
@@ -86,7 +106,6 @@ export default function Expense() {
                 }
             }
         )
-
         setForceRender(!forceRender)
     }
 
@@ -104,7 +123,6 @@ export default function Expense() {
             const data = await response.json();
             setAllExpense(data);
         }
-
         fetchData();
     }, [forceRender]);
 
@@ -126,11 +144,10 @@ export default function Expense() {
                                             <div
                                                 className="col-5 budget__expense-value">
                                                 {/* Round the number to two decimal places */}
-                                                - {Math.round(expenseSum * 100) / 100
+                                                {Math.round(expenseSum * 100) / 100
                                                 }
                                             </div>
                                             <div className="col-3 budget__expense-percentage">&euro;&nbsp;</div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +161,6 @@ export default function Expense() {
                 <div className="container">
                     <div className="add">
                         <div className="row text-center add__container">
-
                             <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input
                                     {...register("expenseName", { required: true, minLength: 4 })}
@@ -165,6 +181,20 @@ export default function Expense() {
                                     placeholder="Data"
                                 />
 
+                                <select {...register("categoryId",
+                                        {
+                                            required: true,
+                                        })
+                                    }
+                                    className="form-control add__description"
+                                    type="text"
+                                    placeholder="Kategorija"
+                                    >
+                                    {allCategory.map((option) => (
+                                    <option value={option.id}>{option.name}</option>
+                                         ))}
+                                </select>
+                            
                                 <input
                                     {...register("amount",
                                         {
@@ -188,15 +218,20 @@ export default function Expense() {
                         </div>
 
                         <div className="row ">
-                            <div className="col-sm-4 col-4">
+                            <div className="col-sm-3 col-3">
                                 {errors?.expenseName?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
                             </div>
-                            <div className="col-sm-4 col-4">
+                            <div className="col-sm-3 col-3">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
+                                {errors?.date?.type === "max" && <p>Naujesnių nei šiandien įrašų negali būti</p>}
                             </div>
-                            <div className="col-sm-4 col-4">
+                            <div className="col-sm-3 col-3">
+                                {errors?.categoryId?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.categoryId?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                            </div>                            
+
+                            <div className="col-sm-3 col-3">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
                             </div>
@@ -209,20 +244,23 @@ export default function Expense() {
                         <div className="col-12 expense">
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list"></div>
-
                             {/* Display user's expense on the page */}
                             {allExpense.map(expense => {
 
                                 return (
                                     <div key={expense.id}>
                                         <div className='row'>
-                                            <div className='col-4'>
+                                            <div className='col-3'>
                                                 {expense.expenseName}&nbsp;
                                             </div>
-                                            <div className='col-4'>
+                                            <div className='col-3'>
                                                 {expense.date}&nbsp;
                                             </div>
-                                            <div className='col-2'>
+
+                                            <div className='col-3'>
+                                                {expense.expensesCategory.name}&nbsp;
+                                            </div>
+                                            <div className='col-1'>
                                                 {expense.amount}&euro;&nbsp;
                                             </div>
 
@@ -232,8 +270,10 @@ export default function Expense() {
                                                     expenseName={expense.expenseName}
                                                     date={expense.date}
                                                     amount={expense.amount}
+                                                    category={expense.expensesCategory.name}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
+                                                    allCategory={allCategory}
                                                 />
 
                                                 <button

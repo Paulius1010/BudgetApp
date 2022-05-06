@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import "./IncomeAndExpense.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useState, useEffect } from 'react'
+import "./IncomeAndExpense.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import AuthService from "../services/auth.service";
+import 'react-toastify/dist/ReactToastify.css'
+import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
 import DeleteIncomeModal from './DeleteIncomeModal';
@@ -13,13 +13,13 @@ import DeleteIncomeModal from './DeleteIncomeModal';
 // JavaScript is not included in this code, only html and css
 
 export default function Income() {
-    const [allIncome, setAllIncome] = useState([]);
-    const [forceRender, setForceRender] = useState(false);
+    const [allIncome, setAllIncome] = useState([])
+    const [forceRender, setForceRender] = useState(false)
     const currentUser = AuthService.getCurrentUser();
     const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
-    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
+    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0)
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -44,20 +44,20 @@ export default function Income() {
                     "amount": data.amount
                 })
             }
-        );
+        )
 
         if (response.status === 201) {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'));
+            (errorMessage('Klaida!'))
         }
 
-        setForceRender(!forceRender);
-    };
+        setForceRender(!forceRender)
+    }
 
     // Popup message configuration
-    toast.configure();
+    toast.configure()
     const successMessage = () => {
         toast.success('Pridėta!', {
             position: toast.POSITION.TOP_CENTER,
@@ -65,8 +65,8 @@ export default function Income() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true,
-        });
-    };
+        })
+    }
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -74,8 +74,8 @@ export default function Income() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        });
-    };
+        })
+    }
 
     const removeIncome = async (id) => {
         await fetch(
@@ -101,6 +101,7 @@ export default function Income() {
         setDisplayDeleteIncomeModal(false);
     };
 
+
     // Fetch all user's income from database to display down below
     useEffect(() => {
         const fetchData = async () => {
@@ -114,10 +115,11 @@ export default function Income() {
                 });
             const data = await response.json();
             setAllIncome(data);
-        };
+        }
 
         fetchData();
     }, [forceRender]);
+
 
     return (
         <>
@@ -134,12 +136,12 @@ export default function Income() {
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
                                             <div
-                                                className="col-3 budget__income-value">
+                                                className="col-5 budget__income-value">
                                                 {/* Round the number to two decimal places */}
-                                                + {Math.round(incomeSum * 100) / 100
+                                                {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-5 budget__income-percentage">&euro;&nbsp;</div>
+                                            <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
@@ -190,9 +192,7 @@ export default function Income() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon={faCirclePlus}
-                                            className='add__btn__income'
-                                        />
+                                        <FontAwesomeIcon icon= {faCirclePlus} className='add__btn__income'/>
                                     </button>
                                 </div>
                             </form>
@@ -218,7 +218,7 @@ export default function Income() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 income" style={{paddingLeft: 0, paddingRight: 0}}>
+                        <div className="col-12 income">
                             <h2 className="income__title">Pajamos</h2>
                             <div className="container income__list">
 
@@ -231,14 +231,14 @@ export default function Income() {
                                             <div className='col-4'>
                                                 {income.incomeName}&nbsp;
                                             </div>
-                                            <div className='col-3' style={{paddingRight: 0}}>
+                                            <div className='col-4'>
                                                 {income.date}&nbsp;
                                             </div>
-                                            <div className='col-3' style={{paddingLeft: '7%'}}>
+                                            <div className='col-2'>
                                                 {income.amount}&euro;&nbsp;
                                             </div>
 
-                                            <div className='col-2' style={{paddingRight: 0, textAlign: 'right'}}>
+                                            <div className='col-2'>
                                                 <EditIncomeModal
                                                     id={income.id}
                                                     incomeName={income.incomeName}
@@ -261,12 +261,12 @@ export default function Income() {
                                                     type="button"
                                                     style={{paddingTop: 0, paddingBottom: 10}}
                                                 >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{ "width": "20px" }} />
+                                                    <FontAwesomeIcon icon="trash" className='add__btn' style={{"width":"20px"}}/>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                );
+                                )
                             })}
                             </div>
                         </div>
@@ -274,5 +274,6 @@ export default function Income() {
                 </div>
             </div>
         </>
-    );
+
+    )
 }
