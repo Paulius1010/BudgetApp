@@ -15,6 +15,7 @@ import DeleteIncomeModal from './DeleteIncomeModal';
 export default function Income() {
     const [allIncome, setAllIncome] = useState([]);
     const [forceRender, setForceRender] = useState(false);
+    const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
     const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -93,13 +94,15 @@ export default function Income() {
         setDisplayDeleteIncomeModal(false);
     };
 
-    const showDeleteModal = () => {
+    const showDeleteModal = (id) => {
         setDisplayDeleteIncomeModal(true);
+        setDeleteId(id);
     };
 
     const hideConfirmationModal = () => {
         setDisplayDeleteIncomeModal(false);
     };
+
 
     // Fetch all user's income from database to display down below
     useEffect(() => {
@@ -119,6 +122,7 @@ export default function Income() {
         fetchData();
     }, [forceRender]);
 
+
     return (
         <>
             <div className="jumbotron-fluid text-center">
@@ -134,12 +138,12 @@ export default function Income() {
                                         <div className="row">
                                             <div className="col-4 budget__income-text">Pajamos</div>
                                             <div
-                                                className="col-3 budget__income-value">
+                                                className="col-5 budget__income-value">
                                                 {/* Round the number to two decimal places */}
-                                                + {Math.round(incomeSum * 100) / 100
+                                                {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-5 budget__income-percentage">&euro;&nbsp;</div>
+                                            <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
@@ -190,9 +194,7 @@ export default function Income() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon={faCirclePlus}
-                                            className='add__btn__income'
-                                        />
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__income' />
                                     </button>
                                 </div>
                             </form>
@@ -218,60 +220,66 @@ export default function Income() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 income" style={{paddingLeft: 0, paddingRight: 0}}>
+                        <div className="col-12 income">
                             <h2 className="income__title">Pajamos</h2>
-                            <div className="container income__list"></div>
+                            <div className="container income__list">
 
-                            {/* Display user's income on the page */}
-                            {allIncome.map(income => {
+                                {/* Display user's income on the page */}
+                                {allIncome.map(income => {
 
-                                return (
-                                    <div key={income.id}>
-                                        <div className='row'>
-                                            <div className='col-4'>
-                                                {income.incomeName}&nbsp;
-                                            </div>
-                                            <div className='col-3' style={{paddingRight: 0}}>
-                                                {income.date}&nbsp;
-                                            </div>
-                                            <div className='col-3' style={{paddingLeft: '7%'}}>
-                                                {income.amount}&euro;&nbsp;
-                                            </div>
+                                    return (
+                                        <div key={income.id}>
+                                            <div className='row'>
+                                                <div className='col-4'>
+                                                    {income.incomeName}&nbsp;
+                                                </div>
+                                                <div className='col-4'>
+                                                    {income.date}&nbsp;
+                                                </div>
+                                                <div className='col-2'>
+                                                    {income.amount}&euro;&nbsp;
+                                                </div>
 
-                                            <div className='col-2' style={{paddingRight: 0, textAlign: 'right'}}>
-                                                <EditIncomeModal
-                                                    id={income.id}
-                                                    incomeName={income.incomeName}
-                                                    date={income.date}
-                                                    amount={income.amount}
-                                                    forceRender={forceRender}
-                                                    setForceRender={setForceRender}
-                                                />
+                                                <div className='col-2'>
+                                                    <EditIncomeModal
+                                                        id={income.id}
+                                                        incomeName={income.incomeName}
+                                                        date={income.date}
+                                                        amount={income.amount}
+                                                        forceRender={forceRender}
+                                                        setForceRender={setForceRender}
+                                                    />
 
-                                                <DeleteIncomeModal
-                                                    showModal={displayDeleteIncomeModal}
-                                                    hideModal={hideConfirmationModal}
-                                                    confirmModal={removeIncome}
-                                                    id={income.id}
-                                                />
+                                                    <DeleteIncomeModal
+                                                        showModal={displayDeleteIncomeModal}
+                                                        hideModal={hideConfirmationModal}
+                                                        confirmModal={removeIncome}
+                                                        id={deleteId}
+                                                    />
 
-                                                <button
-                                                    onClick={() => showDeleteModal()}
-                                                    className="btn"
-                                                    type="button"
-                                                    style={{paddingTop: 0, paddingBottom: 10}}
-                                                >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{ "width": "20px" }} />
-                                                </button>
+                                                    <button
+                                                        onClick={() => showDeleteModal(income.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </>
+
     );
 }

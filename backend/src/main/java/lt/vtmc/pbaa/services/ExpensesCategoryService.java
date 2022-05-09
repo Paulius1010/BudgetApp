@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ExpensesCategoryService {
@@ -19,8 +20,8 @@ public class ExpensesCategoryService {
         this.expensesCategoryRepository = expensesCategoryRepository;
     }
 
-    public List<ExpensesCategory> getAllExpensesCategories() {
-        return expensesCategoryRepository.findAll();
+    public List<ExpensesCategoryResponse> getAllExpensesCategories() {
+        return expensesCategoryRepository.findAll().stream().map(category -> new ExpensesCategoryResponse(category.getId(), category.getName())).collect(Collectors.toList());
     }
 
     public ExpensesCategoryResponse deleteExpensesCategory(Long id) {

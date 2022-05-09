@@ -172,7 +172,7 @@ export default function Navbar() {
                     <div className="col-lg-4">
                         <nav className="site-navigation text-left mr-auto "
                             role="navigation">
-                            <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+                            <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block text-right">
                                 {!currentUser && (
                                     <>
                                         <li id="button-hover">
