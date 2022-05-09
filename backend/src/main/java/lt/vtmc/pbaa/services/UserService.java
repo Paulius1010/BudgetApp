@@ -1,11 +1,12 @@
 package lt.vtmc.pbaa.services;
 
-import java.util.Optional;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import lt.vtmc.pbaa.models.User;
 import lt.vtmc.pbaa.repositories.UserRepository;
+
 
 @Service
 public class UserService {
@@ -23,4 +24,6 @@ public class UserService {
 	public void deleteUserById(Long id) {
 		userRepository.deleteById(id);
 	}
+	
+	
 }
