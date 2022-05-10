@@ -288,23 +288,16 @@ export default function Expense() {
                                                     allCategory={allCategory}
                                                 />
 
-                                                    <DeleteModal
-                                                        showModal={displayDeleteModal}
-                                                        hideModal={hideDeleteModal}
-                                                        confirmModal={removeExpense}
-                                                        id={deleteId}
-                                                    />
-
-                                                    <button
-                                                        onClick={() => showDeleteModal(expense.id)}
-                                                        className="btn"
-                                                        type="button"
-                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
-                                                    >
-                                                    <FontAwesomeIcon 
-                                                    icon="trash" 
-                                                    className='add__btn'                                                             
-                                                    style={{ "width": "20px" }}
+                                                <button
+                                                    onClick={() => showDeleteModal(expense.id)}
+                                                    className="btn"
+                                                    type="button"
+                                                    style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon="trash"
+                                                        className='add__btn'
+                                                        style={{ "width": "20px" }}
                                                     />
                                                 </button>
                                             </div>
@@ -312,6 +305,12 @@ export default function Expense() {
                                     </div>
                                 );
                             })}
+                            <DeleteModal
+                                showModal={displayDeleteModal}
+                                hideModal={hideDeleteModal}
+                                confirmModal={removeExpense}
+                                id={deleteId}
+                            />
                         </div>
                     </div>
                 </div>
