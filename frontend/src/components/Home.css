@@ -7,7 +7,20 @@
     height: 900px;
     object-fit: cover;
     object-position: -58px -90px;
-    filter: brightness(70%);
+    filter: brightness(100%);
+}
+
+.intro_row{
+    height: 45rem;
+    background-image: url("../images/project_bg.png");
+    background-size: contain;
+}
+
+.intro_font{
+    font-family: "Century Gothic";
+    font-size: 50px;
+    padding-top: 16rem;
+    color: white;
 }
 
 .first_section{

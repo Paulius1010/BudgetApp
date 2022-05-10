@@ -74,7 +74,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn__expense' />
             </button>
 
             <div

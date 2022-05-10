@@ -280,7 +280,7 @@ export default function Expense() {
                                                     className="btn"
                                                     type="button"
                                                 >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
+                                                    <FontAwesomeIcon icon="trash" className='add__btn__expense' />
                                                 </button>
                                             </div>
                                         </div>
