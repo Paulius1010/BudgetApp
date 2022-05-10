@@ -73,6 +73,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
+                style={{ paddingTop: 0, paddingBottom: 10 }}
             >
                 <FontAwesomeIcon icon="pen-to-square" className='add__btn__expense' />
             </button>
@@ -108,7 +109,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                                 {...register("expenseName",
                                     {
                                         required: true,
-                                        minLength: 4
+                                        minLength: 3
                                     })
                                 }
                                 type="text"
@@ -117,7 +118,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                                 defaultValue={expenseName}
                             />
                             {errors?.expenseName?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
+                            {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 3 simbolių</p>}
 
                             <input
                                 {...register("date",
@@ -175,6 +176,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

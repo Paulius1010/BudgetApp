@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditExpenseModal from './EditExpenseModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -14,6 +15,8 @@ export default function Expense() {
     const [allExpense, setAllExpense] = useState([]);
     const [allCategory, setAllCategory] = useState([]);
     const [forceRender, setForceRender] = useState(false);
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's expense
@@ -106,6 +109,16 @@ export default function Expense() {
             }
         );
         setForceRender(!forceRender);
+        setDisplayDeleteModal(false);
+    };
+
+    const showDeleteModal = (id) => {
+        setDisplayDeleteModal(true);
+        setDeleteId(id);
+    };
+
+    const hideDeleteModal = () => {
+        setDisplayDeleteModal(false);
     };
 
     // Fetch all user's expense from database to display down below
@@ -139,14 +152,14 @@ export default function Expense() {
                                 <div>
                                     <div className="my-2 budget__expense">
                                         <div className="row">
-                                            <div className="col-4 budget__expense-text">Išlaidos</div>
+                                            <div className="col-4 budget__expense-text" style={{paddingLeft: 0}}>Išlaidos</div>
                                             <div
-                                                className="col-5 budget__expense-value">
+                                                className="col-4 budget__expense-value" style={{paddingLeft: 0, paddingRight: 30}}>
                                                 {/* Round the number to two decimal places */}
                                                 {Math.round(expenseSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-3 budget__expense-percentage">&euro;&nbsp;</div>
+                                            <div className="col-4 budget__expense-percentage" style={{paddingLeft: 0, paddingRight: 60}}>&euro;&nbsp;</div>
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +175,7 @@ export default function Expense() {
                         <div className="row text-center add__container">
                             <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input
-                                    {...register("expenseName", { required: true, minLength: 4 })}
+                                    {...register("expenseName", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
@@ -219,7 +232,7 @@ export default function Expense() {
                         <div className="row ">
                             <div className="col-sm-3 col-3">
                                 {errors?.expenseName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                             <div className="col-sm-3 col-3">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
@@ -232,7 +245,7 @@ export default function Expense() {
 
                             <div className="col-sm-3 col-3">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų išlaidų suma yra 0.01 &euro;</p>}
                             </div>
                         </div>
                     </div>
@@ -240,7 +253,7 @@ export default function Expense() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 expense">
+                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list"></div>
                             {/* Display user's expense on the page */}
@@ -256,14 +269,14 @@ export default function Expense() {
                                                 {expense.date}&nbsp;
                                             </div>
 
-                                            <div className='col-3'>
+                                            <div className='col-2' style={{paddingLeft: 0}}>
                                                 {expense.expensesCategory.name}&nbsp;
                                             </div>
-                                            <div className='col-1'>
+                                            <div className='col-2' style={{paddingLeft: '6%'}}>
                                                 {expense.amount}&euro;&nbsp;
                                             </div>
 
-                                            <div className='col-2'>
+                                            <div className='col-2' style={{textAlign: 'right', paddingLeft: 0, paddingRight: 0}}>
                                                 <EditExpenseModal
                                                     id={expense.id}
                                                     expenseName={expense.expenseName}
@@ -276,17 +289,28 @@ export default function Expense() {
                                                 />
 
                                                 <button
-                                                    onClick={() => removeExpense(expense.id)}
+                                                    onClick={() => showDeleteModal(expense.id)}
                                                     className="btn"
                                                     type="button"
+                                                    style={{ paddingTop: 0, paddingBottom: 10 }}
                                                 >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__expense' />
+                                                    <FontAwesomeIcon
+                                                        icon="trash"
+                                                        className='add__btn__expense'
+                                                        style={{ "width": "20px" }}
+                                                    />
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 );
                             })}
+                            <DeleteModal
+                                showModal={displayDeleteModal}
+                                hideModal={hideDeleteModal}
+                                confirmModal={removeExpense}
+                                id={deleteId}
+                            />
                         </div>
                     </div>
                 </div>

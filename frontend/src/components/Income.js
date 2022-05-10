@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
-import DeleteIncomeModal from './DeleteIncomeModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -17,7 +17,7 @@ export default function Income() {
     const [forceRender, setForceRender] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false);
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
     const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
@@ -91,16 +91,16 @@ export default function Income() {
         );
 
         setForceRender(!forceRender);
-        setDisplayDeleteIncomeModal(false);
+        setDisplayDeleteModal(false);
     };
 
     const showDeleteModal = (id) => {
-        setDisplayDeleteIncomeModal(true);
+        setDisplayDeleteModal(true);
         setDeleteId(id);
     };
 
-    const hideConfirmationModal = () => {
-        setDisplayDeleteIncomeModal(false);
+    const hideDeleteModal = () => {
+        setDisplayDeleteModal(false);
     };
 
 
@@ -136,14 +136,14 @@ export default function Income() {
                                 <div>
                                     <div className="my-2 budget__income">
                                         <div className="row">
-                                            <div className="col-4 budget__income-text">Pajamos</div>
+                                            <div className="col-4 budget__income-text" style={{paddingLeft: 0}}>Pajamos</div>
                                             <div
-                                                className="col-5 budget__income-value">
+                                                className="col-4 budget__income-value" style={{paddingLeft: 0, paddingRight: 50}}>
                                                 {/* Round the number to two decimal places */}
                                                 {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
+                                            <div className="col-4 budget__income-percentage" style={{paddingLeft: 0, paddingRight: 60}}>&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@ export default function Income() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
                                 <input
-                                    {...register("incomeName", { required: true, minLength: 4 })}
+                                    {...register("incomeName", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
@@ -204,7 +204,7 @@ export default function Income() {
                         <div className="row ">
                             <div className="col-sm-4 col-4">
                                 {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
@@ -212,15 +212,15 @@ export default function Income() {
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų suma yra 0.01 &euro;</p>}
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
-                        <div className="col-12 income">
+                    <div className="container" style={{paddingRight: 0}}>
+                        <div className="col-12 income" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="income__title">Pajamos</h2>
                             <div className="container income__list">
 
@@ -230,17 +230,17 @@ export default function Income() {
                                     return (
                                         <div key={income.id}>
                                             <div className='row'>
-                                                <div className='col-4'>
+                                                <div className='col-4' style={{paddingLeft: 0}}>
                                                     {income.incomeName}&nbsp;
                                                 </div>
-                                                <div className='col-4'>
+                                                <div className='col-3' style={{paddingLeft: 0}}>
                                                     {income.date}&nbsp;
                                                 </div>
-                                                <div className='col-2'>
+                                                <div className='col-3' style={{paddingLeft: '6.5%'}}>
                                                     {income.amount}&euro;&nbsp;
                                                 </div>
 
-                                                <div className='col-2'>
+                                                <div className='col-2' style={{textAlign: 'right', paddingLeft: 0, paddingRight: 0}}>
                                                     <EditIncomeModal
                                                         id={income.id}
                                                         incomeName={income.incomeName}
@@ -248,13 +248,6 @@ export default function Income() {
                                                         amount={income.amount}
                                                         forceRender={forceRender}
                                                         setForceRender={setForceRender}
-                                                    />
-
-                                                    <DeleteIncomeModal
-                                                        showModal={displayDeleteIncomeModal}
-                                                        hideModal={hideConfirmationModal}
-                                                        confirmModal={removeIncome}
-                                                        id={deleteId}
                                                     />
 
                                                     <button
@@ -274,6 +267,13 @@ export default function Income() {
                                         </div>
                                     );
                                 })}
+
+                                <DeleteModal
+                                    showModal={displayDeleteModal}
+                                    hideModal={hideDeleteModal}
+                                    confirmModal={removeIncome}
+                                    id={deleteId}
+                                />
                             </div>
                         </div>
                     </div>
