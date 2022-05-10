@@ -250,13 +250,6 @@ export default function Income() {
                                                         setForceRender={setForceRender}
                                                     />
 
-                                                    <DeleteModal
-                                                        showModal={displayDeleteModal}
-                                                        hideModal={hideDeleteModal}
-                                                        confirmModal={removeIncome}
-                                                        id={deleteId}
-                                                    />
-
                                                     <button
                                                         onClick={() => showDeleteModal(income.id)}
                                                         className="btn"
@@ -274,6 +267,13 @@ export default function Income() {
                                         </div>
                                     );
                                 })}
+
+                                <DeleteModal
+                                    showModal={displayDeleteModal}
+                                    hideModal={hideDeleteModal}
+                                    confirmModal={removeIncome}
+                                    id={deleteId}
+                                />
                             </div>
                         </div>
                     </div>
