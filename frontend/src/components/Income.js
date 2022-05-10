@@ -161,7 +161,7 @@ export default function Income() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
                                 <input
-                                    {...register("incomeName", { required: true, minLength: 4 })}
+                                    {...register("incomeName", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
@@ -204,7 +204,7 @@ export default function Income() {
                         <div className="row ">
                             <div className="col-sm-4 col-4">
                                 {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
@@ -212,7 +212,7 @@ export default function Income() {
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų suma yra 0.01 &euro;</p>}
                             </div>
                         </div>
                     </div>
