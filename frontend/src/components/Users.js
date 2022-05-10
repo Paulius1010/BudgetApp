@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import "./IncomeAndExpense.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect } from 'react';
+import "./IncomeAndExpense.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import AuthService from "../services/auth.service"
+import 'react-toastify/dist/ReactToastify.css';
+import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditUserModal from './EditUserModal';
 
 
 export default function Users() {
-    const [allUsers, setAllUsers] = useState([])
-    const [forceRender, setForceRender] = useState(false)
+    const [allUsers, setAllUsers] = useState([]);
+    const [forceRender, setForceRender] = useState(false);
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });    
+    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
     // This is used to figure out today's date, and format it accordingly
     // let today = new Date();
@@ -25,7 +25,7 @@ export default function Users() {
     // Add new user to database from the inputs
     const onSubmit = async (data) => {
         const response = await fetch(
-            "http://localhost:8080/api/auth/signupAdmin",
+            "http://localhost:8080/api/auth/signup",
             {
                 method: "POST",
                 headers: {
@@ -35,33 +35,33 @@ export default function Users() {
                 body: JSON.stringify({
                     "username": data.username,
                     "email": data.email,
-                    "password": data.password, 
-                    "roles": data.roles
+                    "password": data.password,
+                    "role": data.roles
                 })
             }
-        )
+        );
 
-        if (response.status === 201) {
+        if (response.status === 200) {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+    };
 
     // Popup message configuration
-    toast.configure()
+    toast.configure();
     const successMessage = () => {
-        toast.success('Pridėta!', {
+        toast.success('Vartotojas sukurtas', {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true,
-        })
-    }
+        });
+    };
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -69,8 +69,8 @@ export default function Users() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
 
     const removeUser = async (id) => {
         await fetch(
@@ -82,10 +82,10 @@ export default function Users() {
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 }
             }
-        )
+        );
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+    };
 
     // Fetch all users from database to display down below
     useEffect(() => {
@@ -100,7 +100,7 @@ export default function Users() {
                 });
             const data = await response.json();
             setAllUsers(data);
-        }
+        };
 
         fetchData();
     }, [forceRender]);
@@ -108,9 +108,9 @@ export default function Users() {
 
     const [isChecked, setIsChecked] = useState(false);
 
-  const handleOnChange = () => {
-    setIsChecked(!isChecked);
-  };
+    const handleOnChange = () => {
+        setIsChecked(!isChecked);
+    };
 
     return (
         <>
@@ -122,10 +122,10 @@ export default function Users() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
                                 <input
-                                    {...register("username", 
-                                        { 
+                                    {...register("username",
+                                        {
                                             required: true,
-                                            minLength: 4 
+                                            minLength: 4
                                         })}
                                     type="text"
                                     className="form-control add__description"
@@ -139,10 +139,9 @@ export default function Users() {
                                             minLength: 4
                                         })
                                     }
-                                    type="text"
+                                    type="email"
                                     className="form-control add__value"
-                                    placeholder="El-paštas"
-                                    
+                                    placeholder="El. paštas"
                                 />
 
                                 <input
@@ -155,14 +154,13 @@ export default function Users() {
                                     type="password"
                                     className="form-control add__value"
                                     placeholder="Slaptažodis"
-                                    
                                 />
-                                
-                                <input
+
+                                {/* <input
                                     {...register("roles",
                                         {
-                                            
-                                            
+
+
                                         })
                                     }
                                     id="ROLE_USER"
@@ -171,11 +169,11 @@ export default function Users() {
                                     value="ROLE_USER"
                                     checked={isChecked}
                                     onChange={handleOnChange}
-                                />
-                                User
+                                /> */}
+
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon= {faCirclePlus} className='add__btn__income'/>
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__income' />
                                     </button>
                                 </div>
                             </form>
@@ -184,16 +182,34 @@ export default function Users() {
 
                         <div className="row ">
                             <div className="col-sm-4 col-4 ">
-                                {errors?.username?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.username?.type === "minLength" && <p>Vardas turi būti bent 4 simbolių ilgio</p>}
+                                {
+                                    errors?.username?.type === "required" &&
+                                    <p>Šis laukas yra privalomas</p>
+                                }
+                                {
+                                    errors?.username?.type === "minLength" &&
+                                    <p>Vardas turi būti bent 4 simbolių ilgio</p>
+                                }
                             </div>
                             <div className="col-sm-4 col-4">
-                                {errors?.email?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.email?.type === "minLength" && <p>El-paštas turi būti sudarytas iš bent 4 simbolių</p>}
+                                {
+                                    errors?.email?.type === "required"
+                                    && <p>Šis laukas yra privalomas</p>
+                                }
+                                {
+                                    errors?.email?.type === "minLength" &&
+                                    <p>El-paštas turi būti sudarytas iš bent 4 simbolių</p>
+                                }
                             </div>
                             <div className="col-sm-4 col-4">
-                                {errors?.password?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.password?.type === "minLength" && <p>Slaptažodis turi būti bent 6 simbolių ilgio </p>}
+                                {
+                                    errors?.password?.type === "required" &&
+                                    <p>Šis laukas yra privalomas</p>
+                                }
+                                {
+                                    errors?.password?.type === "minLength" &&
+                                    <p>Slaptažodis turi būti bent 6 simbolių ilgio </p>
+                                }
                             </div>
                         </div>
                     </div>
@@ -218,15 +234,15 @@ export default function Users() {
                                                 {users.email}&nbsp;
                                             </div>
                                             <div className='col-2'>
-                                            {/* {users.roles.map(roles => {
+                                                {/* {users.roles.map(roles => {
                                                 return(
                                                     <div key={roles.id}>
                                                         {roles.name}
                                                     </div>
                                                 )
                                             })} */}
-                                            {users.roles.map(roles => <p>{roles.name}</p>)}
-                                                
+                                                {users.roles.map(roles => <p>{roles.name}</p>)}
+
                                             </div>
 
                                             <div className='col-2'>
@@ -246,12 +262,12 @@ export default function Users() {
                                                     className="btn"
                                                     type="button"
                                                 >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{"width":"20px"}}/>
+                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{ "width": "20px" }} />
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                )
+                                );
                             })}
                         </div>
                     </div>
@@ -259,5 +275,5 @@ export default function Users() {
             </div>
         </>
 
-    )
+    );
 }
