@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditCategoryModal from './EditCategoryModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -14,6 +15,8 @@ import EditCategoryModal from './EditCategoryModal';
 export default function Category() {
     const [allCategory, setAllCategory] = useState([])
     const [forceRender, setForceRender] = useState(false)
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Count categories
@@ -77,9 +80,18 @@ export default function Category() {
                 }
             }
         )
+        setForceRender(!forceRender);
+        setDisplayDeleteModal(false);
+    };
 
-        setForceRender(!forceRender)
-    }
+    const showDeleteModal = (id) => {
+        setDisplayDeleteModal(true);
+        setDeleteId(id);
+    };
+
+    const hideConfirmationModal = () => {
+        setDisplayDeleteModal(false);
+    };
 
     // Fetch all categories from database to display down below
     useEffect(() => {
@@ -136,7 +148,7 @@ export default function Category() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input
-                                    {...register("name", { required: true, minLength: 4 })}
+                                    {...register("name", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Kategorijos pavadinimas"
@@ -155,7 +167,7 @@ export default function Category() {
                         <div className="row ">
                             <div className="col-sm-4 col-4">
                                 {errors?.name?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 3 simbolių ilgio</p>}
                             </div>
 
                         </div>
@@ -182,18 +194,30 @@ export default function Category() {
                                             <div className='col-2'>
                                                 <EditCategoryModal
                                                     id={category.id}
-                                                    categoryName={category.name}
+                                                    name={category.name}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
                                                 />
 
-                                                <button
-                                                    onClick={() => removeCategory(category.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
-                                                </button>
+                                                    <DeleteModal
+                                                        showModal={displayDeleteModal}
+                                                        hideModal={hideConfirmationModal}
+                                                        confirmModal={removeCategory}
+                                                        id={deleteId}
+                                                    />
+
+<button
+                                                        onClick={() => showDeleteModal(category.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
                                             </div>
                                         </div>
                                     </div>

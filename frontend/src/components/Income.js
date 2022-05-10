@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
-import DeleteIncomeModal from './DeleteIncomeModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -17,7 +17,7 @@ export default function Income() {
     const [forceRender, setForceRender] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false);
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
     const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
@@ -91,16 +91,16 @@ export default function Income() {
         );
 
         setForceRender(!forceRender);
-        setDisplayDeleteIncomeModal(false);
+        setDisplayDeleteModal(false);
     };
 
     const showDeleteModal = (id) => {
-        setDisplayDeleteIncomeModal(true);
+        setDisplayDeleteModal(true);
         setDeleteId(id);
     };
 
-    const hideConfirmationModal = () => {
-        setDisplayDeleteIncomeModal(false);
+    const hideDeleteModal = () => {
+        setDisplayDeleteModal(false);
     };
 
 
@@ -161,7 +161,7 @@ export default function Income() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
                                 <input
-                                    {...register("incomeName", { required: true, minLength: 4 })}
+                                    {...register("incomeName", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
@@ -204,7 +204,7 @@ export default function Income() {
                         <div className="row ">
                             <div className="col-sm-4 col-4">
                                 {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
@@ -212,7 +212,7 @@ export default function Income() {
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų suma yra 0.01 &euro;</p>}
                             </div>
                         </div>
                     </div>
@@ -250,13 +250,6 @@ export default function Income() {
                                                         setForceRender={setForceRender}
                                                     />
 
-                                                    <DeleteIncomeModal
-                                                        showModal={displayDeleteIncomeModal}
-                                                        hideModal={hideConfirmationModal}
-                                                        confirmModal={removeIncome}
-                                                        id={deleteId}
-                                                    />
-
                                                     <button
                                                         onClick={() => showDeleteModal(income.id)}
                                                         className="btn"
@@ -274,6 +267,13 @@ export default function Income() {
                                         </div>
                                     );
                                 })}
+
+                                <DeleteModal
+                                    showModal={displayDeleteModal}
+                                    hideModal={hideDeleteModal}
+                                    confirmModal={removeIncome}
+                                    id={deleteId}
+                                />
                             </div>
                         </div>
                     </div>

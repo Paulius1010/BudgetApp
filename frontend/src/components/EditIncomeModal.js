@@ -108,7 +108,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 {...register("incomeName",
                                     {
                                         required: true,
-                                        minLength: 4
+                                        minLength: 3
                                     })
                                 }
                                 type="text"
@@ -117,7 +117,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 defaultValue={incomeName}
                             />
                             {errors?.incomeName?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
+                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 3 simbolių</p>}
 
                             <input
                                 {...register("date",
@@ -161,6 +161,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>
