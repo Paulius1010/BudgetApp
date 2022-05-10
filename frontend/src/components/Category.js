@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./IncomeAndExpense.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
@@ -199,30 +199,29 @@ export default function Category() {
                                                     setForceRender={setForceRender}
                                                 />
 
-                                                    <DeleteModal
-                                                        showModal={displayDeleteModal}
-                                                        hideModal={hideConfirmationModal}
-                                                        confirmModal={removeCategory}
-                                                        id={deleteId}
+                                                <button
+                                                    onClick={() => showDeleteModal(category.id)}
+                                                    className="btn"
+                                                    type="button"
+                                                    style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                >
+                                                    <FontAwesomeIcon
+                                                        icon="trash"
+                                                        className='add__btn'
+                                                        style={{ "width": "20px" }}
                                                     />
-
-<button
-                                                        onClick={() => showDeleteModal(category.id)}
-                                                        className="btn"
-                                                        type="button"
-                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon="trash"
-                                                            className='add__btn'
-                                                            style={{ "width": "20px" }}
-                                                        />
-                                                    </button>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 )
                             })}
+                            <DeleteModal
+                                showModal={displayDeleteModal}
+                                hideModal={hideConfirmationModal}
+                                confirmModal={removeCategory}
+                                id={deleteId}
+                            />
                         </div>
                     </div>
                 </div>
