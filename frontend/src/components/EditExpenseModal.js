@@ -75,7 +75,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                 data-bs-target={"#id" + id}
                 style={{ paddingTop: 0, paddingBottom: 10 }}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn__expense' />
             </button>
 
             <div
