@@ -194,7 +194,7 @@ export default function Category() {
                                             <div className='col-2'>
                                                 <EditCategoryModal
                                                     id={category.id}
-                                                    categoryName={category.name}
+                                                    name={category.name}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
                                                 />
@@ -206,14 +206,18 @@ export default function Category() {
                                                         id={deleteId}
                                                     />
 
-                                                    <button
+<button
                                                         onClick={() => showDeleteModal(category.id)}
                                                         className="btn"
                                                         type="button"
                                                         style={{ paddingTop: 0, paddingBottom: 10 }}
                                                     >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
-                                                </button>
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
                                             </div>
                                         </div>
                                     </div>

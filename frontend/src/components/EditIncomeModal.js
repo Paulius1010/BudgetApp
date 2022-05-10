@@ -161,6 +161,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

@@ -9,7 +9,6 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-
     const onSubmit = async (data) => {
         const response = await fetch(
             "http://localhost:8080/api/categories/",
@@ -32,7 +31,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
         else {
             (errorMessage('Klaida!'))
         }
-
+        
         setForceRender(!forceRender)
     }
 
@@ -64,6 +63,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
+                style={{ paddingTop: 0, paddingBottom: 10 }}
             >
                 <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
@@ -121,6 +121,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

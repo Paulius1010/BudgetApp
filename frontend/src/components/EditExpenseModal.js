@@ -73,6 +73,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
+                style={{ paddingTop: 0, paddingBottom: 10 }}
             >
                 <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
@@ -175,6 +176,7 @@ export default function EditExpenseModal({ id, expenseName, categoryId, date, am
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

@@ -117,7 +117,7 @@ export default function Expense() {
         setDeleteId(id);
     };
 
-    const hideConfirmationModal = () => {
+    const hideDeleteModal = () => {
         setDisplayDeleteModal(false);
     };
 
@@ -290,7 +290,7 @@ export default function Expense() {
 
                                                     <DeleteModal
                                                         showModal={displayDeleteModal}
-                                                        hideModal={hideConfirmationModal}
+                                                        hideModal={hideDeleteModal}
                                                         confirmModal={removeExpense}
                                                         id={deleteId}
                                                     />
@@ -301,7 +301,11 @@ export default function Expense() {
                                                         type="button"
                                                         style={{ paddingTop: 0, paddingBottom: 10 }}
                                                     >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
+                                                    <FontAwesomeIcon 
+                                                    icon="trash" 
+                                                    className='add__btn'                                                             
+                                                    style={{ "width": "20px" }}
+                                                    />
                                                 </button>
                                             </div>
                                         </div>
