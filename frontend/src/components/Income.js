@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
-import DeleteIncomeModal from './DeleteIncomeModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -17,7 +17,7 @@ export default function Income() {
     const [forceRender, setForceRender] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const [displayDeleteIncomeModal, setDisplayDeleteIncomeModal] = useState(false);
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
     const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
@@ -91,16 +91,16 @@ export default function Income() {
         );
 
         setForceRender(!forceRender);
-        setDisplayDeleteIncomeModal(false);
+        setDisplayDeleteModal(false);
     };
 
     const showDeleteModal = (id) => {
-        setDisplayDeleteIncomeModal(true);
+        setDisplayDeleteModal(true);
         setDeleteId(id);
     };
 
-    const hideConfirmationModal = () => {
-        setDisplayDeleteIncomeModal(false);
+    const hideDeleteModal = () => {
+        setDisplayDeleteModal(false);
     };
 
 
@@ -250,9 +250,9 @@ export default function Income() {
                                                         setForceRender={setForceRender}
                                                     />
 
-                                                    <DeleteIncomeModal
-                                                        showModal={displayDeleteIncomeModal}
-                                                        hideModal={hideConfirmationModal}
+                                                    <DeleteModal
+                                                        showModal={displayDeleteModal}
+                                                        hideModal={hideDeleteModal}
                                                         confirmModal={removeIncome}
                                                         id={deleteId}
                                                     />
