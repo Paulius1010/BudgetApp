@@ -99,7 +99,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                                 {...register("name",
                                     {
                                         required: true,
-                                        minLength: 4
+                                        minLength: 3
                                     })
                                 }
                                 type="text"
@@ -108,7 +108,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                                 defaultValue={name}
                             />
                             {errors?.name?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.name?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
+                            {errors?.name?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 3 simbolių</p>}
 
                             <div className="modal-footer">
                                 <button
