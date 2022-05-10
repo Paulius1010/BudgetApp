@@ -158,7 +158,7 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                                         minLength: 6
                                     })
                                 }
-                                type="text"
+                                type="password"
                                 className="form-control add__description mt-2"
                                 placeholder="Slaptažodis"
                                 defaultValue={password}
@@ -166,7 +166,7 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                             {/* {errors?.password?.type === "required" && <p>Laukas negali būti tuščias</p>} */}
                             {errors?.password?.type === "minLength" && <p>Slaptažodis turi būti sudarytas iš bent 6 simbolių</p>}
 
-{/*                             checkbox to select roles
+                            {/* checkbox to select roles */}
                             <label>
                             <input
                                 {...register("roles",
@@ -180,14 +180,14 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                                 placeholder="Rolė"
                                 defaultValue={roles}
                             />
-                            Value
+                            Admin
                             </label>
 
                             <Checkbox
-                                label="Value 1"
+                                label="Moderator"
                                 value={checkedOne}
                                  onChange={handleChangeOne}
-                            /> */}
+                            />
 
                             <div className="modal-footer">
                                 <button

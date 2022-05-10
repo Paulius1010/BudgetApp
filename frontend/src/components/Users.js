@@ -106,11 +106,18 @@ export default function Users() {
     }, [forceRender]);
 
 
+    const [isChecked, setIsChecked] = useState(false);
+
+  const handleOnChange = () => {
+    setIsChecked(!isChecked);
+  };
+
     return (
         <>
             <div className="bottom mt-3">
                 <div className="container">
                     <div className="add">
+                        <h2 className="income__title">Pridėti naują vartotoją</h2>
                         <div className="row text-center add__container ">
 
                             <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
@@ -162,10 +169,10 @@ export default function Users() {
                                     type="checkbox"
                                     className="form-control add__value"
                                     value="ROLE_USER"
-                                    
-                                    checked
+                                    checked={isChecked}
+                                    onChange={handleOnChange}
                                 />
-                                
+                                User
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
                                         <FontAwesomeIcon icon= {faCirclePlus} className='add__btn__income'/>
