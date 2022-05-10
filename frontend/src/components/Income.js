@@ -219,7 +219,7 @@ export default function Income() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
+                    <div className="container" style={{paddingRight: 0}}>
                         <div className="col-12 income" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="income__title">Pajamos</h2>
                             <div className="container income__list">
