@@ -6,6 +6,15 @@ const Home = () => {
         <>
 
             <div className="container-fluid mb-4" style={{background: "#8aa82d"}}>
+
+                {/* header row, introduction */}
+                <div className="row justify-content-center intro_row">
+                    <div className="col-12 intro_font">
+                        <div style={{textAlign: "center"}}>Asmeninio biudžeto analizės aplikacija</div>
+                        <div style={{textAlign: "center"}}>Sekite kada, kam ir kiek išleidote pinigų</div>
+                    </div>
+                </div>
+
                 {/* image, qoute row */}
                 <div className="row first_section">
                     <div className="col-4">
@@ -19,9 +28,10 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="col-8 first_section p-0" style={{overflow: "hidden"}}>
-                        <img className="hero_config" src={require("../images/hero_1.jpg")}></img>
+                        <img className="hero_config" src={require("../images/hero_2.png")}></img>
                     </div>
                 </div>
+
                 {/* why use a budget app row */}
                 <div className="row bg-white justify-content-center">
                     {/* d-flex justify-content-center if needed for bot div */}
