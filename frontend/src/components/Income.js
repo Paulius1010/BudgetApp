@@ -265,7 +265,7 @@ export default function Income() {
                                                     >
                                                         <FontAwesomeIcon
                                                             icon="trash"
-                                                            className='add__btn'
+                                                            className='add__btn__income'
                                                             style={{ "width": "20px" }}
                                                         />
                                                     </button>

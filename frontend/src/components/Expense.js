@@ -303,7 +303,7 @@ export default function Expense() {
                                                     >
                                                     <FontAwesomeIcon 
                                                     icon="trash" 
-                                                    className='add__btn'                                                             
+                                                    className='add__btn__expense'                                                             
                                                     style={{ "width": "20px" }}
                                                     />
                                                 </button>
