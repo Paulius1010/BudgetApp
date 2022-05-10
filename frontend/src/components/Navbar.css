@@ -1,0 +1,12 @@
+#button-hover:hover{
+    background-color: #e9ffd6;
+    border-radius: 0.3rem;
+
+}
+#button-hover {
+    transition: 0.3s;
+}
+/* .site-logo{
+    font-family: 'Ink Free';
+    font-size: 50px !important;
+} */

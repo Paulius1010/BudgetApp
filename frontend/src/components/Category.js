@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import "./IncomeAndExpense.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AuthService from "../services/auth.service"
 import { useForm } from "react-hook-form";
 import EditCategoryModal from './EditCategoryModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -13,6 +15,8 @@ import EditCategoryModal from './EditCategoryModal';
 export default function Category() {
     const [allCategory, setAllCategory] = useState([])
     const [forceRender, setForceRender] = useState(false)
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Count categories
@@ -67,7 +71,7 @@ export default function Category() {
 
     const removeCategory = async (id) => {
         await fetch(
-            `http://localhost:8080/api/categories`,
+            `http://localhost:8080/api/categories/${id}`,
             {
                 method: "DELETE",
                 headers: {
@@ -76,9 +80,18 @@ export default function Category() {
                 }
             }
         )
+        setForceRender(!forceRender);
+        setDisplayDeleteModal(false);
+    };
 
-        setForceRender(!forceRender)
-    }
+    const showDeleteModal = (id) => {
+        setDisplayDeleteModal(true);
+        setDeleteId(id);
+    };
+
+    const hideConfirmationModal = () => {
+        setDisplayDeleteModal(false);
+    };
 
     // Fetch all categories from database to display down below
     useEffect(() => {
@@ -109,8 +122,8 @@ export default function Category() {
                                 <h1 className="display-4 pt-3">
                                 </h1>
 
-                                <div className="row">
-                                    <div className="col-12 col-sm-10 col-md-8 col-lg-6 my-2 budget__expense">
+                                <div>
+                                    <div className="budget__expense">
                                         <div className="row">
                                             <div className="col-6 budget__expense-text">Išlaidų kategorijos</div>
 
@@ -135,7 +148,7 @@ export default function Category() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3">
                                 <input
-                                    {...register("name", { required: true, minLength: 4 })}
+                                    {...register("name", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Kategorijos pavadinimas"
@@ -144,7 +157,7 @@ export default function Category() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon="circle-check" className='add__btn__expense' />
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__expense' />
                                     </button>
                                 </div>
                             </form>
@@ -154,7 +167,7 @@ export default function Category() {
                         <div className="row ">
                             <div className="col-sm-4 col-4">
                                 {errors?.name?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 3 simbolių ilgio</p>}
                             </div>
 
                         </div>
@@ -181,18 +194,30 @@ export default function Category() {
                                             <div className='col-2'>
                                                 <EditCategoryModal
                                                     id={category.id}
-                                                    categoryName={category.name}
+                                                    name={category.name}
                                                     forceRender={forceRender}
                                                     setForceRender={setForceRender}
                                                 />
 
-                                                <button
-                                                    onClick={() => removeCategory(category.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn' />
-                                                </button>
+                                                    <DeleteModal
+                                                        showModal={displayDeleteModal}
+                                                        hideModal={hideConfirmationModal}
+                                                        confirmModal={removeCategory}
+                                                        id={deleteId}
+                                                    />
+
+<button
+                                                        onClick={() => showDeleteModal(category.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
                                             </div>
                                         </div>
                                     </div>

@@ -1,9 +1,9 @@
-import React from 'react'
-import { useForm } from "react-hook-form"
-import AuthService from "../services/auth.service"
+import React from 'react';
+import { useForm } from "react-hook-form";
+import AuthService from "../services/auth.service";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
@@ -32,20 +32,20 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                     "amount": data.amount
                 })
             }
-        )
+        );
 
         if (response.status === 200) {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+    };
 
     // Popup message configuration
-    toast.configure()
+    toast.configure();
     const successMessage = () => {
         toast.success('Pakeitimai išsaugoti', {
             position: toast.POSITION.TOP_CENTER,
@@ -53,8 +53,8 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -62,8 +62,8 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
 
     return (
         <>
@@ -72,8 +72,9 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
+                style={{ paddingTop: 0, paddingBottom: 10 }}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn__income' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
 
             <div
@@ -107,7 +108,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 {...register("incomeName",
                                     {
                                         required: true,
-                                        minLength: 4
+                                        minLength: 3
                                     })
                                 }
                                 type="text"
@@ -116,7 +117,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 defaultValue={incomeName}
                             />
                             {errors?.incomeName?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
+                            {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 3 simbolių</p>}
 
                             <input
                                 {...register("date",
@@ -160,6 +161,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>
@@ -169,5 +171,5 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                 </div>
             </div>
         </>
-    )
+    );
 }

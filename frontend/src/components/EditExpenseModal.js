@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function EditExpenseModal({ id, expenseName, date, amount, forceRender, setForceRender }) {
+export default function EditExpenseModal({ id, expenseName, categoryId, date, amount, forceRender, setForceRender, allCategory }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
@@ -28,6 +28,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                 body: JSON.stringify({
                     "expenseId": id,
                     "expenseName": data.expenseName,
+                    "categoryId": data.categoryId,
                     "date": data.date,
                     "amount": data.amount
                 })
@@ -72,6 +73,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                 className="btn"
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
+                style={{ paddingTop: 0, paddingBottom: 10 }}
             >
                 <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
             </button>
@@ -107,7 +109,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                                 {...register("expenseName",
                                     {
                                         required: true,
-                                        minLength: 4
+                                        minLength: 3
                                     })
                                 }
                                 type="text"
@@ -116,7 +118,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                                 defaultValue={expenseName}
                             />
                             {errors?.expenseName?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 4 simbolių</p>}
+                            {errors?.expenseName?.type === "minLength" && <p>Aprašymas turi būti sudarytas iš bent 3 simbolių</p>}
 
                             <input
                                 {...register("date",
@@ -133,6 +135,20 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                             {errors?.date?.type === "required" && <p>Laukas negali būti tuščias</p>}
                             {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
 
+                            <select {...register("categoryId",
+                                        {
+                                            required: true,
+                                        })
+                                    }
+                                    className="form-control add__description"
+                                    type="text"
+                                    placeholder="Kategorija"
+                                    defaultValue={categoryId}
+                                    >
+                                    {allCategory.map((option) => (
+                                    <option value={option.id}>{option.name}</option>
+                                         ))}
+                                </select>
                             <input
                                 {...register("amount",
                                     {
@@ -160,6 +176,7 @@ export default function EditExpenseModal({ id, expenseName, date, amount, forceR
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

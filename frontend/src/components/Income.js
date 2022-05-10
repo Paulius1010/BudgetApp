@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import "./IncomeAndExpense.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faCirclePlus} from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect } from 'react';
+import "./IncomeAndExpense.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import AuthService from "../services/auth.service"
+import 'react-toastify/dist/ReactToastify.css';
+import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
+import DeleteModal from './DeleteModal';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 
 export default function Income() {
-    const [allIncome, setAllIncome] = useState([])
-    const [forceRender, setForceRender] = useState(false)
+    const [allIncome, setAllIncome] = useState([]);
+    const [forceRender, setForceRender] = useState(false);
+    const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
-    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0)
+    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -42,20 +45,20 @@ export default function Income() {
                     "amount": data.amount
                 })
             }
-        )
+        );
 
         if (response.status === 201) {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+    };
 
     // Popup message configuration
-    toast.configure()
+    toast.configure();
     const successMessage = () => {
         toast.success('Pridėta!', {
             position: toast.POSITION.TOP_CENTER,
@@ -63,8 +66,8 @@ export default function Income() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true,
-        })
-    }
+        });
+    };
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -72,8 +75,8 @@ export default function Income() {
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
 
     const removeIncome = async (id) => {
         await fetch(
@@ -85,10 +88,21 @@ export default function Income() {
                     'Authorization': `Bearer ${currentUser.accessToken}`
                 }
             }
-        )
+        );
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+        setDisplayDeleteModal(false);
+    };
+
+    const showDeleteModal = (id) => {
+        setDisplayDeleteModal(true);
+        setDeleteId(id);
+    };
+
+    const hideDeleteModal = () => {
+        setDisplayDeleteModal(false);
+    };
+
 
     // Fetch all user's income from database to display down below
     useEffect(() => {
@@ -103,7 +117,7 @@ export default function Income() {
                 });
             const data = await response.json();
             setAllIncome(data);
-        }
+        };
 
         fetchData();
     }, [forceRender]);
@@ -126,7 +140,7 @@ export default function Income() {
                                             <div
                                                 className="col-5 budget__income-value">
                                                 {/* Round the number to two decimal places */}
-                                                + {Math.round(incomeSum * 100) / 100
+                                                {Math.round(incomeSum * 100) / 100
                                                 }
                                             </div>
                                             <div className="col-3 budget__income-percentage">&euro;&nbsp;</div>
@@ -147,7 +161,7 @@ export default function Income() {
 
                             <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
                                 <input
-                                    {...register("incomeName", { required: true, minLength: 4 })}
+                                    {...register("incomeName", { required: true, minLength: 3 })}
                                     type="text"
                                     className="form-control add__description"
                                     placeholder="Aprašymas"
@@ -180,7 +194,7 @@ export default function Income() {
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
-                                        <FontAwesomeIcon icon= {faCirclePlus} className='add__btn__income'/>
+                                        <FontAwesomeIcon icon={faCirclePlus} className='add__btn__income' />
                                     </button>
                                 </div>
                             </form>
@@ -190,15 +204,15 @@ export default function Income() {
                         <div className="row ">
                             <div className="col-sm-4 col-4">
                                 {errors?.incomeName?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 4 simbolių ilgio</p>}
+                                {errors?.incomeName?.type === "minLength" && <p>Aprašymas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.date?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.date?.type === "max" && <p>Senesnių nei šiandien įrašų negali būti</p>}
+                                {errors?.date?.type === "max" && <p>Naujesnių nei šiandien įrašų negali būti</p>}
                             </div>
                             <div className="col-sm-4 col-4">
                                 {errors?.amount?.type === "required" && <p>Šis laukas yra privalomas</p>}
-                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų kiekis yra 1 &euro;</p>}
+                                {errors?.amount?.type === "min" && <p>Mažiausias įvestinų pajamų suma yra 0.01 &euro;</p>}
                             </div>
                         </div>
                     </div>
@@ -208,51 +222,64 @@ export default function Income() {
                     <div className="container">
                         <div className="col-12 income">
                             <h2 className="income__title">Pajamos</h2>
-                            <div className="container income__list"></div>
+                            <div className="container income__list">
 
-                            {/* Display user's income on the page */}
-                            {allIncome.map(income => {
+                                {/* Display user's income on the page */}
+                                {allIncome.map(income => {
 
-                                return (
-                                    <div key={income.id}>
-                                        <div className='row'>
-                                            <div className='col-4'>
-                                                {income.incomeName}&nbsp;
-                                            </div>
-                                            <div className='col-4'>
-                                                {income.date}&nbsp;
-                                            </div>
-                                            <div className='col-2'>
-                                                {income.amount}&euro;&nbsp;
-                                            </div>
+                                    return (
+                                        <div key={income.id}>
+                                            <div className='row'>
+                                                <div className='col-4'>
+                                                    {income.incomeName}&nbsp;
+                                                </div>
+                                                <div className='col-4'>
+                                                    {income.date}&nbsp;
+                                                </div>
+                                                <div className='col-2'>
+                                                    {income.amount}&euro;&nbsp;
+                                                </div>
 
-                                            <div className='col-2'>
-                                                <EditIncomeModal
-                                                    id={income.id}
-                                                    incomeName={income.incomeName}
-                                                    date={income.date}
-                                                    amount={income.amount}
-                                                    forceRender={forceRender}
-                                                    setForceRender={setForceRender}
-                                                />
+                                                <div className='col-2'>
+                                                    <EditIncomeModal
+                                                        id={income.id}
+                                                        incomeName={income.incomeName}
+                                                        date={income.date}
+                                                        amount={income.amount}
+                                                        forceRender={forceRender}
+                                                        setForceRender={setForceRender}
+                                                    />
 
-                                                <button
-                                                    onClick={() => removeIncome(income.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{"width":"20px"}}/>
-                                                </button>
+                                                    <DeleteModal
+                                                        showModal={displayDeleteModal}
+                                                        hideModal={hideDeleteModal}
+                                                        confirmModal={removeIncome}
+                                                        id={deleteId}
+                                                    />
+
+                                                    <button
+                                                        onClick={() => showDeleteModal(income.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </>
 
-    )
+    );
 }
