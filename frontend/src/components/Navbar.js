@@ -77,12 +77,12 @@ export default function Navbar() {
                                                 Kategorijos
                                             </NavLink>
                                         </li>
-                                        <li id="button-hover">
+                                        {/* <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
-                                        </li>
+                                        </li> */}
                                     </>
                                 ) : currentUser ? (
                                     <>
@@ -104,12 +104,12 @@ export default function Navbar() {
                                                 Kategorijos
                                             </NavLink>
                                         </li> */}
-                                        <li id="button-hover">
+                                        {/* <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
-                                        </li>
+                                        </li> */}
                                     </>
                                 ) : (
                                     <>
@@ -195,6 +195,35 @@ export default function Navbar() {
                                         </li>
                                     </>
                                 )}
+
+                            {showAdminBoard ? (
+                                <>
+                                    <li id="button-hover">
+                                            <a href="/"
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li>
+                                </>
+                            ) : currentUser ? (
+                                <>
+                                    <li id="button-hover">
+                                            <a href="/"
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li>
+                                </>
+                            ) : (
+                                <>
+                                    {/* <li id="button-hover">
+                                            <a href="/"
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li> */}
+                                </>
+                            )}
                             </ul>
                         </nav>
                     </div>
