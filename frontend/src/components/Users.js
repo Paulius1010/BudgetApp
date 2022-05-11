@@ -13,6 +13,7 @@ export default function Users() {
     const [forceRender, setForceRender] = useState(false);
     const currentUser = AuthService.getCurrentUser();
     const { register, watch, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const [submitResponse, setSubmitResponse] = useState(null);
 
     // Add new user to database from the inputs
     const onSubmit = async (data) => {
@@ -42,10 +43,11 @@ export default function Users() {
             successMessage();
             reset();
         }
-        else {
+        else if (response.status != 400) {
             (errorMessage('Klaida!'));
         }
 
+        setSubmitResponse(response.status);
         setForceRender(!forceRender);
     };
 
@@ -157,6 +159,10 @@ export default function Users() {
                                     {
                                         errors?.email?.type === "minLength" &&
                                         <p>El-paštas turi būti sudarytas iš bent 4 simbolių</p>
+                                    }
+                                    {
+                                        submitResponse === 400 &&
+                                        <p>El. paštas jau yra naudojamas</p>
                                     }
                                 </div>
 
