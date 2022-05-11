@@ -165,9 +165,9 @@ export default function Category() {
 
                         </div>
 
-                        <div className="row">
-                            <div className="col-sm-4 col-4" style={{paddingLeft: "0"}}>
-                                {errors?.name?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                        <div className="row text-left">
+                            <div className="col-sm-4 col-4">
+                                {errors?.name?.type === "required" && <p style={{padding: "0 !important"}}>Šis laukas yra privalomas</p>}
                                 {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                         </div>
