@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import "../navbar bootstrap/bootstrap.module.min.css"
-import "./Navbar.css"
+import "../navbar bootstrap/bootstrap.module.min.css";
+import "./Navbar.css";
 import { RenderContext } from "./RenderContext";
 
 export default function Navbar() {
@@ -32,7 +32,7 @@ export default function Navbar() {
             role="banner">
             <div className="container">
                 <div className="row align-items-center position-relative">
-                    <div className="col-lg-4" style={{paddingLeft: 0}}>
+                    <div className="col-lg-4" style={{ paddingLeft: 0 }}>
                         <nav className="site-navigation ml-auto "
                             role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
@@ -66,7 +66,7 @@ export default function Navbar() {
                                 {showAdminBoard ? (
                                     <>
                                         <li id="button-hover">
-                                            <NavLink to={"/register"}
+                                            <NavLink to={"/users"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Vartotojai
                                             </NavLink>

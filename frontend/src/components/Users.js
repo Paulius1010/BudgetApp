@@ -33,7 +33,7 @@ export default function Users() {
                     "username": data.username,
                     "email": data.email,
                     "password": data.password,
-                    "role": ["admin", "user"]
+                    "role": [admin, "user"]
                 })
             }
         );
