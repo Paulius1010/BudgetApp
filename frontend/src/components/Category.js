@@ -178,50 +178,51 @@ export default function Category() {
                     <div className="container">
                         <div className="col-12 expense">
                             <h2 className="expense__title">Kategorijos</h2>
-                            <div className="container expense__list"></div>
+                            <div className="container expense__list">
 
-                            {/* Display categories on the page */}
-                            {allCategory.map(category => {
+                                {/* Display categories on the page */}
+                                {allCategory.map(category => {
 
-                                return (
-                                    <div key={category.id}>
-                                        <div className='row'>
-                                            <div className='col-10'>
-                                                {category.name}&nbsp;
-                                            </div>
+                                    return (
+                                        <div key={category.id}>
+                                            <div className='row'>
+                                                <div className='col-10'  style={{ paddingLeft: 0 }}>
+                                                    {category.name}&nbsp;
+                                                </div>
 
 
-                                            <div className='col-2'>
-                                                <EditCategoryModal
-                                                    id={category.id}
-                                                    name={category.name}
-                                                    forceRender={forceRender}
-                                                    setForceRender={setForceRender}
-                                                />
-
-                                                <button
-                                                    onClick={() => showDeleteModal(category.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                    style={{ paddingTop: 0, paddingBottom: 10 }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon="trash"
-                                                        className='add__btn'
-                                                        style={{ "width": "20px" }}
+                                                <div className='col-2'>
+                                                    <EditCategoryModal
+                                                        id={category.id}
+                                                        name={category.name}
+                                                        forceRender={forceRender}
+                                                        setForceRender={setForceRender}
                                                     />
-                                                </button>
+
+                                                    <button
+                                                        onClick={() => showDeleteModal(category.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn__expense'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
-                            })}
-                            <DeleteModal
-                                showModal={displayDeleteModal}
-                                hideModal={hideConfirmationModal}
-                                confirmModal={removeCategory}
-                                id={deleteId}
-                            />
+                                    )
+                                })}
+                                <DeleteModal
+                                    showModal={displayDeleteModal}
+                                    hideModal={hideConfirmationModal}
+                                    confirmModal={removeCategory}
+                                    id={deleteId}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
