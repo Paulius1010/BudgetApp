@@ -102,13 +102,6 @@ export default function Users() {
         fetchData();
     }, [forceRender]);
 
-
-    const [isChecked, setIsChecked] = useState(false);
-
-    const handleOnChange = () => {
-        setIsChecked(!isChecked);
-    };
-
     return (
         <>
             <div className="bottom mt-3">
@@ -117,99 +110,116 @@ export default function Users() {
                         <h2 className="income__title">Pridėti naują vartotoją</h2>
                         <div className="row text-center add__container ">
 
-                            <form onSubmit={handleSubmit(onSubmit)} className="input-group my-3">
-                                <input
-                                    {...register("username",
-                                        {
-                                            required: true,
-                                            minLength: 4
-                                        })}
-                                    type="text"
-                                    className="form-control add__description"
-                                    placeholder="Vardas"
-                                />
-
-                                <input
-                                    {...register("email",
-                                        {
-                                            required: true,
-                                            minLength: 4
-                                        })
+                            <form onSubmit={handleSubmit(onSubmit)}
+                                className="input-group my-3 justify-content-center"
+                            >
+                                <div className="col-2 p-0 pe-2">
+                                    <input
+                                        {...register("username",
+                                            {
+                                                required: true,
+                                                minLength: 4
+                                            })}
+                                        type="text"
+                                        className="form-control add__description"
+                                        placeholder="Vardas"
+                                    />
+                                    {
+                                        errors?.username?.type === "required" &&
+                                        <p>Šis laukas yra privalomas</p>
                                     }
-                                    type="email"
-                                    className="form-control add__value"
-                                    placeholder="El. paštas"
-                                />
-
-                                <input
-                                    {...register("password",
-                                        {
-                                            required: true,
-                                            minLength: 6
-                                        })
+                                    {
+                                        errors?.username?.type === "minLength" &&
+                                        <p>Vardas turi būti bent 4 simbolių ilgio</p>
                                     }
-                                    type="password"
-                                    className="form-control add__value"
-                                    placeholder="Slaptažodis"
-                                />
+                                </div>
 
-                                <label
-                                    htmlFor="admin"
-                                    className="ms-1"
-                                >
-                                    Admin.?
-                                </label>
-                                <input
-                                    {...register("admin")}
-                                    // id="ROLE_USER"
-                                    name='admin'
-                                    type="checkbox"
-                                    className="ms-1"
-                                // value="ROLE_USER"
-                                // checked={isChecked}
-                                // onChange={handleOnChange}
-                                />
+                                <div className="col-2 p-0 pe-2">
+                                    <input
+                                        {...register("email",
+                                            {
+                                                required: true,
+                                                minLength: 4
+                                            })
+                                        }
+                                        type="email"
+                                        className="form-control add__value"
+                                        placeholder="El. paštas"
+                                    />
+                                    {
+                                        errors?.email?.type === "required"
+                                        && <p>Šis laukas yra privalomas</p>
+                                    }
+                                    {
+                                        errors?.email?.type === "minLength" &&
+                                        <p>El-paštas turi būti sudarytas iš bent 4 simbolių</p>
+                                    }
+                                </div>
 
-                                <div className="input-group-append">
+                                <div className="col-2 p-0 pe-2">
+                                    <input
+                                        {...register("password",
+                                            {
+                                                required: true,
+                                                minLength: 6
+                                            })
+                                        }
+                                        type="password"
+                                        className="form-control add__value"
+                                        placeholder="Slaptažodis"
+                                    />
+                                    {
+                                        errors?.password?.type === "required" &&
+                                        <p>Šis laukas yra privalomas</p>
+                                    }
+                                    {
+                                        errors?.password?.type === "minLength" &&
+                                        <p>Slaptažodis turi būti bent 6 simbolių ilgio </p>
+                                    }
+                                </div>
+
+                                <div className="col-2 p-0">
+                                    <input
+                                        {...register("password",
+                                            {
+                                                required: true,
+                                                minLength: 6
+                                            })
+                                        }
+                                        type="password"
+                                        className="form-control add__value"
+                                        placeholder="Pakartoti slaptažodį"
+                                    />
+                                    {/* {
+                                        errors?.password?.type === "required" &&
+                                        <p>Šis laukas yra privalomas</p>
+                                    }
+                                    {
+                                        errors?.password?.type === "minLength" &&
+                                        <p>Slaptažodis turi būti bent 6 simbolių ilgio </p>
+                                    } */}
+                                </div>
+
+                                <div className="col-2 p-0">
+                                    <label
+                                        htmlFor="admin"
+                                        className="ms-1"
+                                    >
+                                        Admin.?
+                                    </label>
+                                    <input
+                                        {...register("admin")}
+                                        name='admin'
+                                        type="checkbox"
+                                        className="ms-1"
+                                    />
+
                                     <button className="btn" type="submit">
                                         <FontAwesomeIcon icon={faCirclePlus} className='add__btn__income' />
                                     </button>
                                 </div>
                             </form>
 
-                        </div>
-
-                        <div className="row ">
-                            <div className="col-sm-4 col-4 ">
-                                {
-                                    errors?.username?.type === "required" &&
-                                    <p>Šis laukas yra privalomas</p>
-                                }
-                                {
-                                    errors?.username?.type === "minLength" &&
-                                    <p>Vardas turi būti bent 4 simbolių ilgio</p>
-                                }
-                            </div>
-                            <div className="col-sm-4 col-4">
-                                {
-                                    errors?.email?.type === "required"
-                                    && <p>Šis laukas yra privalomas</p>
-                                }
-                                {
-                                    errors?.email?.type === "minLength" &&
-                                    <p>El-paštas turi būti sudarytas iš bent 4 simbolių</p>
-                                }
-                            </div>
-                            <div className="col-sm-4 col-4">
-                                {
-                                    errors?.password?.type === "required" &&
-                                    <p>Šis laukas yra privalomas</p>
-                                }
-                                {
-                                    errors?.password?.type === "minLength" &&
-                                    <p>Slaptažodis turi būti bent 6 simbolių ilgio </p>
-                                }
-                            </div>
                         </div>
                     </div>
                 </div>
