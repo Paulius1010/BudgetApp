@@ -42,7 +42,7 @@ export default function Category() {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Tokia kategorija jau egzistuoja!'))
         }
 
         setForceRender(!forceRender)
@@ -164,12 +164,11 @@ export default function Category() {
 
                         </div>
 
-                        <div className="row ">
-                            <div className="col-sm-4 col-4">
+                        <div className="row">
+                            <div className="col-sm-4 col-4" style={{paddingLeft: "0"}}>
                                 {errors?.name?.type === "required" && <p>Šis laukas yra privalomas</p>}
                                 {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 3 simbolių ilgio</p>}
                             </div>
-
                         </div>
                     </div>
                 </div>
