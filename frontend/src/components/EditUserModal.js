@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { checked } from 'glamor';
 
-export default function EditUserModal({ id, username, email, password, roles, forceRender, setForceRender }) {
+export default function EditUserModal({ id, username, email, roles, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    // console.log(roles.some(item => item.name === "ROLE_ADMIN"));
+    const password = useRef({});
+    password.current = watch("password", "");
+    // const isAdmin = roles.some(item => item.name === "ROLE_ADMIN");
 
     const onSubmit = async (data) => {
+        let admin = "";
+
+        if (data.admin) {
+            admin = "admin";
+        }
+
         const response = await fetch(
             `http://localhost:8080/api/user/${id}`,
             {
@@ -22,8 +33,8 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                     "id": id,
                     "username": data.username,
                     "email": data.email,
-                    "password": data.password,
-                    "roles": data.roles
+                    "password": (data.password ? data.password : undefined),
+                    "role": [admin, "user"]
                 })
             }
         );
@@ -59,25 +70,25 @@ export default function EditUserModal({ id, username, email, password, roles, fo
         });
     };
 
-    const Checkbox = ({ label, value, onChange }) => {
-        return (
-            <label>
-                <input type="checkbox" checked={value} onChange={onChange} />
-                {label}
-            </label>
-        );
-    };
+    // const Checkbox = ({ label, value, onChange }) => {
+    //     return (
+    //         <label>
+    //             <input type="checkbox" checked={value} onChange={onChange} />
+    //             {label}
+    //         </label>
+    //     );
+    // };
 
-    const [checkedOne, setCheckedOne] = React.useState(false);
-    const [checkedTwo, setCheckedTwo] = React.useState(false);
+    // const [checkedOne, setCheckedOne] = React.useState(false);
+    // const [checkedTwo, setCheckedTwo] = React.useState(false);
 
-    const handleChangeOne = () => {
-        setCheckedOne(!checkedOne);
-    };
+    // const handleChangeOne = () => {
+    //     setCheckedOne(!checkedOne);
+    // };
 
-    const handleChangeTwo = () => {
-        setCheckedTwo(!checkedTwo);
-    };
+    // const handleChangeTwo = () => {
+    //     setCheckedTwo(!checkedTwo);
+    // };
 
     return (
         <>
@@ -87,7 +98,10 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                 data-bs-toggle="modal"
                 data-bs-target={"#id" + id}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn__income' />
+                <FontAwesomeIcon
+                    icon="pen-to-square"
+                    className='add__btn__income'
+                />
             </button>
 
             <div
@@ -116,7 +130,10 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                             </button>
                         </div>
 
-                        <form onSubmit={handleSubmit(onSubmit)} className="modal-body">
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="modal-body"
+                        >
                             <input
                                 {...register("username",
                                     {
@@ -129,9 +146,14 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                                 placeholder="Vardas"
                                 defaultValue={username}
                             />
-                            {errors?.username?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.username?.type === "minLength" && <p>Vardas turi būti sudarytas iš bent 4 simbolių</p>}
-
+                            {
+                                errors?.username?.type === "required" &&
+                                <p>Laukas negali būti tuščias</p>
+                            }
+                            {
+                                errors?.username?.type === "minLength" &&
+                                <p>Vardas turi būti sudarytas iš bent 4 simbolių</p>
+                            }
 
                             <input
                                 {...register("email",
@@ -140,14 +162,19 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                                         minLength: 4
                                     })
                                 }
-                                type="text"
+                                type="email"
                                 className="form-control add__value mt-2"
-                                placeholder="El-paštas"
-                                step="0.01"
+                                placeholder="El. paštas"
                                 defaultValue={email}
                             />
-                            {errors?.email?.type === "required" && <p>Laukas negali būti tuščias</p>}
-                            {errors?.email?.type === "min" && <p>El-paštas turi būti sudarytas iš bent 4 simbolių &euro;</p>}
+                            {
+                                errors?.email?.type === "required" &&
+                                <p>Laukas negali būti tuščias</p>
+                            }
+                            {
+                                errors?.email?.type === "min" &&
+                                <p>El-paštas turi būti sudarytas iš bent 4 simbolių &euro;</p>
+                            }
 
                             <input
                                 {...register("password",
@@ -159,13 +186,28 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                                 type="password"
                                 className="form-control add__description mt-2"
                                 placeholder="Slaptažodis"
-                                defaultValue={password}
                             />
                             {/* {errors?.password?.type === "required" && <p>Laukas negali būti tuščias</p>} */}
-                            {errors?.password?.type === "minLength" && <p>Slaptažodis turi būti sudarytas iš bent 6 simbolių</p>}
+                            {
+                                errors?.password?.type === "minLength" &&
+                                <p>Slaptažodis turi būti sudarytas iš bent 6 simbolių</p>
+                            }
+
+                            <input
+                                {...register("password_repeat",
+                                    {
+                                        validate: value =>
+                                            value === password.current || "Slaptažodžiai nesutampa"
+                                    })
+                                }
+                                type="password"
+                                className='form-control mt-2'
+                                placeholder='Pakartoti slaptažodį'
+                            />
+                            {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
 
                             {/* checkbox to select roles */}
-                            <label>
+                            {/* <label>
                                 <input
                                     {...register("roles",
                                         {
@@ -185,6 +227,20 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                                 label="Moderator"
                                 value={checkedOne}
                                 onChange={handleChangeOne}
+                            /> */}
+
+                            <label
+                                htmlFor="admin"
+                                className="ms-1"
+                            >
+                                Administratorius
+                            </label>
+                            <input
+                                {...register("admin")}
+                                name='admin'
+                                type="checkbox"
+                                className="ms-1"
+                                defaultChecked={roles.some(item => item.name === "ROLE_ADMIN") ? true : false}
                             />
 
                             <div className="modal-footer">

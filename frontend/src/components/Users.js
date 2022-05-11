@@ -255,7 +255,6 @@ export default function Users() {
                                                     id={users.id}
                                                     username={users.username}
                                                     email={users.email}
-                                                    password={users.password}
                                                     roles={users.roles}
 
                                                     forceRender={forceRender}
