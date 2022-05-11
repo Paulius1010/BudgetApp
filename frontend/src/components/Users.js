@@ -8,35 +8,32 @@ import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditUserModal from './EditUserModal';
 
-
 export default function Users() {
     const [allUsers, setAllUsers] = useState([]);
     const [forceRender, setForceRender] = useState(false);
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
-    // This is used to figure out today's date, and format it accordingly
-    // let today = new Date();
-    // const dd = String(today.getDate()).padStart(2, '0');
-    // const mm = String(today.getMonth() + 1).padStart(2, '0');
-    // const yyyy = today.getFullYear();
-    // today = yyyy + '-' + mm + '-' + dd;
-
     // Add new user to database from the inputs
     const onSubmit = async (data) => {
+        let admin = "";
+
+        if (data.admin) {
+            admin = "admin";
+        }
+
         const response = await fetch(
             "http://localhost:8080/api/auth/signup",
             {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${currentUser.accessToken}`
                 },
                 body: JSON.stringify({
                     "username": data.username,
                     "email": data.email,
                     "password": data.password,
-                    "role": data.roles
+                    "role": ["admin", "user"]
                 })
             }
         );
@@ -156,20 +153,22 @@ export default function Users() {
                                     placeholder="Slaptažodis"
                                 />
 
-                                {/* <input
-                                    {...register("roles",
-                                        {
-
-
-                                        })
-                                    }
-                                    id="ROLE_USER"
+                                <label
+                                    htmlFor="admin"
+                                    className="ms-1"
+                                >
+                                    Admin.?
+                                </label>
+                                <input
+                                    {...register("admin")}
+                                    // id="ROLE_USER"
+                                    name='admin'
                                     type="checkbox"
-                                    className="form-control add__value"
-                                    value="ROLE_USER"
-                                    checked={isChecked}
-                                    onChange={handleOnChange}
-                                /> */}
+                                    className="ms-1"
+                                // value="ROLE_USER"
+                                // checked={isChecked}
+                                // onChange={handleOnChange}
+                                />
 
                                 <div className="input-group-append">
                                     <button className="btn" type="submit">
