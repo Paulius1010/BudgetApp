@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { toast } from 'react-toastify';
@@ -13,6 +13,7 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
     const password = useRef({});
     password.current = watch("password", "");
     // const isAdmin = roles.some(item => item.name === "ROLE_ADMIN");
+    const [submitResponse, setSubmitResponse] = useState(null);
 
     const onSubmit = async (data) => {
         let admin = "";
@@ -42,10 +43,11 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
         if (response.status === 200) {
             successMessage();
         }
-        else {
+        else if (response.status !== 400) {
             (errorMessage('Klaida!'));
         }
 
+        setSubmitResponse(response.status);
         setForceRender(!forceRender);
     };
 
@@ -174,6 +176,10 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
                             {
                                 errors?.email?.type === "min" &&
                                 <p>El-paštas turi būti sudarytas iš bent 4 simbolių &euro;</p>
+                            }
+                            {
+                                submitResponse === 400 &&
+                                <p>El. paštas jau yra naudojamas</p>
                             }
 
                             <input

@@ -60,6 +60,12 @@ public class UserController {
 	@PutMapping("/{id}")
 //	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ADMIN')")
 	public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @Valid @RequestBody SignupRequest signUpRequest) {
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Email is already in use!"));
+		}
+		
 		User user = userRepository.findById(id).orElseThrow();
 	
 //		Set<Role> roles = new HashSet<>();
