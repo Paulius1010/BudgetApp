@@ -18,7 +18,7 @@
 
 .intro_font{
     font-family: "Century Gothic";
-    font-size: 50px;
+    font-size: 320%;
     padding-top: 16rem;
     color: white;
 }
@@ -37,7 +37,7 @@
 
 .ss_header{
     font-family: "Calibri";
-    font-size: 23px;
+    font-size: 130%;
     color: #6b8910;
     font-weight: bold;
     padding-bottom: 13px;
@@ -56,7 +56,7 @@
 } */
 
 .text_config{
-   font-size: 35px;
+   font-size: 190%;
    font-family: "Arial Black";
    /* font-family: "Bahnschrift SemiBold"; */
    font-style: bold;
