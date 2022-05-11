@@ -18,7 +18,7 @@ export default function Expense() {
     const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's expense
     const expenseSum = allExpense.reduce((n, { amount }) => n + amount, 0);
 
@@ -69,6 +69,7 @@ export default function Expense() {
 
         if (response.status === 201) {
             successMessage();
+            reset();
         }
         else {
             (errorMessage('Klaida!'));
@@ -152,14 +153,14 @@ export default function Expense() {
                                 <div>
                                     <div className="my-2 budget__expense">
                                         <div className="row">
-                                            <div className="col-4 budget__expense-text" style={{paddingLeft: 0}}>Išlaidos</div>
+                                            <div className="col-4 budget__expense-text" style={{ paddingLeft: 0 }}>Išlaidos</div>
                                             <div
-                                                className="col-4 budget__expense-value" style={{paddingLeft: 0, paddingRight: 30}}>
+                                                className="col-4 budget__expense-value" style={{ paddingLeft: 0, paddingRight: 30 }}>
                                                 {/* Round the number to two decimal places */}
                                                 {Math.round(expenseSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-4 budget__expense-percentage" style={{paddingLeft: 0, paddingRight: 60}}>&euro;&nbsp;</div>
+                                            <div className="col-4 budget__expense-percentage" style={{ paddingLeft: 0, paddingRight: 60 }}>&euro;&nbsp;</div>
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +254,7 @@ export default function Expense() {
 
                 <div className="mt-5 list">
                     <div className="container">
-                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
+                        <div className="col-12 expense" style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list"></div>
                             {/* Display user's expense on the page */}
@@ -269,14 +270,14 @@ export default function Expense() {
                                                 {expense.date}&nbsp;
                                             </div>
 
-                                            <div className='col-2' style={{paddingLeft: 0}}>
+                                            <div className='col-2' style={{ paddingLeft: 0 }}>
                                                 {expense.expensesCategory.name}&nbsp;
                                             </div>
-                                            <div className='col-2' style={{paddingLeft: '6%'}}>
+                                            <div className='col-2' style={{ paddingLeft: '6%' }}>
                                                 {expense.amount}&euro;&nbsp;
                                             </div>
 
-                                            <div className='col-2' style={{textAlign: 'right', paddingLeft: 0, paddingRight: 0}}>
+                                            <div className='col-2' style={{ textAlign: 'right', paddingLeft: 0, paddingRight: 0 }}>
                                                 <EditExpenseModal
                                                     id={expense.id}
                                                     expenseName={expense.expenseName}
