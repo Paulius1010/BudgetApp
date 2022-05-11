@@ -28,17 +28,32 @@
 }
 
 .second_section{
-    height: 30rem;
+    height: auto;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    border-bottom: solid 3.5px #8AA82D;
+    padding: 20px 0;
 }
 
-#second_section_header{
-    padding-top: 20px;
-    padding-left: 30px;
+.ss_header{
     font-family: "Calibri";
-    font-size: 30px;
+    font-size: 23px;
+    color: #6b8910;
+    font-weight: bold;
+    padding-bottom: 13px;
 }
+.ss_content{
+    font-family: "Calibri";
+}
+.third_section{
+    padding: 80px 0;
+}
+
+/* #second_section_header{
+    
+    padding-left: 30px;
+
+} */
 
 .text_config{
    font-size: 35px;
