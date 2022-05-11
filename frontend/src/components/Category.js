@@ -18,9 +18,9 @@ export default function Category() {
     const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Count categories
-    const categoryCount = allCategory.reduce((n, { amount }) => n + 1, 0)
+    const categoryCount = allCategory.reduce((n) => n + 1, 0)
 
     // Add category to database from the inputs
     const onSubmit = async (data) => {
@@ -40,6 +40,7 @@ export default function Category() {
 
         if (response.status === 201) {
             successMessage();
+            reset();
         }
         else {
             (errorMessage('Tokia kategorija jau egzistuoja!'))
