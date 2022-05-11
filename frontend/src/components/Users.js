@@ -12,7 +12,7 @@ export default function Users() {
     const [allUsers, setAllUsers] = useState([]);
     const [forceRender, setForceRender] = useState(false);
     const currentUser = AuthService.getCurrentUser();
-    const { register, watch, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, watch, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
     // Add new user to database from the inputs
     const onSubmit = async (data) => {
@@ -40,6 +40,7 @@ export default function Users() {
 
         if (response.status === 200) {
             successMessage();
+            reset();
         }
         else {
             (errorMessage('Klaida!'));
@@ -109,12 +110,12 @@ export default function Users() {
         <>
             <div className="bottom mt-4">
                 <div className="container">
-                    <div className="add" style={{padding: 4, paddingTop: 12}}>
+                    <div className="add" style={{ padding: 4, paddingTop: 12 }}>
                         <h2 className="income__title">Pridėti naują vartotoją</h2>
                         <div className="row text-center add__container ">
 
                             <form onSubmit={handleSubmit(onSubmit)}
-                                className="input-group my-2 justify-content-center" 
+                                className="input-group my-2 justify-content-center"
                             >
                                 <div className="col-2 p-0 pe-2" >
                                     <input
@@ -222,7 +223,7 @@ export default function Users() {
 
                 <div className="mt-4 list">
                     <div className="container">
-                        <div className="col-12 username" style={{paddingLeft: 0, paddingRight: 0}}>
+                        <div className="col-12 username" style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <h2 className="income__title">Vartotojai</h2>
                             <div className="container income__list"></div>
 
@@ -235,10 +236,10 @@ export default function Users() {
                                             <div className='col-3'>
                                                 {users.username}&nbsp;
                                             </div>
-                                            <div className='col-4' style={{paddingLeft: 40}}>
+                                            <div className='col-4' style={{ paddingLeft: 40 }}>
                                                 {users.email}&nbsp;
                                             </div>
-                                            <div className='col-3' style={{paddingLeft: 50}}>
+                                            <div className='col-3' style={{ paddingLeft: 50 }}>
                                                 {/* {users.roles.map(roles => {
                                                 return(
                                                     <div key={roles.id}>
@@ -250,7 +251,7 @@ export default function Users() {
 
                                             </div>
 
-                                            <div className='col-2' style={{textAlign: "right", paddingRight: 0}}>
+                                            <div className='col-2' style={{ textAlign: "right", paddingRight: 0 }}>
                                                 <EditUserModal
                                                     id={users.id}
                                                     username={users.username}
