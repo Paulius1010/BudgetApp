@@ -1,15 +1,13 @@
-import React from 'react'
-import { useForm } from "react-hook-form"
-import AuthService from "../services/auth.service"
+import React from 'react';
+import { useForm } from "react-hook-form";
+import AuthService from "../services/auth.service";
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function EditUserModal({ id, username, email, password, roles, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
-
-
 
     const onSubmit = async (data) => {
         const response = await fetch(
@@ -24,24 +22,24 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                     "id": id,
                     "username": data.username,
                     "email": data.email,
-                    "password": data.password, 
+                    "password": data.password,
                     "roles": data.roles
                 })
             }
-        )
+        );
 
         if (response.status === 200) {
             successMessage();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
-        setForceRender(!forceRender)
-    }
+        setForceRender(!forceRender);
+    };
 
     // Popup message configuration
-    toast.configure()
+    toast.configure();
     const successMessage = () => {
         toast.success('Pakeitimai išsaugoti', {
             position: toast.POSITION.TOP_CENTER,
@@ -49,8 +47,8 @@ export default function EditUserModal({ id, username, email, password, roles, fo
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -58,28 +56,28 @@ export default function EditUserModal({ id, username, email, password, roles, fo
             theme: "colored",
             pauseOnHover: false,
             hideProgressBar: true
-        })
-    }
+        });
+    };
 
     const Checkbox = ({ label, value, onChange }) => {
         return (
-          <label>
-            <input type="checkbox" checked={value} onChange={onChange} />
-            {label}
-          </label>
+            <label>
+                <input type="checkbox" checked={value} onChange={onChange} />
+                {label}
+            </label>
         );
-      };
+    };
 
-      const [checkedOne, setCheckedOne] = React.useState(false);
-  const [checkedTwo, setCheckedTwo] = React.useState(false);
+    const [checkedOne, setCheckedOne] = React.useState(false);
+    const [checkedTwo, setCheckedTwo] = React.useState(false);
 
-  const handleChangeOne = () => {
-    setCheckedOne(!checkedOne);
-  };
+    const handleChangeOne = () => {
+        setCheckedOne(!checkedOne);
+    };
 
-  const handleChangeTwo = () => {
-    setCheckedTwo(!checkedTwo);
-  };
+    const handleChangeTwo = () => {
+        setCheckedTwo(!checkedTwo);
+    };
 
     return (
         <>
@@ -168,25 +166,25 @@ export default function EditUserModal({ id, username, email, password, roles, fo
 
                             {/* checkbox to select roles */}
                             <label>
-                            <input
-                                {...register("roles",
-                                    {
-                                        // required: true,
-                                        // minLength: 6
-                                    })
-                                }
-                                type="checkbox"
-                                className="form-check-input add__description mt-2"
-                                placeholder="Rolė"
-                                defaultValue={roles}
-                            />
-                            Admin
+                                <input
+                                    {...register("roles",
+                                        {
+                                            // required: true,
+                                            // minLength: 6
+                                        })
+                                    }
+                                    type="checkbox"
+                                    className="form-check-input add__description mt-2"
+                                    placeholder="Rolė"
+                                    defaultValue={roles}
+                                />
+                                Admin
                             </label>
 
                             <Checkbox
                                 label="Moderator"
                                 value={checkedOne}
-                                 onChange={handleChangeOne}
+                                onChange={handleChangeOne}
                             />
 
                             <div className="modal-footer">
@@ -209,5 +207,5 @@ export default function EditUserModal({ id, username, email, password, roles, fo
                 </div>
             </div>
         </>
-    )
+    );
 }

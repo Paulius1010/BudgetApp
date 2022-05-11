@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./IncomeAndExpense.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ export default function Users() {
     const [allUsers, setAllUsers] = useState([]);
     const [forceRender, setForceRender] = useState(false);
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, watch, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
 
     // Add new user to database from the inputs
     const onSubmit = async (data) => {
@@ -102,6 +102,9 @@ export default function Users() {
         fetchData();
     }, [forceRender]);
 
+    const password = useRef({});
+    password.current = watch("password", "");
+
     return (
         <>
             <div className="bottom mt-3">
@@ -180,24 +183,17 @@ export default function Users() {
 
                                 <div className="col-2 p-0">
                                     <input
-                                        {...register("password",
+                                        {...register("password_repeat",
                                             {
-                                                required: true,
-                                                minLength: 6
+                                                validate: value =>
+                                                    value === password.current || "Slaptažodžiai nesutampa"
                                             })
                                         }
                                         type="password"
-                                        className="form-control add__value"
-                                        placeholder="Pakartoti slaptažodį"
+                                        className='form-control'
+                                        placeholder='Pakartoti slaptažodį'
                                     />
-                                    {/* {
-                                        errors?.password?.type === "required" &&
-                                        <p>Šis laukas yra privalomas</p>
-                                    }
-                                    {
-                                        errors?.password?.type === "minLength" &&
-                                        <p>Slaptažodis turi būti bent 6 simbolių ilgio </p>
-                                    } */}
+                                    {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
                                 </div>
 
                                 <div className="col-2 p-0">
