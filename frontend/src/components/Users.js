@@ -107,16 +107,16 @@ export default function Users() {
 
     return (
         <>
-            <div className="bottom mt-3">
+            <div className="bottom mt-4">
                 <div className="container">
-                    <div className="add">
+                    <div className="add" style={{padding: 4, paddingTop: 12}}>
                         <h2 className="income__title">Pridėti naują vartotoją</h2>
                         <div className="row text-center add__container ">
 
                             <form onSubmit={handleSubmit(onSubmit)}
-                                className="input-group my-3 justify-content-center"
+                                className="input-group my-2 justify-content-center" 
                             >
-                                <div className="col-2 p-0 pe-2">
+                                <div className="col-2 p-0 pe-2" >
                                     <input
                                         {...register("username",
                                             {
@@ -137,7 +137,7 @@ export default function Users() {
                                     }
                                 </div>
 
-                                <div className="col-2 p-0 pe-2">
+                                <div className="col-2 p-0 pe-2" >
                                     <input
                                         {...register("email",
                                             {
@@ -159,7 +159,7 @@ export default function Users() {
                                     }
                                 </div>
 
-                                <div className="col-2 p-0 pe-2">
+                                <div className="col-2 p-0 pe-2" >
                                     <input
                                         {...register("password",
                                             {
@@ -181,7 +181,7 @@ export default function Users() {
                                     }
                                 </div>
 
-                                <div className="col-2 p-0">
+                                <div className="col-2 p-0" >
                                     <input
                                         {...register("password_repeat",
                                             {
@@ -196,7 +196,7 @@ export default function Users() {
                                     {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
                                 </div>
 
-                                <div className="col-2 p-0">
+                                <div className="col-4 p-0" >
                                     <label
                                         htmlFor="admin"
                                         className="ms-1"
@@ -220,9 +220,9 @@ export default function Users() {
                     </div>
                 </div>
 
-                <div className="mt-5 list">
+                <div className="mt-4 list">
                     <div className="container">
-                        <div className="col-12 username">
+                        <div className="col-12 username" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="income__title">Vartotojai</h2>
                             <div className="container income__list"></div>
 
@@ -232,13 +232,13 @@ export default function Users() {
                                 return (
                                     <div key={users.id}>
                                         <div className='row'>
-                                            <div className='col-4'>
+                                            <div className='col-3'>
                                                 {users.username}&nbsp;
                                             </div>
-                                            <div className='col-4'>
+                                            <div className='col-4' style={{paddingLeft: 40}}>
                                                 {users.email}&nbsp;
                                             </div>
-                                            <div className='col-2'>
+                                            <div className='col-3' style={{paddingLeft: 50}}>
                                                 {/* {users.roles.map(roles => {
                                                 return(
                                                     <div key={roles.id}>
@@ -250,7 +250,7 @@ export default function Users() {
 
                                             </div>
 
-                                            <div className='col-2'>
+                                            <div className='col-2' style={{textAlign: "right", paddingRight: 0}}>
                                                 <EditUserModal
                                                     id={users.id}
                                                     username={users.username}
