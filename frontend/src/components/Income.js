@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import "./IncomeAndExpense.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,8 @@ import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
 import DeleteModal from './DeleteModal';
+import PaginationDataService from "../services/pagination.service";
+import Pagination from "@material-ui/lab/Pagination";
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -121,6 +123,10 @@ export default function Income() {
 
         fetchData();
     }, [forceRender]);
+
+
+    //pagination
+    
 
 
     return (
