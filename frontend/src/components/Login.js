@@ -18,7 +18,8 @@ export default function Login() {
                     .then(response => response.json())
                     .then(data => {
                         if (data.roles.some(role => role.name === "ROLE_ADMIN")) {
-                            navigate("/admin");
+                            // navigate("/admin");
+                            navigate("/users");
                             setRender(!render);
                         } else {
                             navigate("/income");
