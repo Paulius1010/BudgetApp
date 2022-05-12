@@ -48,8 +48,7 @@ export default function Income() {
         );
 
         if (response.status === 201) {
-            successMessage();
-            reset();
+            successMessage('Pridėta!');
         }
         else {
             (errorMessage('Klaida!'));
@@ -60,8 +59,8 @@ export default function Income() {
 
     // Popup message configuration
     toast.configure();
-    const successMessage = () => {
-        toast.success('Pridėta!', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -80,7 +79,7 @@ export default function Income() {
     };
 
     const removeIncome = async (id) => {
-        await fetch(
+        const response = await fetch(
             `http://localhost:8080/api/income/${id}`,
             {
                 method: "DELETE",
@@ -90,6 +89,13 @@ export default function Income() {
                 }
             }
         );
+
+        if (response.status === 200) {
+            successMessage('Ištrinta');
+        }
+        else {
+            (errorMessage('Klaida!'))
+        }
 
         setForceRender(!forceRender);
         setDisplayDeleteModal(false);

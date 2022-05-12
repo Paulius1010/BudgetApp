@@ -39,7 +39,7 @@ export default function Category() {
         )
 
         if (response.status === 201) {
-            successMessage();
+            successMessage('Pridėta');
             reset();
         }
         else {
@@ -51,8 +51,8 @@ export default function Category() {
 
     // Popup message configuration
     toast.configure()
-    const successMessage = () => {
-        toast.success('Pridėta!', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -71,7 +71,7 @@ export default function Category() {
     }
 
     const removeCategory = async (id) => {
-        await fetch(
+        const response = await fetch(
             `http://localhost:8080/api/categories/${id}`,
             {
                 method: "DELETE",
@@ -81,6 +81,14 @@ export default function Category() {
                 }
             }
         )
+
+        if (response.status === 200) {
+            successMessage('Ištrinta');
+        }
+        else {
+            (errorMessage('Šios kategorijos trinti negalima, nes yra naudojama vartotojų'))
+        }
+
         setForceRender(!forceRender);
         setDisplayDeleteModal(false);
     };
