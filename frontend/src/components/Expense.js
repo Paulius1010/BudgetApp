@@ -201,8 +201,10 @@ export default function Expense() {
                                 }
                                     className="form-control add__description"
                                     type="text"
-                                    placeholder="Kategorija"
                                 >
+                                    <option value={""}>
+                                        --Pasirinkite kategoriją--
+                                    </option>
                                     {allCategory.map((option) => (
                                         <option value={option.id}>{option.name}</option>
                                     ))}
