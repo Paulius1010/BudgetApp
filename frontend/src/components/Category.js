@@ -43,7 +43,7 @@ export default function Category() {
             reset();
         }
         else {
-            (errorMessage('Tokia kategorija jau egzistuoja!'))
+            (errorMessage('Tokia išlaidų kategorija jau įvesta!'))
         }
 
         setForceRender(!forceRender)
