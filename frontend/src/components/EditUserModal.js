@@ -214,9 +214,11 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
                                 >
                                     Uždaryti
                                 </button>
+
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>
