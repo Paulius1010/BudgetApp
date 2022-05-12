@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditUserModal from './EditUserModal';
+import DeleteModal from './DeleteModal';
 
 export default function Users() {
     const [allUsers, setAllUsers] = useState([]);
@@ -14,6 +15,11 @@ export default function Users() {
     const currentUser = AuthService.getCurrentUser();
     const { register, watch, handleSubmit, reset, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     const [submitResponse, setSubmitResponse] = useState(null);
+    const [deleteId, setDeleteId] = useState();
+    const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+
+    const password = useRef({});
+    password.current = watch("password", "");
 
     // Add new user to database from the inputs
     const onSubmit = async (data) => {
@@ -62,6 +68,7 @@ export default function Users() {
             hideProgressBar: true,
         });
     };
+
     const errorMessage = (msg) => {
         toast.error(msg, {
             position: toast.POSITION.TOP_CENTER,
@@ -85,6 +92,7 @@ export default function Users() {
         );
 
         setForceRender(!forceRender);
+        setDisplayDeleteModal(false);
     };
 
     // Fetch all users from database to display down below
@@ -105,8 +113,14 @@ export default function Users() {
         fetchData();
     }, [forceRender]);
 
-    const password = useRef({});
-    password.current = watch("password", "");
+    const showDeleteModal = (id) => {
+        setDisplayDeleteModal(true);
+        setDeleteId(id);
+    };
+
+    const hideDeleteModal = () => {
+        setDisplayDeleteModal(false);
+    };
 
     return (
         <>
@@ -269,7 +283,8 @@ export default function Users() {
                                                 />
 
                                                 <button
-                                                    onClick={() => removeUser(users.id)}
+                                                    // onClick={() => removeUser(users.id)}
+                                                    onClick={() => showDeleteModal(users.id)}
                                                     className="btn"
                                                     type="button"
                                                 >
@@ -280,6 +295,13 @@ export default function Users() {
                                     </div>
                                 );
                             })}
+
+                            <DeleteModal
+                                showModal={displayDeleteModal}
+                                hideModal={hideDeleteModal}
+                                confirmModal={removeUser}
+                                id={deleteId}
+                            />
                         </div>
                     </div>
                 </div>
