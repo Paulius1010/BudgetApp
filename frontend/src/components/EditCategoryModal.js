@@ -65,7 +65,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                 data-bs-target={"#id" + id}
                 style={{ paddingTop: 0, paddingBottom: 10 }}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn__expense' />
             </button>
 
             <div
