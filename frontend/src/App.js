@@ -19,8 +19,8 @@ import Contacts from "./components/Contacts.js";
 import Blog from "./components/Blog.js";
 import { RenderContext } from './components/RenderContext';
 import ErrorPage from "./components/ErrorPage";
+import Users from "./components/Users";
 import Footer from "./components/Footer";
-
 const App = () => {
   const [render, setRender] = useState(false);
 
@@ -48,6 +48,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/user" element={<BoardUser />} />
+            <Route path="/users" element={<Users />} />
             {/* <Route path="/mod" element={<BoardModerator />} /> */}
             <Route path="/admin" element={<BoardAdmin />} />
             {/* <Route path="/register-success" element={<RegisterSuccess />} /> */}
