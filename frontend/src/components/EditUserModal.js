@@ -72,26 +72,6 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
         });
     };
 
-    // const Checkbox = ({ label, value, onChange }) => {
-    //     return (
-    //         <label>
-    //             <input type="checkbox" checked={value} onChange={onChange} />
-    //             {label}
-    //         </label>
-    //     );
-    // };
-
-    // const [checkedOne, setCheckedOne] = React.useState(false);
-    // const [checkedTwo, setCheckedTwo] = React.useState(false);
-
-    // const handleChangeOne = () => {
-    //     setCheckedOne(!checkedOne);
-    // };
-
-    // const handleChangeTwo = () => {
-    //     setCheckedTwo(!checkedTwo);
-    // };
-
     return (
         <>
             <button
@@ -177,10 +157,10 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
                                 errors?.email?.type === "min" &&
                                 <p>El-paštas turi būti sudarytas iš bent 4 simbolių &euro;</p>
                             }
-                            {
+                            {/* {
                                 submitResponse === 400 &&
                                 <p>El. paštas jau yra naudojamas</p>
-                            }
+                            } */}
 
                             <input
                                 {...register("password",
@@ -211,29 +191,6 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
                                 placeholder='Pakartoti slaptažodį'
                             />
                             {errors.password_repeat && <p>{errors.password_repeat.message}</p>}
-
-                            {/* checkbox to select roles */}
-                            {/* <label>
-                                <input
-                                    {...register("roles",
-                                        {
-                                            // required: true,
-                                            // minLength: 6
-                                        })
-                                    }
-                                    type="checkbox"
-                                    className="form-check-input add__description mt-2"
-                                    placeholder="Rolė"
-                                    defaultValue={roles}
-                                />
-                                Admin
-                            </label>
-
-                            <Checkbox
-                                label="Moderator"
-                                value={checkedOne}
-                                onChange={handleChangeOne}
-                            /> */}
 
                             <label
                                 htmlFor="admin"
