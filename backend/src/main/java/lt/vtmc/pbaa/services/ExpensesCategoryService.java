@@ -48,6 +48,10 @@ public class ExpensesCategoryService {
         if (expensesCategory == null) {
             throw new RuntimeException("Category does not exist");
         }
+        Optional<ExpensesCategory> expensesCategory2 = expensesCategoryRepository.findByName(expensesCategoryUpdateRequest.getName());
+        if (expensesCategory2.isPresent()) {
+            throw new RuntimeException("Category already exists");
+        }
         expensesCategory.setName(expensesCategoryUpdateRequest.getName());
         expensesCategoryRepository.save(expensesCategory);
         return new ExpensesCategoryResponse(expensesCategory.getId(), expensesCategory.getName());
