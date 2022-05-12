@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin
@@ -46,4 +48,16 @@ public class IncomeController {
 		return ResponseEntity.ok().body(this.incomeService.getAllIncomeByUser(id));
 	}
 	
+	@GetMapping("/user")// /api/income/user?offset=0&pageSize=3 to test
+	public ResponseEntity<List<Income>> getAllIncomeByUserIdPage(@RequestParam("offset") int offset, @RequestParam("pageSize") int pageSize) {
+		return ResponseEntity.ok().body(this.incomeService.getIncomeWithPagination(offset, pageSize));
+	}
+	@GetMapping("/userSort")// /api/income/userSort?field=date to test
+	public ResponseEntity<List<Income>> getAllIncomeByUserIdSorted(@RequestParam("field") String field) {
+		return ResponseEntity.ok().body(this.incomeService.findByUserAndSort(field));
+	}
+	@GetMapping("/userDate")// /api/income/userSort?field=date to test
+	public ResponseEntity<List<Income>> getAllIncomeByUserIdMonth(@RequestParam("date") String date) {
+		return ResponseEntity.ok().body(this.incomeService.findByUserByDate(date));
+	}
 }
