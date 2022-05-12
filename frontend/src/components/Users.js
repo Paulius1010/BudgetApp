@@ -249,51 +249,53 @@ export default function Users() {
 
                             {/* Display users on the page */}
                             {allUsers.map(users => {
-
-                                return (
-                                    <div key={users.id}>
-                                        <div className='row'>
-                                            <div className='col-3'>
-                                                {users.username}&nbsp;
-                                            </div>
-                                            <div className='col-4' style={{ paddingLeft: 40 }}>
-                                                {users.email}&nbsp;
-                                            </div>
-                                            <div className='col-3' style={{ paddingLeft: 50 }}>
-                                                {/* {users.roles.map(roles => {
+                                // Show everyone but currently logged in user
+                                if (users.id !== currentUser.id) {
+                                    return (
+                                        <div key={users.id}>
+                                            <div className='row'>
+                                                <div className='col-3'>
+                                                    {users.username}&nbsp;
+                                                </div>
+                                                <div className='col-4' style={{ paddingLeft: 40 }}>
+                                                    {users.email}&nbsp;
+                                                </div>
+                                                <div className='col-3' style={{ paddingLeft: 50 }}>
+                                                    {/* {users.roles.map(roles => {
                                                 return(
                                                     <div key={roles.id}>
                                                         {roles.name}
                                                     </div>
                                                 )
                                             })} */}
-                                                {users.roles.map(roles => <p>{roles.name}</p>)}
+                                                    {users.roles.map(roles => <p>{roles.name}</p>)}
 
-                                            </div>
+                                                </div>
 
-                                            <div className='col-2' style={{ textAlign: "right", paddingRight: 0 }}>
-                                                <EditUserModal
-                                                    id={users.id}
-                                                    username={users.username}
-                                                    email={users.email}
-                                                    roles={users.roles}
+                                                <div className='col-2' style={{ textAlign: "right", paddingRight: 0 }}>
+                                                    <EditUserModal
+                                                        id={users.id}
+                                                        username={users.username}
+                                                        email={users.email}
+                                                        roles={users.roles}
 
-                                                    forceRender={forceRender}
-                                                    setForceRender={setForceRender}
-                                                />
+                                                        forceRender={forceRender}
+                                                        setForceRender={setForceRender}
+                                                    />
 
-                                                <button
-                                                    // onClick={() => removeUser(users.id)}
-                                                    onClick={() => showDeleteModal(users.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                >
-                                                    <FontAwesomeIcon icon="trash" className='add__btn__income' style={{ "width": "20px" }} />
-                                                </button>
+                                                    <button
+                                                        // onClick={() => removeUser(users.id)}
+                                                        onClick={() => showDeleteModal(users.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                    >
+                                                        <FontAwesomeIcon icon="trash" className='add__btn__income' style={{ "width": "20px" }} />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
+                                    );
+                                }
                             })}
 
                             <DeleteModal
