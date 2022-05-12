@@ -137,7 +137,7 @@ export default function Category() {
                                             <div className="col-6 budget__expense-text">Išlaidų kategorijos</div>
 
                                             <div
-                                                className="col-6 budget__expense-value">
+                                                className="col-6 budget__expense-value" style={{paddingRight: 50}}>
                                                 {categoryCount
                                                 }
                                             </div>
@@ -183,8 +183,8 @@ export default function Category() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
-                        <div className="col-12 expense">
+                    <div className="container" style={{paddingRight: 0}}>
+                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="expense__title">Kategorijos</h2>
                             <div className="container expense__list">
 
@@ -199,7 +199,7 @@ export default function Category() {
                                                 </div>
 
 
-                                                <div className='col-2'>
+                                                <div className='col-2' style={{textAlign: "right", paddingRight: 0}}>
                                                     <EditCategoryModal
                                                         id={category.id}
                                                         name={category.name}

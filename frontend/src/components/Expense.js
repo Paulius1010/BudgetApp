@@ -263,7 +263,7 @@ export default function Expense() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
+                    <div className="container" style={{paddingRight: 0}}>
                         <div className="col-12 expense" style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list">
