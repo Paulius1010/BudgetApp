@@ -39,11 +39,11 @@ export default function Category() {
         )
 
         if (response.status === 201) {
-            successMessage();
+            successMessage('Pridėta');
             reset();
         }
         else {
-            (errorMessage('Tokia kategorija jau egzistuoja!'))
+            (errorMessage('Tokia išlaidų kategorija jau įvesta!'))
         }
 
         setForceRender(!forceRender)
@@ -51,8 +51,8 @@ export default function Category() {
 
     // Popup message configuration
     toast.configure()
-    const successMessage = () => {
-        toast.success('Pridėta!', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -71,7 +71,7 @@ export default function Category() {
     }
 
     const removeCategory = async (id) => {
-        await fetch(
+        const response = await fetch(
             `http://localhost:8080/api/categories/${id}`,
             {
                 method: "DELETE",
@@ -81,6 +81,14 @@ export default function Category() {
                 }
             }
         )
+
+        if (response.status === 200) {
+            successMessage('Ištrinta');
+        }
+        else {
+            (errorMessage('Šios kategorijos trinti negalima, nes yra naudojama vartotojų'))
+        }
+
         setForceRender(!forceRender);
         setDisplayDeleteModal(false);
     };
@@ -129,7 +137,7 @@ export default function Category() {
                                             <div className="col-6 budget__expense-text">Išlaidų kategorijos</div>
 
                                             <div
-                                                className="col-6 budget__expense-value">
+                                                className="col-6 budget__expense-value" style={{paddingRight: 50}}>
                                                 {categoryCount
                                                 }
                                             </div>
@@ -175,8 +183,8 @@ export default function Category() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
-                        <div className="col-12 expense">
+                    <div className="container" style={{paddingRight: 0}}>
+                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="expense__title">Kategorijos</h2>
                             <div className="container expense__list">
 
@@ -191,7 +199,7 @@ export default function Category() {
                                                 </div>
 
 
-                                                <div className='col-2'>
+                                                <div className='col-2' style={{textAlign: "right", paddingRight: 0}}>
                                                     <EditCategoryModal
                                                         id={category.id}
                                                         name={category.name}
