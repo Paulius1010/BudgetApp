@@ -193,6 +193,7 @@ export default function Expense() {
                                 <input
                                     {...register("date",
                                         {
+                                            value: today,
                                             required: true,
                                             max: today
                                         })
