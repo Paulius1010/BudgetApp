@@ -29,6 +29,12 @@ export default function Income() {
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
+    // Limiting not older than... date
+    let dateLimit = new Date("2000-01-01");
+    // 
+
+    // let dDate = new Date().toLocaleDateString('en-CA');
+
     // Add user's income to database from the inputs
     const onSubmit = async (data, e) => {
         const response = await fetch(
@@ -177,13 +183,14 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
+                                            value:  today,
                                             required: true,
                                             max: today
                                         })
                                     }
                                     type="date"
                                     className="form-control add__date"
-                                    placeholder="Data"
+                                    // placeholder="Data"
                                     />
 
                                 <input
