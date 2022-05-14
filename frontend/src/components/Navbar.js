@@ -181,12 +181,12 @@ export default function Navbar() {
                                                 Apie mus
                                             </NavLink>
                                         </li>
-                                        <li id="button-hover">
+                                        {/* <li id="button-hover">
                                             <NavLink to={"/blog"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Tinklaraštis
                                             </NavLink>
-                                        </li>
+                                        </li> */}
                                         <li id="button-hover">
                                             <NavLink to={"/contacts"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
