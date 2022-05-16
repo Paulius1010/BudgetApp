@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="limits")
+@Table(name="expenselimits")
 public class ExpenseLimit {
 
     @Id
