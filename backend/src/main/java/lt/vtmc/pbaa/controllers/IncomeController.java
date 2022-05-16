@@ -50,15 +50,15 @@ public class IncomeController {
 	}
 	
 	@GetMapping("/user")// /api/income/user?offset=0&pageSize=3 to test
-	public ResponseEntity<List<Income>> getAllIncomeByUserIdPage(@RequestParam("offset") int offset, @RequestParam("pageSize") int pageSize) {
+	public ResponseEntity<Page<Income>> getAllIncomeByUserIdPage(@RequestParam("offset") int offset, @RequestParam("pageSize") int pageSize) {
 		return ResponseEntity.ok().body(this.incomeService.getIncomeWithPagination(offset, pageSize));
 	}
 
-	@GetMapping("/userDate")// /api/income/userSort?field=date to test
+	@GetMapping("/userDate")// /api/income/userDate?field=date to test
 	public ResponseEntity<List<Income>> getAllIncomeByUserIdMonth(@RequestParam("date") String date) {
 		return ResponseEntity.ok().body(this.incomeService.findByUserByDate(date));
 	}
-	@GetMapping("/userDate2")// /api/income/userSort?field=date to test
+	@GetMapping("/userDate2")// /api/income/userDate2?field=date to test
 	public ResponseEntity<Page<Income>> getAllIncomeByUserIdAndMonth(@RequestParam("date") String date, @RequestParam("offset") int offset, @RequestParam("pageSize") int pageSize) {
 		return ResponseEntity.ok().body(this.incomeService.findByUserAndDate(date, offset, pageSize));
 	}

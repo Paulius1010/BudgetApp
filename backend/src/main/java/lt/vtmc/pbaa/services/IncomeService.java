@@ -108,12 +108,13 @@ public class IncomeService {
 //    	
 //		return incomeRepository.findByUser(user, Sort.by(Sort.Direction.ASC, field));
 //	}
-    public List<Income> getIncomeWithPagination(int offset, int pageSize){
+    public Page<Income> getIncomeWithPagination(int offset, int pageSize){
     	String currentPrincipalEmail = getCurrentPrincipalEmail();
     	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
     	Optional<User> user = Optional.of(user1);
+    	Page<Income> page = incomeRepository.findByUser(user, PageRequest.of(offset, pageSize));
     	
-    	return incomeRepository.findByUser(user, PageRequest.of(offset, pageSize));
+    	return page;
 
     }
     public List<Income> findByUserByDate(String date){

@@ -20,7 +20,6 @@ import Blog from "./components/Blog.js";
 import { RenderContext } from './components/RenderContext';
 import ErrorPage from "./components/ErrorPage";
 import Footer from "./components/Footer";
-import IncomeList from "./components/Income-list.component";
 const App = () => {
   const [render, setRender] = useState(false);
 
@@ -53,7 +52,6 @@ const App = () => {
             {/* <Route path="/register-success" element={<RegisterSuccess />} /> */}
             <Route path="/welcome" element={<HomeLoggedIn />} />
             <Route path="/income" element={<Income />} />
-            <Route path="/incomes" element={<IncomeList />} />
             <Route path="/expense" element={<Expense />} />
             <Route path="/category" element={<Category />} />
             <Route path="/aboutus" element={<AboutUs />} />

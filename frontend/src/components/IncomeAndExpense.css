@@ -244,3 +244,12 @@ h2 {
 .income {
     padding: 0;
 }
+
+/* pagination styles/css */
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff !important;
+    background-color: rgba(137,186,22,255) !important;
+    border-color: green;
+  }
+

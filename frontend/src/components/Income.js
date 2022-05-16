@@ -8,8 +8,8 @@ import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
 import DeleteModal from './DeleteModal';
-import PaginationDataService from "../services/pagination.service";
-import Pagination from "@material-ui/lab/Pagination";
+import ReactPaginate from 'react-paginate';
+
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -22,7 +22,7 @@ export default function Income() {
     const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
-    const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
+    //const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -107,6 +107,28 @@ export default function Income() {
 
 
     // Fetch all user's income from database to display down below
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
+    //             {
+    //                 method: "GET",
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${currentUser.accessToken}`
+    //                 }
+    //             });
+    //         const data = await response.json();
+    //         setAllIncome(data);
+    //     };
+
+    //     fetchData();
+    // }, [forceRender]);
+
+
+    // to sum all user income and display it at the top
+
+    const [allIncome2, setAllIncome2] = useState([]);
+    const incomeSum = allIncome2.reduce((n, { amount }) => n + amount, 0);
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
@@ -118,16 +140,64 @@ export default function Income() {
                     }
                 });
             const data = await response.json();
-            setAllIncome(data);
+            setAllIncome2(data);
         };
 
         fetchData();
     }, [forceRender]);
 
+    //pagination..........................
 
-    //pagination
+    const [pageCount, setpageCount] = useState(0);
+    //limit of how many items per page to see
+    let limit = 10;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8080/api/income/user?offset=0&pageSize=${limit}`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+            const data = await response.json();
+            setAllIncome(data.content);
+            const total = data.totalPages;
+            
+            setpageCount(total);
+        };
+
+        fetchData();
+    }, [forceRender, limit]);
+
+    const fetchIncome = async (currentPage) => {
+        const res = await fetch(
+          `http://localhost:8080/api/income/user?offset=${currentPage}&pageSize=${limit}`,
+          {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${currentUser.accessToken}`
+            }
+        });
+        const data = await res.json();
+        
+        return data.content;
+      };
+
+    const handlePageClick = async (data) => {
+        console.log(data);
     
-
+        let currentPage = data.selected;
+    
+        const incomeFormServer = await fetchIncome(currentPage);
+    
+        setAllIncome(incomeFormServer);
+        // scroll to the top
+        //window.scrollTo(0, 0)
+      };
 
     return (
         <>
@@ -146,8 +216,7 @@ export default function Income() {
                                             <div
                                                 className="col-4 budget__income-value" style={{paddingLeft: 0, paddingRight: 50}}>
                                                 {/* Round the number to two decimal places */}
-                                                {Math.round(incomeSum * 100) / 100
-                                                }
+                                                {Math.round(incomeSum * 100) / 100}
                                             </div>
                                             <div className="col-4 budget__income-percentage" style={{paddingLeft: 0, paddingRight: 60}}>&euro;&nbsp;</div>
 
@@ -281,6 +350,30 @@ export default function Income() {
                                     id={deleteId}
                                 />
                             </div>
+                            {/* pagination for the user items */}
+                            <ReactPaginate
+                              
+                              previousLabel={"previous"}
+                              nextLabel={"next"}
+                              breakLabel={"..."}
+                              pageCount={pageCount}
+                              marginPagesDisplayed={2}
+                              pageRangeDisplayed={3}
+                              onPageChange={handlePageClick}
+                              containerClassName={"pagination justify-content-center"}
+                              pageClassName={"page-item"}
+                              pageLinkClassName={"page-link"}
+                              previousClassName={"page-item"}
+                              previousLinkClassName={"page-link"}
+                              nextClassName={"page-item"}
+                              nextLinkClassName={"page-link"}
+                              breakClassName={"page-item"}
+                              breakLinkClassName={"page-link"}
+                              activeClassName={"active"}
+                            />
+                            {/* so the footer doesn't hide pagination */}
+                            <br />
+                            <br />
                         </div>
                     </div>
                 </div>
