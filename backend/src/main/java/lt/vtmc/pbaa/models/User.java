@@ -38,7 +38,12 @@ public class User {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "user_id")
 	private List<Expense> expenseList;
-	
+
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "user_id")
+	private List<ExpenseLimit> expenseLimitList;
+
 	public User() {
 
 	}
