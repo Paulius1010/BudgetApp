@@ -31,6 +31,15 @@ export default function Login() {
             .catch(() => setMessage("El. paštas arba slaptažodis yra neteisingas"));
     };
 
+    const [passwordShown, setPasswordShown] = useState(false);
+
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // chnage inverse the boolean state passwordShown
+    setPasswordShown(!passwordShown);
+  };
+
     return (
         <section className="vh-100">
             <div className="container h-100">
@@ -55,13 +64,13 @@ export default function Login() {
 
                                             <div className="form-outline mb-3">                                           
                                                 <label className="form-label" htmlFor="form3Example4">Slaptažodis</label>                                                                                
-                                                <input {...register("password", { required: true })} type="password" className='form-control' />
+                                                <input {...register("password", { required: true })} type={passwordShown ? "text" : "password"} id='password' className='form-control'  />
                                                 {errors?.password?.type === "required" && <p>Įveskite Slaptažodį</p>}
-                                                {message && message}   
-                                                <div style={{textAlign: "right"}}>                                     
-                                                <FontAwesomeIcon icon="eye"  />
-                                                </div> 
-                                            </div >
+                                                {message && message}  
+                                                <div style={{paddingTop: 10}}> 
+                                                <input type="checkbox" onClick={togglePassword}/> Show Password 
+                                                </div>
+                                            </div>
                                             
                                             <div className="text-lg-start mt-4 pt-2">
                                                 <button type="submit" className="btn btn-primary btn-lg"
@@ -76,7 +85,7 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </section >
     );
 }
