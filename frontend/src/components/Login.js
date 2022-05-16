@@ -4,6 +4,7 @@ import AuthService from "../services/auth.service";
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { RenderContext } from './RenderContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
@@ -18,7 +19,8 @@ export default function Login() {
                     .then(response => response.json())
                     .then(data => {
                         if (data.roles.some(role => role.name === "ROLE_ADMIN")) {
-                            navigate("/admin");
+                            // navigate("/admin");
+                            navigate("/users");
                             setRender(!render);
                         } else {
                             navigate("/income");
@@ -28,6 +30,15 @@ export default function Login() {
             })
             .catch(() => setMessage("El. paštas arba slaptažodis yra neteisingas"));
     };
+
+    const [passwordShown, setPasswordShown] = useState(false);
+
+  // Password toggle handler
+  const togglePassword = () => {
+    // When the handler is invoked
+    // chnage inverse the boolean state passwordShown
+    setPasswordShown(!passwordShown);
+  };
 
     return (
         <section className="vh-100">
@@ -51,14 +62,16 @@ export default function Login() {
                                                 {errors?.email?.type === "required" && <p>Įveskite el. paštą</p>}
                                             </div>
 
-                                            <div className="form-outline mb-3">
-
-                                                <label className="form-label" htmlFor="form3Example4">Slaptažodis</label>
-                                                <input {...register("password", { required: true })} type="password" className='form-control' />
+                                            <div className="form-outline mb-3">                                           
+                                                <label className="form-label" htmlFor="form3Example4">Slaptažodis</label>                                                                                
+                                                <input {...register("password", { required: true })} type={passwordShown ? "text" : "password"} id='password' className='form-control'  />
                                                 {errors?.password?.type === "required" && <p>Įveskite Slaptažodį</p>}
-                                                {message && message}
+                                                {message && message}  
+                                                <div style={{paddingTop: 10}}> 
+                                                <input type="checkbox" onClick={togglePassword}/> Show Password 
+                                                </div>
                                             </div>
-
+                                            
                                             <div className="text-lg-start mt-4 pt-2">
                                                 <button type="submit" className="btn btn-primary btn-lg"
                                                     style={{ paddingLeft: "2.5rem", paddingRight: "2.5rem" }}>Prisijungti</button>
@@ -72,7 +85,7 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </section >
     );
 }

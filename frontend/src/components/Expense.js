@@ -18,7 +18,7 @@ export default function Expense() {
     const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's expense
     const expenseSum = allExpense.reduce((n, { amount }) => n + amount, 0);
 
@@ -68,7 +68,8 @@ export default function Expense() {
         );
 
         if (response.status === 201) {
-            successMessage();
+            successMessage('Pridėta');
+            reset();
         }
         else {
             (errorMessage('Klaida!'));
@@ -78,8 +79,8 @@ export default function Expense() {
 
     // Popup message configuration
     toast.configure();
-    const successMessage = () => {
-        toast.success('Pridėta!', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -98,7 +99,7 @@ export default function Expense() {
     };
 
     const removeExpense = async (id) => {
-        await fetch(
+        const response = await fetch(
             `http://localhost:8080/api/expense/${id}`,
             {
                 method: "DELETE",
@@ -108,6 +109,14 @@ export default function Expense() {
                 }
             }
         );
+
+        if (response.status === 200) {
+            successMessage('Ištrinta');
+        }
+        else {
+            (errorMessage('Klaida!'))
+        }
+
         setForceRender(!forceRender);
         setDisplayDeleteModal(false);
     };
@@ -152,14 +161,14 @@ export default function Expense() {
                                 <div>
                                     <div className="my-2 budget__expense">
                                         <div className="row">
-                                            <div className="col-4 budget__expense-text" style={{paddingLeft: 0}}>Išlaidos</div>
+                                            <div className="col-4 budget__expense-text" style={{ paddingLeft: 0 }}>Išlaidos</div>
                                             <div
-                                                className="col-4 budget__expense-value" style={{paddingLeft: 0, paddingRight: 30}}>
+                                                className="col-4 budget__expense-value" style={{ paddingLeft: 0, paddingRight: 30 }}>
                                                 {/* Round the number to two decimal places */}
                                                 {Math.round(expenseSum * 100) / 100
                                                 }
                                             </div>
-                                            <div className="col-4 budget__expense-percentage" style={{paddingLeft: 0, paddingRight: 60}}>&euro;&nbsp;</div>
+                                            <div className="col-4 budget__expense-percentage" style={{ paddingLeft: 0, paddingRight: 60 }}>&euro;&nbsp;</div>
                                         </div>
                                     </div>
                                 </div>
@@ -184,6 +193,7 @@ export default function Expense() {
                                 <input
                                     {...register("date",
                                         {
+                                            value: today,
                                             required: true,
                                             max: today
                                         })
@@ -200,8 +210,10 @@ export default function Expense() {
                                 }
                                     className="form-control add__description"
                                     type="text"
-                                    placeholder="Kategorija"
                                 >
+                                    <option value={""}>
+                                        --Pasirinkite kategoriją--
+                                    </option>
                                     {allCategory.map((option) => (
                                         <option value={option.id}>{option.name}</option>
                                     ))}
@@ -252,65 +264,66 @@ export default function Expense() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
-                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
+                    <div className="container" style={{paddingRight: 0}}>
+                        <div className="col-12 expense" style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <h2 className="expense__title">Išlaidos</h2>
-                            <div className="container expense__list"></div>
-                            {/* Display user's expense on the page */}
-                            {allExpense.map(expense => {
+                            <div className="container expense__list">
+                                {/* Display user's expense on the page */}
+                                {allExpense.map(expense => {
 
-                                return (
-                                    <div key={expense.id}>
-                                        <div className='row'>
-                                            <div className='col-3'>
-                                                {expense.expenseName}&nbsp;
-                                            </div>
-                                            <div className='col-3'>
-                                                {expense.date}&nbsp;
-                                            </div>
+                                    return (
+                                        <div key={expense.id}>
+                                            <div className='row'>
+                                                <div className='col-3'  style={{ paddingLeft: 0 }}>
+                                                    {expense.expenseName}&nbsp;
+                                                </div>
+                                                <div className='col-3'  style={{ paddingLeft: 0 }}>
+                                                    {expense.date}&nbsp;
+                                                </div>
 
-                                            <div className='col-2' style={{paddingLeft: 0}}>
-                                                {expense.expensesCategory.name}&nbsp;
-                                            </div>
-                                            <div className='col-2' style={{paddingLeft: '6%'}}>
-                                                {expense.amount}&euro;&nbsp;
-                                            </div>
+                                                <div className='col-2' style={{ paddingLeft: 0 }}>
+                                                    {expense.expensesCategory.name}&nbsp;
+                                                </div>
+                                                <div className='col-2' style={{ paddingLeft: '6%' }}>
+                                                    {expense.amount}&euro;&nbsp;
+                                                </div>
 
-                                            <div className='col-2' style={{textAlign: 'right', paddingLeft: 0, paddingRight: 0}}>
-                                                <EditExpenseModal
-                                                    id={expense.id}
-                                                    expenseName={expense.expenseName}
-                                                    date={expense.date}
-                                                    amount={expense.amount}
-                                                    category={expense.expensesCategory.name}
-                                                    forceRender={forceRender}
-                                                    setForceRender={setForceRender}
-                                                    allCategory={allCategory}
-                                                />
-
-                                                <button
-                                                    onClick={() => showDeleteModal(expense.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                    style={{ paddingTop: 0, paddingBottom: 10 }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon="trash"
-                                                        className='add__btn__expense'
-                                                        style={{ "width": "20px" }}
+                                                <div className='col-2' style={{ textAlign: 'right', paddingLeft: 0, paddingRight: 0 }}>
+                                                    <EditExpenseModal
+                                                        id={expense.id}
+                                                        expenseName={expense.expenseName}
+                                                        date={expense.date}
+                                                        amount={expense.amount}
+                                                        category={expense.expensesCategory.name}
+                                                        forceRender={forceRender}
+                                                        setForceRender={setForceRender}
+                                                        allCategory={allCategory}
                                                     />
-                                                </button>
+
+                                                    <button
+                                                        onClick={() => showDeleteModal(expense.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn__expense'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
-                            <DeleteModal
-                                showModal={displayDeleteModal}
-                                hideModal={hideDeleteModal}
-                                confirmModal={removeExpense}
-                                id={deleteId}
-                            />
+                                    );
+                                })}
+                                <DeleteModal
+                                    showModal={displayDeleteModal}
+                                    hideModal={hideDeleteModal}
+                                    confirmModal={removeExpense}
+                                    id={deleteId}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

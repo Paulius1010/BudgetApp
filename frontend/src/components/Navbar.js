@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, NavLink } from "react-router-dom";
 import AuthService from "../services/auth.service";
-import "../navbar bootstrap/bootstrap.module.min.css"
-import "./Navbar.css"
+import "../navbar bootstrap/bootstrap.module.min.css";
+import "./Navbar.css";
 import { RenderContext } from "./RenderContext";
 
 export default function Navbar() {
@@ -32,7 +32,7 @@ export default function Navbar() {
             role="banner">
             <div className="container">
                 <div className="row align-items-center position-relative">
-                    <div className="col-lg-4" style={{paddingLeft: 0}}>
+                    <div className="col-lg-4" style={{ paddingLeft: 0 }}>
                         <nav className="site-navigation ml-auto "
                             role="navigation">
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
@@ -66,7 +66,7 @@ export default function Navbar() {
                                 {showAdminBoard ? (
                                     <>
                                         <li id="button-hover">
-                                            <NavLink to={"/register"}
+                                            <NavLink to={"/users"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
                                                 Vartotojai
                                             </NavLink>
@@ -77,12 +77,12 @@ export default function Navbar() {
                                                 Kategorijos
                                             </NavLink>
                                         </li>
-                                        <li id="button-hover">
+                                        {/* <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
-                                        </li>
+                                        </li> */}
                                     </>
                                 ) : currentUser ? (
                                     <>
@@ -104,12 +104,12 @@ export default function Navbar() {
                                                 Kategorijos
                                             </NavLink>
                                         </li> */}
-                                        <li id="button-hover">
+                                        {/* <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
-                                        </li>
+                                        </li> */}
                                     </>
                                 ) : (
                                     <>
@@ -181,12 +181,12 @@ export default function Navbar() {
                                                 Apie mus
                                             </NavLink>
                                         </li>
-                                        <li id="button-hover">
+                                        {/* <li id="button-hover">
                                             <NavLink to={"/blog"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                                 Tinklaraštis
                                             </NavLink>
-                                        </li>
+                                        </li> */}
                                         <li id="button-hover">
                                             <NavLink to={"/contacts"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
@@ -195,6 +195,35 @@ export default function Navbar() {
                                         </li>
                                     </>
                                 )}
+
+                            {showAdminBoard ? (
+                                <>
+                                    <li id="button-hover">
+                                            <a href="/"
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li>
+                                </>
+                            ) : currentUser ? (
+                                <>
+                                    <li id="button-hover">
+                                            <a href="/"
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li>
+                                </>
+                            ) : (
+                                <>
+                                    {/* <li id="button-hover">
+                                            <a href="/"
+                                                onClick={logOut}>
+                                                Atsijungti
+                                            </a>
+                                        </li> */}
+                                </>
+                            )}
                             </ul>
                         </nav>
                     </div>

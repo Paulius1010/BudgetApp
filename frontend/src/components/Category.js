@@ -18,9 +18,9 @@ export default function Category() {
     const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Count categories
-    const categoryCount = allCategory.reduce((n, { amount }) => n + 1, 0)
+    const categoryCount = allCategory.reduce((n) => n + 1, 0)
 
     // Add category to database from the inputs
     const onSubmit = async (data) => {
@@ -39,10 +39,11 @@ export default function Category() {
         )
 
         if (response.status === 201) {
-            successMessage();
+            successMessage('Pridėta');
+            reset();
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Tokia išlaidų kategorija jau įvesta!'))
         }
 
         setForceRender(!forceRender)
@@ -50,8 +51,8 @@ export default function Category() {
 
     // Popup message configuration
     toast.configure()
-    const successMessage = () => {
-        toast.success('Pridėta!', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -70,7 +71,7 @@ export default function Category() {
     }
 
     const removeCategory = async (id) => {
-        await fetch(
+        const response = await fetch(
             `http://localhost:8080/api/categories/${id}`,
             {
                 method: "DELETE",
@@ -80,6 +81,14 @@ export default function Category() {
                 }
             }
         )
+
+        if (response.status === 200) {
+            successMessage('Ištrinta');
+        }
+        else {
+            (errorMessage('Šios kategorijos trinti negalima, nes yra naudojama vartotojų'))
+        }
+
         setForceRender(!forceRender);
         setDisplayDeleteModal(false);
     };
@@ -128,7 +137,7 @@ export default function Category() {
                                             <div className="col-6 budget__expense-text">Išlaidų kategorijos</div>
 
                                             <div
-                                                className="col-6 budget__expense-value">
+                                                className="col-6 budget__expense-value" style={{paddingRight: 50}}>
                                                 {categoryCount
                                                 }
                                             </div>
@@ -164,64 +173,64 @@ export default function Category() {
 
                         </div>
 
-                        <div className="row ">
+                        <div className="row text-left">
                             <div className="col-sm-4 col-4">
-                                {errors?.name?.type === "required" && <p>Šis laukas yra privalomas</p>}
+                                {errors?.name?.type === "required" && <p style={{padding: "0 !important"}}>Šis laukas yra privalomas</p>}
                                 {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 3 simbolių ilgio</p>}
                             </div>
-
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container">
-                        <div className="col-12 expense">
+                    <div className="container" style={{paddingRight: 0}}>
+                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
                             <h2 className="expense__title">Kategorijos</h2>
-                            <div className="container expense__list"></div>
+                            <div className="container expense__list">
 
-                            {/* Display categories on the page */}
-                            {allCategory.map(category => {
+                                {/* Display categories on the page */}
+                                {allCategory.map(category => {
 
-                                return (
-                                    <div key={category.id}>
-                                        <div className='row'>
-                                            <div className='col-10'>
-                                                {category.name}&nbsp;
-                                            </div>
+                                    return (
+                                        <div key={category.id}>
+                                            <div className='row'>
+                                                <div className='col-10'  style={{ paddingLeft: 0 }}>
+                                                    {category.name}&nbsp;
+                                                </div>
 
 
-                                            <div className='col-2'>
-                                                <EditCategoryModal
-                                                    id={category.id}
-                                                    name={category.name}
-                                                    forceRender={forceRender}
-                                                    setForceRender={setForceRender}
-                                                />
-
-                                                <button
-                                                    onClick={() => showDeleteModal(category.id)}
-                                                    className="btn"
-                                                    type="button"
-                                                    style={{ paddingTop: 0, paddingBottom: 10 }}
-                                                >
-                                                    <FontAwesomeIcon
-                                                        icon="trash"
-                                                        className='add__btn'
-                                                        style={{ "width": "20px" }}
+                                                <div className='col-2' style={{textAlign: "right", paddingRight: 0}}>
+                                                    <EditCategoryModal
+                                                        id={category.id}
+                                                        name={category.name}
+                                                        forceRender={forceRender}
+                                                        setForceRender={setForceRender}
                                                     />
-                                                </button>
+
+                                                    <button
+                                                        onClick={() => showDeleteModal(category.id)}
+                                                        className="btn"
+                                                        type="button"
+                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                    >
+                                                        <FontAwesomeIcon
+                                                            icon="trash"
+                                                            className='add__btn__expense'
+                                                            style={{ "width": "20px" }}
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                )
-                            })}
-                            <DeleteModal
-                                showModal={displayDeleteModal}
-                                hideModal={hideConfirmationModal}
-                                confirmModal={removeCategory}
-                                id={deleteId}
-                            />
+                                    )
+                                })}
+                                <DeleteModal
+                                    showModal={displayDeleteModal}
+                                    hideModal={hideConfirmationModal}
+                                    confirmModal={removeCategory}
+                                    id={deleteId}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

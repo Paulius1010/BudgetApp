@@ -20,7 +20,7 @@ export default function Income() {
     const [deleteId, setDeleteId] = useState();
     const currentUser = AuthService.getCurrentUser();
     const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
     // Sums user's income
     //const incomeSum = allIncome.reduce((n, { amount }) => n + amount, 0);
 
@@ -31,8 +31,14 @@ export default function Income() {
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
+    // Limiting not older than... date
+    let dateLimit = new Date("2000-01-01");
+    // 
+
+    // let dDate = new Date().toLocaleDateString('en-CA');
+
     // Add user's income to database from the inputs
-    const onSubmit = async (data) => {
+    const onSubmit = async (data, e) => {
         const response = await fetch(
             "http://localhost:8080/api/income/",
             {
@@ -50,7 +56,7 @@ export default function Income() {
         );
 
         if (response.status === 201) {
-            successMessage();
+            successMessage('Pridėta!');
         }
         else {
             (errorMessage('Klaida!'));
@@ -61,8 +67,8 @@ export default function Income() {
 
     // Popup message configuration
     toast.configure();
-    const successMessage = () => {
-        toast.success('Pridėta!', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -81,7 +87,7 @@ export default function Income() {
     };
 
     const removeIncome = async (id) => {
-        await fetch(
+        const response = await fetch(
             `http://localhost:8080/api/income/${id}`,
             {
                 method: "DELETE",
@@ -91,6 +97,13 @@ export default function Income() {
                 }
             }
         );
+
+        if (response.status === 200) {
+            successMessage('Ištrinta');
+        }
+        else {
+            (errorMessage('Klaida!'))
+        }
 
         setForceRender(!forceRender);
         setDisplayDeleteModal(false);
@@ -212,13 +225,13 @@ export default function Income() {
                                 <div>
                                     <div className="my-2 budget__income">
                                         <div className="row">
-                                            <div className="col-4 budget__income-text" style={{paddingLeft: 0}}>Pajamos</div>
+                                            <div className="col-4 budget__income-text" style={{ paddingLeft: 0 }}>Pajamos</div>
                                             <div
-                                                className="col-4 budget__income-value" style={{paddingLeft: 0, paddingRight: 50}}>
+                                                className="col-4 budget__income-value" style={{ paddingLeft: 0, paddingRight: 50 }}>
                                                 {/* Round the number to two decimal places */}
                                                 {Math.round(incomeSum * 100) / 100}
                                             </div>
-                                            <div className="col-4 budget__income-percentage" style={{paddingLeft: 0, paddingRight: 60}}>&euro;&nbsp;</div>
+                                            <div className="col-4 budget__income-percentage" style={{ paddingLeft: 0, paddingRight: 60 }}>&euro;&nbsp;</div>
 
                                         </div>
                                     </div>
@@ -245,14 +258,15 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
+                                            value:  today,
                                             required: true,
                                             max: today
                                         })
                                     }
                                     type="date"
                                     className="form-control add__date"
-                                    placeholder="Data"
-                                />
+                                    // placeholder="Data"
+                                    />
 
                                 <input
                                     {...register("amount",
@@ -272,6 +286,7 @@ export default function Income() {
                                         <FontAwesomeIcon icon={faCirclePlus} className='add__btn__income' />
                                     </button>
                                 </div>
+
                             </form>
 
                         </div>
@@ -294,8 +309,8 @@ export default function Income() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container" style={{paddingRight: 0}}>
-                        <div className="col-12 income" style={{paddingLeft: 0, paddingRight: 0}}>
+                    <div className="container" style={{ paddingRight: 0 }}>
+                        <div className="col-12 income" style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <h2 className="income__title">Pajamos</h2>
                             <div className="container income__list">
 
@@ -305,17 +320,17 @@ export default function Income() {
                                     return (
                                         <div key={income.id}>
                                             <div className='row'>
-                                                <div className='col-4' style={{paddingLeft: 0}}>
+                                                <div className='col-4' style={{ paddingLeft: 0 }}>
                                                     {income.incomeName}&nbsp;
                                                 </div>
-                                                <div className='col-3' style={{paddingLeft: 0}}>
+                                                <div className='col-3' style={{ paddingLeft: 0 }}>
                                                     {income.date}&nbsp;
                                                 </div>
-                                                <div className='col-3' style={{paddingLeft: '6.5%'}}>
+                                                <div className='col-3' style={{ paddingLeft: '6.5%' }}>
                                                     {income.amount}&euro;&nbsp;
                                                 </div>
 
-                                                <div className='col-2' style={{textAlign: 'right', paddingLeft: 0, paddingRight: 0}}>
+                                                <div className='col-2' style={{ textAlign: 'right', paddingLeft: 0, paddingRight: 0 }}>
                                                     <EditIncomeModal
                                                         id={income.id}
                                                         incomeName={income.incomeName}

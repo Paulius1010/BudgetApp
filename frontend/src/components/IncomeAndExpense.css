@@ -196,8 +196,10 @@ h2 {
     color: #2ecc71;
 }
 
-.income__list{
+.income__list, 
+.expense__list{
     margin: 0 auto;
+    padding-bottom: 2rem;
 }
 
 .expense__title,

@@ -26,10 +26,10 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
         )
 
         if (response.status === 200) {
-            successMessage();
+            successMessage('Pakeitimai išsaugoti');
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Tokia išlaidų kategorija jau įvesta'))
         }
         
         setForceRender(!forceRender)
@@ -37,8 +37,8 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
 
     // Popup message configuration
     toast.configure()
-    const successMessage = () => {
-        toast.success('Pakeitimai išsaugoti', {
+    const successMessage = (msg) => {
+        toast.success(msg, {
             position: toast.POSITION.TOP_CENTER,
             autoClose: 3000,
             theme: "colored",
@@ -65,7 +65,7 @@ export default function EditCategoryModal({ id, name, forceRender, setForceRende
                 data-bs-target={"#id" + id}
                 style={{ paddingTop: 0, paddingBottom: 10 }}
             >
-                <FontAwesomeIcon icon="pen-to-square" className='add__btn' />
+                <FontAwesomeIcon icon="pen-to-square" className='add__btn__expense' />
             </button>
 
             <div
