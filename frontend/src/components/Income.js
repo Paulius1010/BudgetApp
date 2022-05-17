@@ -55,6 +55,7 @@ export default function Income() {
 
         if (response.status === 201) {
             successMessage('Pridėta!');
+            reset();
         }
         else {
             (errorMessage('Klaida!'));
@@ -100,7 +101,7 @@ export default function Income() {
             successMessage('Ištrinta');
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
         setForceRender(!forceRender);
@@ -183,7 +184,7 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
-                                            value:  today,
+                                            value: today,
                                             required: true,
                                             max: today,
                                             // min: new Date("01/01/2000")
@@ -191,8 +192,8 @@ export default function Income() {
                                     }
                                     type="date"
                                     className="form-control add__date"
-                                    // placeholder="Data"
-                                    />
+                                // placeholder="Data"
+                                />
 
                                 <input
                                     {...register("amount",
