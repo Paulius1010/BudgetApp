@@ -57,6 +57,7 @@ export default function Income() {
 
         if (response.status === 201) {
             successMessage('Pridėta!');
+            reset();
         }
         else {
             (errorMessage('Klaida!'));
@@ -102,7 +103,7 @@ export default function Income() {
             successMessage('Ištrinta');
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
         setForceRender(!forceRender);
@@ -195,7 +196,9 @@ export default function Income() {
                                     className="form-control add__date"
                                 // placeholder="Data"
                                 />
+                                      
                                 {/* {date} */}
+
                                 <input
                                     {...register("amount",
                                         {
