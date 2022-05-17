@@ -40,10 +40,10 @@ export default function Navbar() {
                             <ul className="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
                                 {showAdminBoard ? (
                                     <li id="button-hover">
-                                        <NavLink to={"/"}
+                                        {/* <NavLink to={"/"}
                                             className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
                                             Namai
-                                        </NavLink>
+                                        </NavLink> */}
                                     </li>
                                 ) : currentUser ? (
                                     <>
