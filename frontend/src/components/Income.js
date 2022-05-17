@@ -8,6 +8,7 @@ import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
 import DeleteModal from './DeleteModal';
+import moment from 'moment';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -24,6 +25,7 @@ export default function Income() {
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
+    const date = moment(today).format("YYYY/MM/DD")
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
@@ -183,7 +185,7 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
-                                            value:  today,
+                                            value: date,
                                             required: true,
                                             max: today,
                                             // min: new Date("01/01/2000")
