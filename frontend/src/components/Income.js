@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
 import DeleteModal from './DeleteModal';
 import ReactPaginate from 'react-paginate';
-
+import Table from 'react-bootstrap/Table'
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -178,7 +178,7 @@ export default function Income() {
             const data = await response.json();
             setAllIncome(data.content);
             const total = data.totalPages;
-            
+
             setpageCount(total);
         };
 
@@ -187,62 +187,46 @@ export default function Income() {
 
     const fetchIncome = async (currentPage) => {
         const res = await fetch(
-          `http://localhost:8080/api/income/user?offset=${currentPage}&pageSize=${limit}`,
-          {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${currentUser.accessToken}`
-            }
-        });
+            `http://localhost:8080/api/income/user?offset=${currentPage}&pageSize=${limit}`,
+            {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentUser.accessToken}`
+                }
+            });
         const data = await res.json();
-        
+
         return data.content;
-      };
+    };
 
     const handlePageClick = async (data) => {
         console.log(data);
-    
+
         let currentPage = data.selected;
-    
+
         const incomeFormServer = await fetchIncome(currentPage);
-    
+
         setAllIncome(incomeFormServer);
         // scroll to the top
         //window.scrollTo(0, 0)
-      };
+    };
 
     return (
         <>
-            <div className="jumbotron-fluid text-center">
-                <div className="container">
-                    <div className="top">
-                        <div className="budget">
-                            <div className="budget__title">
-                                <h1 className="display-4 pt-3">
-                                </h1>
 
-                                <div>
-                                    <div className="my-2 budget__income">
-                                        <div className="row">
-                                            <div className="col-4 budget__income-text" style={{ paddingLeft: 0 }}>Pajamos</div>
-                                            <div
-                                                className="col-4 budget__income-value" style={{ paddingLeft: 0, paddingRight: 50 }}>
-                                                {/* Round the number to two decimal places */}
-                                                {Math.round(incomeSum * 100) / 100}
-                                            </div>
-                                            <div className="col-4 budget__income-percentage" style={{ paddingLeft: 0, paddingRight: 60 }}>&euro;&nbsp;</div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div className="container-fluid budget__income">
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col'>
+                            <h2>Pajamos:  {Math.round(incomeSum * 100) / 100} &euro;</h2>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="bottom mt-3">
+
+            <div className="bottom">
                 <div className="container">
                     <div className="add">
                         <div className="row text-center add__container">
@@ -258,15 +242,15 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
-                                            value:  today,
+                                            value: today,
                                             required: true,
                                             max: today
                                         })
                                     }
                                     type="date"
                                     className="form-control add__date"
-                                    // placeholder="Data"
-                                    />
+                                // placeholder="Data"
+                                />
 
                                 <input
                                     {...register("amount",
@@ -289,6 +273,7 @@ export default function Income() {
 
                             </form>
 
+                            
                         </div>
 
                         <div className="row ">
@@ -308,29 +293,78 @@ export default function Income() {
                     </div>
                 </div>
 
-                <div className="mt-5 list">
-                    <div className="container" style={{ paddingRight: 0 }}>
-                        <div className="col-12 income" style={{ paddingLeft: 0, paddingRight: 0 }}>
-                            <h2 className="income__title">Pajamos</h2>
-                            <div className="container income__list">
+                {/* <div className="mt-5 list"> */}
+                <div className="container" style={{ paddingRight: 0 }}>
+                    <div className="col-12 income" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                        <div className="income__list">
 
-                                {/* Display user's income on the page */}
-                                {allIncome.map(income => {
+                            <Table hover >
+                                <thead>
+                                    <tr>
+                                        <th>Aprašymas</th>
+                                        <th>Data</th>
+                                        <th>Kiekis</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* Display user's income on the page */}
+                                    {allIncome.map(income => {
 
-                                    return (
-                                        <div key={income.id}>
-                                            <div className='row'>
-                                                <div className='col-4' style={{ paddingLeft: 0 }}>
+                                        return (
+
+
+                                            // <div key={income.id}>
+                                            //     <div className='row'>
+                                            //         <div className='col-4' style={{ paddingLeft: 0 }}>
+                                            //             {income.incomeName}&nbsp;
+                                            //         </div>
+                                            //         <div className='col-3' style={{ paddingLeft: 0 }}>
+                                            //             {income.date}&nbsp;
+                                            //         </div>
+                                            //         <div className='col-3' style={{ paddingLeft: '6.5%' }}>
+                                            //             {income.amount}&euro;&nbsp;
+                                            //         </div>
+
+                                            //         <div className='col-2' style={{ textAlign: 'right', paddingLeft: 0, paddingRight: 0 }}>
+                                            //             <EditIncomeModal
+                                            //                 id={income.id}
+                                            //                 incomeName={income.incomeName}
+                                            //                 date={income.date}
+                                            //                 amount={income.amount}
+                                            //                 forceRender={forceRender}
+                                            //                 setForceRender={setForceRender}
+                                            //             />
+
+                                            //             <button
+                                            //                 onClick={() => showDeleteModal(income.id)}
+                                            //                 className="btn"
+                                            //                 type="button"
+                                            //                 style={{ paddingTop: 0, paddingBottom: 10 }}
+                                            //             >
+                                            //                 <FontAwesomeIcon
+                                            //                     icon="trash"
+                                            //                     className='add__btn__income'
+                                            //                     style={{ "width": "20px" }}
+                                            //                 />
+                                            //             </button>
+                                            //         </div>
+                                            //     </div>
+                                            // </div>
+
+                                            <tr key={income.id} >
+
+                                                <td >
                                                     {income.incomeName}&nbsp;
-                                                </div>
-                                                <div className='col-3' style={{ paddingLeft: 0 }}>
+                                                </td>
+                                                <td >
                                                     {income.date}&nbsp;
-                                                </div>
-                                                <div className='col-3' style={{ paddingLeft: '6.5%' }}>
+                                                </td>
+                                                <td >
                                                     {income.amount}&euro;&nbsp;
-                                                </div>
+                                                </td>
 
-                                                <div className='col-2' style={{ textAlign: 'right', paddingLeft: 0, paddingRight: 0 }}>
+                                                <td style={{ textAlign: 'right', paddingLeft: 0, paddingRight: 0 }}>
                                                     <EditIncomeModal
                                                         id={income.id}
                                                         incomeName={income.incomeName}
@@ -352,11 +386,15 @@ export default function Income() {
                                                             style={{ "width": "20px" }}
                                                         />
                                                     </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                                </td>
+
+                                            </tr>
+
+                                        );
+                                    })}
+
+                                </tbody>
+
 
                                 <DeleteModal
                                     showModal={displayDeleteModal}
@@ -364,34 +402,33 @@ export default function Income() {
                                     confirmModal={removeIncome}
                                     id={deleteId}
                                 />
-                            </div>
-                            {/* pagination for the user items */}
-                            <ReactPaginate
-                              
-                              previousLabel={"previous"}
-                              nextLabel={"next"}
-                              breakLabel={"..."}
-                              pageCount={pageCount}
-                              marginPagesDisplayed={2}
-                              pageRangeDisplayed={3}
-                              onPageChange={handlePageClick}
-                              containerClassName={"pagination justify-content-center"}
-                              pageClassName={"page-item"}
-                              pageLinkClassName={"page-link"}
-                              previousClassName={"page-item"}
-                              previousLinkClassName={"page-link"}
-                              nextClassName={"page-item"}
-                              nextLinkClassName={"page-link"}
-                              breakClassName={"page-item"}
-                              breakLinkClassName={"page-link"}
-                              activeClassName={"active"}
-                            />
-                            {/* so the footer doesn't hide pagination */}
-                            <br />
-                            <br />
+                            </Table>
                         </div>
+                        {/* pagination for the user items */}
+                        <ReactPaginate
+
+                            previousLabel={"previous"}
+                            nextLabel={"next"}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination justify-content-center"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active"}
+                        />
+
                     </div>
                 </div>
+                {/* </div> */}
             </div>
         </>
 
