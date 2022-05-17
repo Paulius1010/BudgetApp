@@ -65,9 +65,9 @@ const App = () => {
       </RenderContext.Provider>
 
       {/* Commented the footer section for now */}
-      <footer>
+      {/* <footer>
         <Footer />
-      </footer>
+      </footer> */}
     </>
   );
 };
