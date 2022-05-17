@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthService from "../services/auth.service";
 import Header from './Header';
 import NavbarAna from './NavbarAna';
@@ -8,6 +8,28 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 export default function HomeLoggedIn() {
     const currentUser = AuthService.getCurrentUser();
+    const [income, setIncome] = useState([]);
+
+    const chartData = income.map(x => x.amount);
+    console.log(chartData);
+
+    // Fetch all user's income from database to display down below
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+            const data = await response.json();
+            setIncome(data);
+        };
+
+        fetchData();
+    }, []);
 
     ChartJS.register(ArcElement, Tooltip, Legend);
     const data = {
@@ -15,7 +37,8 @@ export default function HomeLoggedIn() {
         datasets: [
             {
                 label: 'Pajamų šaltiniai',
-                data: [12, 19, 3, 5, 2, 3],
+                // data: [12, 19, 3, 5, 2, 3],
+                data: chartData,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
