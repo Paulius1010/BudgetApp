@@ -52,7 +52,7 @@ const App = () => {
             {/* <Route path="/mod" element={<BoardModerator />} /> */}
             <Route path="/admin" element={<BoardAdmin />} />
             {/* <Route path="/register-success" element={<RegisterSuccess />} /> */}
-            <Route path="/welcome" element={<HomeLoggedIn />} />
+            <Route path="/statistics" element={<HomeLoggedIn />} />
             <Route path="/income" element={<Income />} />
             <Route path="/expense" element={<Expense />} />
             <Route path="/category" element={<Category />} />
