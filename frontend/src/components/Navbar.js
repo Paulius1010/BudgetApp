@@ -4,6 +4,8 @@ import AuthService from "../services/auth.service";
 import "../navbar bootstrap/bootstrap.module.min.css";
 import "./Navbar.css";
 import { RenderContext } from "./RenderContext";
+import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Navbar() {
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
@@ -46,9 +48,9 @@ export default function Navbar() {
                                 ) : currentUser ? (
                                     <>
                                         <li id="button-hover">
-                                            <NavLink to={"/welcome"}
+                                            <NavLink to={"/statistics"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
-                                                Namai
+                                                Statistika
                                             </NavLink>
                                         </li>
                                     </>
@@ -56,8 +58,14 @@ export default function Navbar() {
                                     <>
                                         <li id="button-hover">
                                             <NavLink to={"/"}
-                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}>
-                                                Namai
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')}
+                                            >
+
+                                                <FontAwesomeIcon
+                                                    icon={faHome}
+                                                    id="home_button"
+                                                />
+
                                             </NavLink>
                                         </li>
                                     </>
@@ -196,34 +204,34 @@ export default function Navbar() {
                                     </>
                                 )}
 
-                            {showAdminBoard ? (
-                                <>
-                                    <li id="button-hover">
+                                {showAdminBoard ? (
+                                    <>
+                                        <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
                                         </li>
-                                </>
-                            ) : currentUser ? (
-                                <>
-                                    <li id="button-hover">
+                                    </>
+                                ) : currentUser ? (
+                                    <>
+                                        <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
                                         </li>
-                                </>
-                            ) : (
-                                <>
-                                    {/* <li id="button-hover">
+                                    </>
+                                ) : (
+                                    <>
+                                        {/* <li id="button-hover">
                                             <a href="/"
                                                 onClick={logOut}>
                                                 Atsijungti
                                             </a>
                                         </li> */}
-                                </>
-                            )}
+                                    </>
+                                )}
                             </ul>
                         </nav>
                     </div>

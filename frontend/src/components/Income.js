@@ -25,7 +25,7 @@ export default function Income() {
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
-    const date = moment(today).format("YYYY/MM/DD")
+    const date = moment(today).format("YYYY-MM-DD")
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
