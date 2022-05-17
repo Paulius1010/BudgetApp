@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as bootstrap from 'bootstrap';
+
+window.bootstrap = bootstrap;
+
+// import Modal from "react-modal";
 
 export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
     const { register, handleSubmit, formState: { errors } } = useForm({ mode: 'onSubmit', reValidateMode: 'onSubmit' });
+    // const [show, setShow] = useState(false);
+
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
+
+    // var modal = new bootstrap.Modal('#id' + id);
+    const editModal = document.getElementById("id" + id);
+const myModal = bootstrap.Modal.getInstance(editModal);
+
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
@@ -34,8 +48,17 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
             }
         );
 
+        // function closeModal() {
+        //     setIsOpen(!isOpen);
+        //   }
+
         if (response.status === 200) {
             successMessage();
+            myModal.hide();
+            // $('#myModal').modal('show')
+            // closeModal();
+            // handleClose();
+            
         }
         else {
             (errorMessage('Klaida!'));
@@ -160,8 +183,9 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 </button>
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
-                                    data-bs-dismiss="modal"
+                                    className="btn btn-primary"                                   
+                                    // data-bs-dismiss="modal"
+                                    
                                 >
                                     Išsaugoti
                                 </button>
