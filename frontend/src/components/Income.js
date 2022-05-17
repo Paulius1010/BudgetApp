@@ -185,7 +185,8 @@ export default function Income() {
                                         {
                                             value:  today,
                                             required: true,
-                                            max: today
+                                            max: today,
+                                            // min: new Date("01/01/2000")
                                         })
                                     }
                                     type="date"
