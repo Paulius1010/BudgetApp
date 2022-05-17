@@ -193,14 +193,15 @@ export default function Expense() {
                                 <input
                                     {...register("date",
                                         {
-                                            value: today,
-                                            required: true,
-                                            max: today
+                                            required: true
                                         })
                                     }
+                                    max={today}
+                                    min={"2000-01-01"}
+                                    defaultValue={today}
                                     type="date"
                                     className="form-control add__date"
-                                    placeholder="Data"
+                                // placeholder="Data"
                                 />
 
                                 <select {...register("categoryId",
@@ -264,7 +265,7 @@ export default function Expense() {
                 </div>
 
                 <div className="mt-5 list">
-                    <div className="container" style={{paddingRight: 0}}>
+                    <div className="container" style={{ paddingRight: 0 }}>
                         <div className="col-12 expense" style={{ paddingLeft: 0, paddingRight: 0 }}>
                             <h2 className="expense__title">Išlaidos</h2>
                             <div className="container expense__list">
@@ -274,10 +275,10 @@ export default function Expense() {
                                     return (
                                         <div key={expense.id}>
                                             <div className='row'>
-                                                <div className='col-3'  style={{ paddingLeft: 0 }}>
+                                                <div className='col-3' style={{ paddingLeft: 0 }}>
                                                     {expense.expenseName}&nbsp;
                                                 </div>
-                                                <div className='col-3'  style={{ paddingLeft: 0 }}>
+                                                <div className='col-3' style={{ paddingLeft: 0 }}>
                                                     {expense.date}&nbsp;
                                                 </div>
 

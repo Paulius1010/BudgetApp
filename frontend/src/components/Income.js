@@ -185,24 +185,24 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
-                                            value: date,
-                                            required: true,
-                                            max: today,
-                                            // min: new Date("01/01/2000")
+                                            required: true
                                         })
                                     }
+                                    max={today}
+                                    min={"2000-01-01"}
+                                    defaultValue={today}
                                     type="date"
                                     className="form-control add__date"
-                                    // placeholder="Data"
-                                    />
-
+                                // placeholder="Data"
+                                />
+                                {/* {date} */}
                                 <input
                                     {...register("amount",
                                         {
                                             required: true,
-                                            min: 1
                                         })
                                     }
+                                    min={"0.01"}
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
