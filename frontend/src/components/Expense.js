@@ -224,9 +224,9 @@ export default function Expense() {
                                     {...register("amount",
                                         {
                                             required: true,
-                                            min: 1
                                         })
                                     }
+                                    min={"0.01"}
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
