@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as bootstrap from 'bootstrap';
+import $ from "jquery";
 
 export default function EditIncomeModal({ id, incomeName, date, amount, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
@@ -15,6 +17,12 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
+
+    const hideModal = () => {
+        const myModalEl = document.getElementById('id' + id);
+        const modal = bootstrap.Modal.getInstance(myModalEl);
+        modal.hide();
+    };
 
     const onSubmit = async (data) => {
         const response = await fetch(
@@ -36,6 +44,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
 
         if (response.status === 200) {
             successMessage();
+            hideModal();
         }
         else {
             (errorMessage('Klaida!'));
@@ -78,7 +87,7 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
             </button>
 
             <div
-                className="modal fade"
+                className="modal"
                 id={"id" + id}
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
@@ -161,7 +170,6 @@ export default function EditIncomeModal({ id, incomeName, date, amount, forceRen
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
-                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>

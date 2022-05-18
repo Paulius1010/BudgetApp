@@ -31,6 +31,25 @@ export default function HomeLoggedIn() {
     }
 
     // Fetch all user's income from database to display down below
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
+    //             {
+    //                 method: "GET",
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${currentUser.accessToken}`
+    //                 }
+    //             });
+
+    //         const data = await response.json();
+    //         setIncome(data);
+    //     };
+
+    //     fetchData();
+    // }, []);
+
+    // Fetch current user's this month's all income
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
@@ -48,6 +67,7 @@ export default function HomeLoggedIn() {
 
         fetchData();
     }, []);
+
 
     ChartJS.register(ArcElement, Tooltip, Legend);
     const data = {

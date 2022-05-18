@@ -9,7 +9,8 @@ import { useForm } from "react-hook-form";
 import EditIncomeModal from './EditIncomeModal';
 import DeleteModal from './DeleteModal';
 import ReactPaginate from 'react-paginate';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
+import moment from 'moment';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -26,6 +27,7 @@ export default function Income() {
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
+    const date = moment(today).format("YYYY-MM-DD");
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
@@ -57,6 +59,7 @@ export default function Income() {
 
         if (response.status === 201) {
             successMessage('Pridėta!');
+            reset();
         }
         else {
             (errorMessage('Klaida!'));
@@ -102,7 +105,7 @@ export default function Income() {
             successMessage('Ištrinta');
         }
         else {
-            (errorMessage('Klaida!'))
+            (errorMessage('Klaida!'));
         }
 
         setForceRender(!forceRender);
@@ -242,23 +245,26 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
-                                            value: today,
-                                            required: true,
-                                            max: today
+                                            required: true
                                         })
                                     }
+                                    max={today}
+                                    min={"2000-01-01"}
+                                    defaultValue={today}
                                     type="date"
                                     className="form-control add__date"
                                 // placeholder="Data"
                                 />
 
+                                {/* {date} */}
+
                                 <input
                                     {...register("amount",
                                         {
                                             required: true,
-                                            min: 1
                                         })
                                     }
+                                    min={"0.01"}
                                     type="number"
                                     className="form-control add__value"
                                     placeholder="Kiekis"
@@ -273,7 +279,7 @@ export default function Income() {
 
                             </form>
 
-                            
+
                         </div>
 
                         <div className="row ">
