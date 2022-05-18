@@ -14,13 +14,21 @@ export default function HomeLoggedIn() {
     const chartIncomeAmount = income.map(x => x.amount);
     const chartIncomeNames = income.map(x => x.incomeName);
 
-    // const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-    // const r = randomBetween(0, 255);
-    // const g = randomBetween(0, 255);
-    // const b = randomBetween(0, 255);
-    // const rgb = `rgb(${r}, ${g}, ${b}, 0.2)`; // Collect all to a css color string
+    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+    const chartIncomeColors = [];
+    const chartIncomeColorsBorder = [];
 
-    // for (i = )
+    // Generates random RGB values for the displayed incomes
+    for (let i = 1; i <= income.length; i++) {
+        const r = randomBetween(0, 255);
+        const g = randomBetween(0, 255);
+        const b = randomBetween(0, 255);
+        const rgb = `rgb(${r}, ${g}, ${b}, 0.2)`; // Collect all to a css color string
+        const rgbBorder = `rgb(${r}, ${g}, ${b}, 1)`;
+
+        chartIncomeColors.push(rgb);
+        chartIncomeColorsBorder.push(rgbBorder);
+    }
 
     // Fetch all user's income from database to display down below
     useEffect(() => {
@@ -48,22 +56,8 @@ export default function HomeLoggedIn() {
             {
                 label: 'Šio mėnesio pajamos:',
                 data: chartIncomeAmount,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                ],
+                backgroundColor: chartIncomeColors,
+                borderColor: chartIncomeColorsBorder,
                 borderWidth: 1,
             },
         ],
