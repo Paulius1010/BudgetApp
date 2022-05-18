@@ -8,8 +8,8 @@ const Home = () => {
             <div className="container-fluid margin_fix">
                 {/* why use a budget app row */}
                 <div className="row">
-                    <div className="container">
-                        <div className="col-7 bg-white second_section container"> 
+                    <div className="">
+                        <div className="col-11 col-md-11 bg-white second_section container">
                             <div className="row">
                                 <div className="row ss_header">
                                     <div className="col-4">
@@ -40,10 +40,10 @@ const Home = () => {
                 {/* benefits for you row */}
                 <div className="row">
                     <div className="container">
-                        <div className="col-7 bg-white third_section container">
+                        <div className="col-11 col-md-11 bg-white third_section container">
                             <div className="row">
                                 <div className="col-4 ss_header">Planuokites lengviau</div>
-                                <div className="col-8 ss_content">Geras pinigų valdymas – tai kruopštus planavimas. Lengva pasimesti savo išlaidose, jei tiksliai nematote kiek, kur ir kada išleidote savo turimas lėšas.</div>  
+                                <div className="col-8 ss_content">Geras pinigų valdymas – tai kruopštus planavimas. Lengva pasimesti savo išlaidose, jei tiksliai nematote kiek, kur ir kada išleidote savo turimas lėšas.</div>
                             </div>
                         </div>
                     </div>

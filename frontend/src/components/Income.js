@@ -183,7 +183,7 @@ export default function Income() {
                                 <input
                                     {...register("date",
                                         {
-                                            value:  today,
+                                            value: today,
                                             required: true,
                                             max: today,
                                             // min: new Date("01/01/2000")
@@ -191,8 +191,8 @@ export default function Income() {
                                     }
                                     type="date"
                                     className="form-control add__date"
-                                    // placeholder="Data"
-                                    />
+                                // placeholder="Data"
+                                />
 
                                 <input
                                     {...register("amount",

@@ -1,28 +1,30 @@
-.second_section{
-    height: auto;
+.second_section {
+    /* height: auto; */
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom: solid 3.5px #8AA82D;
-    padding: 20px 0;
+    padding: 7vh 0;
 }
 
-.ss_header{
+.ss_header {
     font-family: "Calibri";
     font-size: 130%;
     color: #6b8910;
     font-weight: bold;
     padding-bottom: 13px;
 }
-.ss_content{
+
+.ss_content {
     font-family: "Calibri";
 }
-.third_section{
-    height: auto;
+
+.third_section {
+    /* height: auto; */
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    padding: 20px 0;
+    padding: 8vh 0;
 }
 
-.margin_fix{
-    margin: 5rem 0;
+.margin_fix {
+    margin: 5vh 0;
 }
