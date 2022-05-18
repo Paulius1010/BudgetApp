@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import AuthService from "../services/auth.service";
-import Header from './Header';
-import NavbarAna from './NavbarAna';
-import SideBar from './SideBar';
+// import Header from './Header';
+// import NavbarAna from './NavbarAna';
+// import SideBar from './SideBar';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 export default function HomeLoggedIn() {
     const currentUser = AuthService.getCurrentUser();
+
     const [income, setIncome] = useState([]);
 
-    const chartData = income.map(x => x.amount);
-    console.log(chartData);
+    const chartIncomeAmount = income.map(x => x.amount);
+    const chartIncomeNames = income.map(x => x.incomeName);
+
+    // const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+    // const r = randomBetween(0, 255);
+    // const g = randomBetween(0, 255);
+    // const b = randomBetween(0, 255);
+    // const rgb = `rgb(${r}, ${g}, ${b}, 0.2)`; // Collect all to a css color string
+
+    // for (i = )
 
     // Fetch all user's income from database to display down below
     useEffect(() => {
@@ -24,6 +33,7 @@ export default function HomeLoggedIn() {
                         'Authorization': `Bearer ${currentUser.accessToken}`
                     }
                 });
+
             const data = await response.json();
             setIncome(data);
         };
@@ -33,12 +43,11 @@ export default function HomeLoggedIn() {
 
     ChartJS.register(ArcElement, Tooltip, Legend);
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: chartIncomeNames,
         datasets: [
             {
-                label: 'Pajamų šaltiniai',
-                // data: [12, 19, 3, 5, 2, 3],
-                data: chartData,
+                label: 'Šio mėnesio pajamos:',
+                data: chartIncomeAmount,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -82,6 +91,8 @@ export default function HomeLoggedIn() {
 
         <div className="container">
             <div className="row">
+                <p>Šio mėnesio pajamos:</p>
+
                 <div className="col-6">
                     <Doughnut
                         data={data}
