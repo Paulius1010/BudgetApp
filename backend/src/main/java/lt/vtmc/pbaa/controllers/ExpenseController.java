@@ -6,6 +6,7 @@ import lt.vtmc.pbaa.payload.requests.ExpenseUpdateRequest;
 import lt.vtmc.pbaa.payload.responses.ExpenseResponse;
 import lt.vtmc.pbaa.services.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,4 +46,8 @@ public class ExpenseController {
     public ResponseEntity<List<Expense>> getAllExpensesByUserId(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.expenseService.getAllExpenseByUser(id));
     }
+    @GetMapping("/user")// /api/expense/user?offset=0&pageSize=3 to test
+	public ResponseEntity<Page<Expense>> getAllIncomeByUserIdPage(@RequestParam("offset") int offset, @RequestParam("pageSize") int pageSize) {
+		return ResponseEntity.ok().body(this.expenseService.getAllExpenseByUserPage(offset, pageSize));
+	}
 }

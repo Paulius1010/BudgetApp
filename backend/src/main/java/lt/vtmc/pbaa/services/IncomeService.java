@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,14 +111,39 @@ public class IncomeService {
 //    	
 //		return incomeRepository.findByUser(user, Sort.by(Sort.Direction.ASC, field));
 //	}
+    
     public Page<Income> getIncomeWithPagination(int offset, int pageSize){
     	String currentPrincipalEmail = getCurrentPrincipalEmail();
     	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
     	Optional<User> user = Optional.of(user1);
-    	Page<Income> page = incomeRepository.findByUser(user, PageRequest.of(offset, pageSize));
+    	//Sort.Order order = new Sort.Order(Direction.DESC, "date");
     	
-    	return page;
+    	List<Income> income = incomeRepository.findByUser(user);
+    	 Collections.sort(income, new Comparator() {
 
+    	        public int compare(Object o1, Object o2) {
+    	        	//comapre by date and then id in descending order
+    	        	LocalDate x1 = ((Income) o1).getDate();
+    	        	LocalDate x2 = ((Income) o2).getDate();
+    	            int sComp = x2.compareTo(x1);
+
+    	            if (sComp != 0) {
+    	               return sComp;
+    	            } 
+
+    	            Long y1 = ((Income) o1).getId();
+    	            Long y2 = ((Income) o2).getId();
+    	            return y2.compareTo(y1);
+    	    }});
+    	 Pageable pageable = PageRequest.of(offset, pageSize);
+    	 final int startp = (int)pageable.getOffset();
+     	final int endp = Math.min((startp + pageable.getPageSize()), income.size());
+     	final Page<Income> pagep = new PageImpl<>(income.subList(startp, endp), pageable, income.size());
+    	 
+    	//Page<Income> page = incomeRepository.findByUser(user, PageRequest.of(offset, pageSize, Sort.by("date").descending()));
+    	
+    	return pagep;
+    	
     }
     public List<Income> findByUserByDate(String date){
     	String currentPrincipalEmail = getCurrentPrincipalEmail();
