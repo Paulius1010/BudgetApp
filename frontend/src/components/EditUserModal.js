@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { checked } from 'glamor';
+import * as bootstrap from 'bootstrap';
+import $ from "jquery";
 
 export default function EditUserModal({ id, username, email, roles, forceRender, setForceRender }) {
     const currentUser = AuthService.getCurrentUser();
@@ -14,6 +16,12 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
     password.current = watch("password", "");
     // const isAdmin = roles.some(item => item.name === "ROLE_ADMIN");
     const [submitResponse, setSubmitResponse] = useState(null);
+
+    const hideModal = () => {
+        const myModalEl = document.getElementById('id' + id);
+        const modal = bootstrap.Modal.getInstance(myModalEl);
+        modal.hide();
+    };
 
     const onSubmit = async (data) => {
         let admin = "";
@@ -42,6 +50,7 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
 
         if (response.status === 200) {
             successMessage();
+            hideModal();
         }
         else if (response.status !== 400) {
             (errorMessage('Klaida!'));
@@ -87,7 +96,7 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
             </button>
 
             <div
-                className="modal fade"
+                className="modal"
                 id={"id" + id}
                 data-bs-backdrop="static"
                 data-bs-keyboard="false"
@@ -218,7 +227,6 @@ export default function EditUserModal({ id, username, email, roles, forceRender,
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
-                                    data-bs-dismiss="modal"
                                 >
                                     Išsaugoti
                                 </button>
