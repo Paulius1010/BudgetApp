@@ -20,10 +20,10 @@ export default function HomeLoggedIn() {
 
     // Generates random RGB values for the displayed incomes
     for (let i = 1; i <= income.length; i++) {
-        const r = randomBetween(0, 255);
-        const g = randomBetween(0, 255);
-        const b = randomBetween(0, 255);
-        const rgb = `rgb(${r}, ${g}, ${b}, 0.2)`; // Collect all to a css color string
+        const r = randomBetween(0, 200);
+        const g = randomBetween(0, 200);
+        const b = randomBetween(0, 200);
+        const rgb = `rgb(${r}, ${g}, ${b}, 0.4)`; // Collect all to a css color string
         const rgbBorder = `rgb(${r}, ${g}, ${b}, 1)`;
 
         chartIncomeColors.push(rgb);
