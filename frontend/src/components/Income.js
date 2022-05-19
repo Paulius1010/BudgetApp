@@ -10,7 +10,7 @@ import EditIncomeModal from './EditIncomeModal';
 import DeleteModal from './DeleteModal';
 import ReactPaginate from 'react-paginate';
 import Table from 'react-bootstrap/Table';
-import moment from 'moment';
+// import moment from 'moment';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -27,17 +27,12 @@ export default function Income() {
 
     // This is used to figure out today's date, and format it accordingly
     let today = new Date();
-    const date = moment(today).format("YYYY-MM-DD");
+    // const date = moment(today).format("YYYY-MM-DD");
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
     today = yyyy + '-' + mm + '-' + dd;
 
-    // Limiting not older than... date
-    let dateLimit = new Date("2000-01-01");
-    // 
-
-    // let dDate = new Date().toLocaleDateString('en-CA');
 
     // Add user's income to database from the inputs
     const onSubmit = async (data, e) => {

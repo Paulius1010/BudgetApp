@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AuthService from "../services/auth.service";
 // import Header from './Header';
-// import NavbarAna from './NavbarAna';
 // import SideBar from './SideBar';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -10,13 +9,18 @@ export default function HomeLoggedIn() {
     const currentUser = AuthService.getCurrentUser();
 
     const [income, setIncome] = useState([]);
+    const [expense, setExpense] = useState([]); //mine
 
     const chartIncomeAmount = income.map(x => x.amount);
     const chartIncomeNames = income.map(x => x.incomeName);
+    const chartExpenseAmount = expense.map(x => x.amount); //mine
+    const chartExpenseNames = expense.map(x => x.expenseName); //mine
 
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
     const chartIncomeColors = [];
     const chartIncomeColorsBorder = [];
+    const chartExpenseColors = []; //mine
+    const chartExpenseColorsBorder = []; //mine
 
     // Generates random RGB values for the displayed incomes
     for (let i = 1; i <= income.length; i++) {
@@ -28,6 +32,8 @@ export default function HomeLoggedIn() {
 
         chartIncomeColors.push(rgb);
         chartIncomeColorsBorder.push(rgbBorder);
+        chartExpenseColors.push(rgb); //mine
+        chartExpenseColorsBorder.push(rgbBorder); //mine
     }
 
     // Fetch all user's income from database to display down below
@@ -68,9 +74,27 @@ export default function HomeLoggedIn() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8080/api/expense/user/${currentUser.id}`,
+                {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentUser.accessToken}`
+                    }
+                });
+
+            const data = await response.json();
+            setExpense(data);
+        };
+
+        fetchData();
+    }, []) //mine
+
 
     ChartJS.register(ArcElement, Tooltip, Legend);
-    const data = {
+    const incomeData = {
         labels: chartIncomeNames,
         datasets: [
             {
@@ -82,6 +106,20 @@ export default function HomeLoggedIn() {
             },
         ],
     };
+
+    ChartJS.register(ArcElement, Tooltip, Legend); //mine
+    const expenseData = {
+        labels: chartExpenseNames,
+        datasets: [
+            {
+                label: 'Šio mėnesio išlaidos:',
+                data: chartExpenseAmount,
+                backgroundColor: chartExpenseColors,
+                borderColor: chartExpenseColorsBorder,
+                borderWidth: 1,
+            },
+        ],
+    }; //mine
 
     return (
         // <>
@@ -105,16 +143,30 @@ export default function HomeLoggedIn() {
 
         <div className="container">
             <div className="row">
-                <p>Šio mėnesio pajamos:</p>
-
-                <div className="col-6">
-                    <Doughnut
-                        data={data}
-                        width={400}
-                        height={400}
-                        options={{ maintainAspectRatio: false }}
-                    />
+                <div className='col-6'>
+                    <p>Šio mėnesio pajamos:</p>
+                    <div>
+                        <Doughnut
+                            data={incomeData}
+                            width={400}
+                            height={400}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
                 </div>
+
+                <div className='col-6'>
+                    <p>Šio mėnesio išlaidos:</p>
+                    <div>
+                        <Doughnut
+                            data={expenseData}
+                            width={400}
+                            height={400}
+                            options={{ maintainAspectRatio: false }}
+                        />
+                    </div>
+                </div>
+
             </div>
         </div>
     );
