@@ -11,15 +11,29 @@ export default function HomeLoggedIn() {
 
     const [income, setIncome] = useState([]);
 
-    const chartIncomeAmount = income.map(x => x.amount);
-    const chartIncomeNames = income.map(x => x.incomeName);
+    const mergedRepeatIncomeName = income.reduce((previousValue, currentValue) => {
+        const found = previousValue.find(element => {
+            return element.incomeName === currentValue.incomeName;
+        });
+
+        if (found) {
+            found.amount += currentValue.amount;
+        } else {
+            previousValue.push(currentValue);
+        }
+
+        return previousValue;
+    }, []);
+
+    const chartIncomeAmount = mergedRepeatIncomeName.map(x => x.amount);
+    const chartIncomeNames = mergedRepeatIncomeName.map(x => x.incomeName);
 
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
     const chartIncomeColors = [];
     const chartIncomeColorsBorder = [];
 
     // Generates random RGB values for the displayed incomes
-    for (let i = 1; i <= income.length; i++) {
+    for (let i = 1; i <= mergedRepeatIncomeName.length; i++) {
         const r = randomBetween(0, 255);
         const g = randomBetween(0, 255);
         const b = randomBetween(0, 255);
@@ -29,6 +43,7 @@ export default function HomeLoggedIn() {
         chartIncomeColors.push(rgb);
         chartIncomeColorsBorder.push(rgbBorder);
     }
+
 
     // Fetch all user's income from database to display down below
     // useEffect(() => {
