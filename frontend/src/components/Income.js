@@ -160,7 +160,7 @@ export default function Income() {
 
   const [pageCount, setpageCount] = useState(0);
   //limit of how many items per page to see
-  let limit = 10;
+  let limit = 9;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -304,7 +304,7 @@ export default function Income() {
         {/* <div className="mt-5 list"> */}
         <div className="container" style={{ paddingRight: 0 }}>
           <div
-            className="col-12 income"
+            className="col-12 income__list"
             style={{ paddingLeft: 0, paddingRight: 0 }}
           >
             <div className="income__list">

@@ -125,9 +125,18 @@ export default function Users() {
   return (
     <>
       {/* <div className="bottom mt-4"> */}
+      <div className="container-fluid budget__income">
         <div className="container">
-          <div className="add" style={{ padding: 4, paddingTop: 12 }}>
-            <h2 className="income__title">Pridėti naują vartotoją</h2>
+          <div className="row">
+            <div className="col">
+              <h2>Pridėti naują vartotoją </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div className="container">
+          <div className="" >
+            {/* <h2 className="">Pridėti naują vartotoją</h2> */}
             <div className="row text-center add__container ">
               <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -228,14 +237,15 @@ export default function Users() {
           </div>
         </div>
 
-        <div className="list">
-          <div className="container">
+        
+          <div className="container" style={{ paddingRight: 0 }}>
             <div
               className="col-12 username"
               style={{ paddingLeft: 0, paddingRight: 0 }}
             >
               {/* <h2 className="income__title">Vartotojai</h2> */}
-              <div className="container income__list"></div>
+              <div className="container income__list"
+               style={{ paddingLeft: 0, paddingRight: 0 }}></div>
 
               <Table hover>
                 <thead>
@@ -359,7 +369,7 @@ export default function Users() {
               </Table>
             </div>
           </div>
-        </div>
+        
       {/* </div> */}
     </>
   );

@@ -11,6 +11,7 @@ import DeleteModal from "./DeleteModal";
 
 import ReactPaginate from "react-paginate";
 import Table from "react-bootstrap/Table";
+import { Pagination } from "react-bootstrap";
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -130,8 +131,8 @@ export default function Expense() {
 
   // Fetch all user's expense from database to display
   const [allExpense2, setAllExpense2] = useState([]);
-    // Sums user's expense
-    const expenseSum = allExpense2.reduce((n, { amount }) => n + amount, 0);
+  // Sums user's expense
+  const expenseSum = allExpense2.reduce((n, { amount }) => n + amount, 0);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -155,7 +156,7 @@ export default function Expense() {
 
   const [pageCount, setpageCount] = useState(0);
   //limit of how many items per page to see
-  let limit = 10;
+  let limit = 9;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -209,8 +210,8 @@ export default function Expense() {
 
   return (
     <>
-      
-      
+
+
       <div className="container-fluid budget__expense">
         <div className="container">
           <div className="row">
@@ -320,13 +321,13 @@ export default function Expense() {
         </div>
 
         {/* <div className="mt-5 list"> */}
-          <div className="container" style={{ paddingRight: 0 }}>
-            <div
-              className="col-12 expense"
-              style={{ paddingLeft: 0, paddingRight: 0 }}
-            >
-              {/* <h2 className="expense__title">Išlaidos</h2> */}
-              <div className="expense__list">
+        <div className="container" style={{ paddingRight: 0 }}>
+          <div
+            className="col-12 expense"
+            style={{ paddingLeft: 0, paddingRight: 0 }}
+          >
+            {/* <h2 className="expense__title">Išlaidos</h2> */}
+            <div className="expense__list">
               <Table hover>
                 <thead>
                   <tr>
@@ -338,101 +339,101 @@ export default function Expense() {
                   </tr>
                 </thead>
                 <tbody>
-                {/* Display user's expense on the page */}
-                {allExpense.map((expense) => {
-                  return (
-                    // <div key={expense.id}>
-                    //   <div className="row">
-                    //     <div className="col-3" style={{ paddingLeft: 0 }}>
-                    //       {expense.expenseName}&nbsp;
-                    //     </div>
-                    //     <div className="col-3" style={{ paddingLeft: 0 }}>
-                    //       {expense.date}&nbsp;
-                    //     </div>
+                  {/* Display user's expense on the page */}
+                  {allExpense.map((expense) => {
+                    return (
+                      // <div key={expense.id}>
+                      //   <div className="row">
+                      //     <div className="col-3" style={{ paddingLeft: 0 }}>
+                      //       {expense.expenseName}&nbsp;
+                      //     </div>
+                      //     <div className="col-3" style={{ paddingLeft: 0 }}>
+                      //       {expense.date}&nbsp;
+                      //     </div>
 
-                    //     <div className="col-2" style={{ paddingLeft: 0 }}>
-                    //       {expense.expensesCategory.name}&nbsp;
-                    //     </div>
-                    //     <div className="col-2" style={{ paddingLeft: "6%" }}>
-                    //       {expense.amount}&euro;&nbsp;
-                    //     </div>
+                      //     <div className="col-2" style={{ paddingLeft: 0 }}>
+                      //       {expense.expensesCategory.name}&nbsp;
+                      //     </div>
+                      //     <div className="col-2" style={{ paddingLeft: "6%" }}>
+                      //       {expense.amount}&euro;&nbsp;
+                      //     </div>
 
-                    //     <div
-                    //       className="col-2"
-                    //       style={{
-                    //         textAlign: "right",
-                    //         paddingLeft: 0,
-                    //         paddingRight: 0,
-                    //       }}
-                    //     >
-                    //       <EditExpenseModal
-                    //         id={expense.id}
-                    //         expenseName={expense.expenseName}
-                    //         date={expense.date}
-                    //         amount={expense.amount}
-                    //         category={expense.expensesCategory.name}
-                    //         forceRender={forceRender}
-                    //         setForceRender={setForceRender}
-                    //         allCategory={allCategory}
-                    //       />
+                      //     <div
+                      //       className="col-2"
+                      //       style={{
+                      //         textAlign: "right",
+                      //         paddingLeft: 0,
+                      //         paddingRight: 0,
+                      //       }}
+                      //     >
+                      //       <EditExpenseModal
+                      //         id={expense.id}
+                      //         expenseName={expense.expenseName}
+                      //         date={expense.date}
+                      //         amount={expense.amount}
+                      //         category={expense.expensesCategory.name}
+                      //         forceRender={forceRender}
+                      //         setForceRender={setForceRender}
+                      //         allCategory={allCategory}
+                      //       />
 
-                    //       <button
-                    //         onClick={() => showDeleteModal(expense.id)}
-                    //         className="btn"
-                    //         type="button"
-                    //         style={{ paddingTop: 0, paddingBottom: 10 }}
-                    //       >
-                    //         <FontAwesomeIcon
-                    //           icon="trash"
-                    //           className="add__btn__expense"
-                    //           style={{ width: "20px" }}
-                    //         />
-                    //       </button>
-                    //     </div>
-                    //   </div>
-                    // </div>
-                    <tr key={expense.id}>
+                      //       <button
+                      //         onClick={() => showDeleteModal(expense.id)}
+                      //         className="btn"
+                      //         type="button"
+                      //         style={{ paddingTop: 0, paddingBottom: 10 }}
+                      //       >
+                      //         <FontAwesomeIcon
+                      //           icon="trash"
+                      //           className="add__btn__expense"
+                      //           style={{ width: "20px" }}
+                      //         />
+                      //       </button>
+                      //     </div>
+                      //   </div>
+                      // </div>
+                      <tr key={expense.id}>
                         <td>{expense.expenseName}&nbsp;</td>
                         <td>{expense.date}&nbsp;</td>
                         <td>{expense.expensesCategory.name}&nbsp;</td>
                         <td>{expense.amount}&euro;&nbsp;</td>
-                      
 
-                      <td
-                        
-                        style={{
-                          textAlign: "right",
-                          paddingLeft: 0,
-                          paddingRight: 0,
-                        }}
-                      >
-                        <EditExpenseModal
-                          id={expense.id}
-                          expenseName={expense.expenseName}
-                          date={expense.date}
-                          amount={expense.amount}
-                          category={expense.expensesCategory.name}
-                          forceRender={forceRender}
-                          setForceRender={setForceRender}
-                          allCategory={allCategory}
-                        />
 
-                        <button
-                          onClick={() => showDeleteModal(expense.id)}
-                          className="btn"
-                          type="button"
-                          style={{ paddingTop: 0, paddingBottom: 10 }}
+                        <td
+
+                          style={{
+                            textAlign: "right",
+                            paddingLeft: 0,
+                            paddingRight: 0,
+                          }}
                         >
-                          <FontAwesomeIcon
-                            icon="trash"
-                            className="add__btn__expense"
-                            style={{ width: "20px" }}
+                          <EditExpenseModal
+                            id={expense.id}
+                            expenseName={expense.expenseName}
+                            date={expense.date}
+                            amount={expense.amount}
+                            category={expense.expensesCategory.name}
+                            forceRender={forceRender}
+                            setForceRender={setForceRender}
+                            allCategory={allCategory}
                           />
-                        </button>
-                      </td>
-                  </tr>
-                  );
-                })}
+
+                          <button
+                            onClick={() => showDeleteModal(expense.id)}
+                            className="btn"
+                            type="button"
+                            style={{ paddingTop: 0, paddingBottom: 10 }}
+                          >
+                            <FontAwesomeIcon
+                              icon="trash"
+                              className="add__btn__expense"
+                              style={{ width: "20px" }}
+                            />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
                 <DeleteModal
                   showModal={displayDeleteModal}
@@ -440,9 +441,10 @@ export default function Expense() {
                   confirmModal={removeExpense}
                   id={deleteId}
                 />
-                </Table>
-              </div>
-              {/* pagination for the user items */}
+              </Table>
+            </div>
+            {/* pagination for the user items */}
+            
             <ReactPaginate
               previousLabel={"previous"}
               nextLabel={"next"}
@@ -462,8 +464,9 @@ export default function Expense() {
               breakLinkClassName={"page-link"}
               activeClassName={"active"}
             />
-            </div>
+            
           </div>
+        </div>
         {/* </div> */}
       </div>
     </>

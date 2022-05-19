@@ -71,7 +71,7 @@ body {
 }
 
 .budget__expense {
-    background-color: #e74c3c;
+    background-color: #74bdee;
 
 }
 
@@ -127,7 +127,7 @@ button {
 }
 
 .add__btn__expense {
-    color: #e74c3c;
+    color: #74bdee;
     width: 25px;
     height: auto;
 }
