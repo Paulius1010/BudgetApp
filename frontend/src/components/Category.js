@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import EditCategoryModal from './EditCategoryModal';
 import DeleteModal from './DeleteModal';
 
+import Table from "react-bootstrap/Table";
+
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 
@@ -123,34 +125,25 @@ export default function Category() {
 
     return (
         <>
-            <div className="jumbotron-fluid text-center">
+
+            <div className="container-fluid budget__expense">
                 <div className="container">
-                    <div className="top">
-                        <div className="budget">
-                            <div className="budget__title">
-                                <h1 className="display-4 pt-3">
-                                </h1>
 
-                                <div>
-                                    <div className="budget__expense">
-                                        <div className="row">
-                                            <div className="col-6 budget__expense-text">Išlaidų kategorijos</div>
-
-                                            <div
-                                                className="col-6 budget__expense-value" style={{paddingRight: 50}}>
-                                                {categoryCount
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="row">
+                        <div className="col-6 ">
+                            <h2>
+                                Išlaidų kategorijos: {categoryCount}
+                            </h2>
                         </div>
+
+
                     </div>
                 </div>
+
             </div>
 
-            <div className="bottom mt-3">
+
+            <div className="bottom">
                 <div className="container">
                     <div className="add">
                         <div className="row text-center add__container">
@@ -175,61 +168,64 @@ export default function Category() {
 
                         <div className="row text-left">
                             <div className="col-sm-4 col-4">
-                                {errors?.name?.type === "required" && <p style={{padding: "0 !important"}}>Šis laukas yra privalomas</p>}
+                                {errors?.name?.type === "required" && <p style={{ padding: "0 !important" }}>Šis laukas yra privalomas</p>}
                                 {errors?.name?.type === "minLength" && <p>Pavadinimas turi būti bent 3 simbolių ilgio</p>}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-5 list">
-                    <div className="container" style={{paddingRight: 0}}>
-                        <div className="col-12 expense" style={{paddingLeft: 0, paddingRight: 0}}>
-                            <h2 className="expense__title">Kategorijos</h2>
+                <div className="list">
+                    <div className="container" style={{ paddingRight: 0 }}>
+                        <div className="col-12 expense" style={{ paddingLeft: 0, paddingRight: 0 }}>
+
                             <div className="container expense__list">
+                                <Table hover>
+                                    <thead>
+                                        
+                                    </thead>
+                                    <tbody>
+                                        {/* Display categories on the page */}
+                                        {allCategory.map(category => {
 
-                                {/* Display categories on the page */}
-                                {allCategory.map(category => {
+                                            return (
+                                                <tr key={category.id}>
 
-                                    return (
-                                        <div key={category.id}>
-                                            <div className='row'>
-                                                <div className='col-10'  style={{ paddingLeft: 0 }}>
-                                                    {category.name}&nbsp;
-                                                </div>
+                                                    <td>{category.name}&nbsp;</td>
 
-
-                                                <div className='col-2' style={{textAlign: "right", paddingRight: 0}}>
-                                                    <EditCategoryModal
-                                                        id={category.id}
-                                                        name={category.name}
-                                                        forceRender={forceRender}
-                                                        setForceRender={setForceRender}
-                                                    />
-
-                                                    <button
-                                                        onClick={() => showDeleteModal(category.id)}
-                                                        className="btn"
-                                                        type="button"
-                                                        style={{ paddingTop: 0, paddingBottom: 10 }}
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon="trash"
-                                                            className='add__btn__expense'
-                                                            style={{ "width": "20px" }}
+                                                    <td className='col-2' style={{ textAlign: "right", paddingRight: 0 }}>
+                                                        <EditCategoryModal
+                                                            id={category.id}
+                                                            name={category.name}
+                                                            forceRender={forceRender}
+                                                            setForceRender={setForceRender}
                                                         />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                                <DeleteModal
-                                    showModal={displayDeleteModal}
-                                    hideModal={hideConfirmationModal}
-                                    confirmModal={removeCategory}
-                                    id={deleteId}
-                                />
+
+                                                        <button
+                                                            onClick={() => showDeleteModal(category.id)}
+                                                            className="btn"
+                                                            type="button"
+                                                            style={{ paddingTop: 0, paddingBottom: 10 }}
+                                                        >
+                                                            <FontAwesomeIcon
+                                                                icon="trash"
+                                                                className='add__btn__expense'
+                                                                style={{ "width": "20px" }}
+                                                            />
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                            )
+                                        })}
+                                        </tbody>
+                                        <DeleteModal
+                                            showModal={displayDeleteModal}
+                                            hideModal={hideConfirmationModal}
+                                            confirmModal={removeCategory}
+                                            id={deleteId}
+                                        />
+                                </Table>
                             </div>
                         </div>
                     </div>

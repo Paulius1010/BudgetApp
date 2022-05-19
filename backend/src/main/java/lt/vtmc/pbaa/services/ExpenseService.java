@@ -2,6 +2,7 @@ package lt.vtmc.pbaa.services;
 
 import lt.vtmc.pbaa.models.Expense;
 import lt.vtmc.pbaa.models.ExpensesCategory;
+import lt.vtmc.pbaa.models.Income;
 import lt.vtmc.pbaa.models.User;
 import lt.vtmc.pbaa.payload.requests.ExpenseInsertRequest;
 import lt.vtmc.pbaa.payload.requests.ExpenseUpdateRequest;
@@ -10,12 +11,18 @@ import lt.vtmc.pbaa.repositories.ExpenseRepository;
 import lt.vtmc.pbaa.repositories.ExpensesCategoryRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,5 +107,35 @@ public class ExpenseService {
     public List<Expense> getAllExpenseByUser(Long id) {
         Optional<User> user = userRepository.findById(id);
         return expenseRepository.findByUser(user);
+    }
+    
+    public Page<Expense> getAllExpenseByUserPage(int offset, int pageSize){
+    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+    	Optional<User> user = Optional.of(user1);
+    	
+    	List<Expense> expense = expenseRepository.findByUser(user);
+   	 Collections.sort(expense, new Comparator() {
+
+   	        public int compare(Object o1, Object o2) {
+   	        	//comapre by date and then id in descending order
+   	        	LocalDate x1 = ((Expense) o1).getDate();
+   	        	LocalDate x2 = ((Expense) o2).getDate();
+   	            int sComp = x2.compareTo(x1);
+
+   	            if (sComp != 0) {
+   	               return sComp;
+   	            } 
+
+   	            Long y1 = ((Expense) o1).getId();
+   	            Long y2 = ((Expense) o2).getId();
+   	            return y2.compareTo(y1);
+   	    }});
+   	 Pageable pageable = PageRequest.of(offset, pageSize);
+   	 final int startp = (int)pageable.getOffset();
+    	final int endp = Math.min((startp + pageable.getPageSize()), expense.size());
+    	final Page<Expense> page = new PageImpl<>(expense.subList(startp, endp), pageable, expense.size());
+    	
+    	return page;
     }
 }
