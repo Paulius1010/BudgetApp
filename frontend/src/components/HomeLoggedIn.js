@@ -5,9 +5,13 @@ import AuthService from "../services/auth.service";
 // import SideBar from './SideBar';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import moment from 'moment';
 
 export default function HomeLoggedIn() {
     const currentUser = AuthService.getCurrentUser();
+
+    const today = new Date();
+    const todayFormatted = moment(today).format("YYYY-MM-DD");
 
     const [income, setIncome] = useState([]);
 
@@ -44,30 +48,10 @@ export default function HomeLoggedIn() {
         chartIncomeColorsBorder.push(rgbBorder);
     }
 
-
-    // Fetch all user's income from database to display down below
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
-    //             {
-    //                 method: "GET",
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'Authorization': `Bearer ${currentUser.accessToken}`
-    //                 }
-    //             });
-
-    //         const data = await response.json();
-    //         setIncome(data);
-    //     };
-
-    //     fetchData();
-    // }, []);
-
     // Fetch current user's this month's all income
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
+            const response = await fetch(`http://localhost:8080/api/income/userDate?date=${todayFormatted}`,
                 {
                     method: "GET",
                     headers: {
