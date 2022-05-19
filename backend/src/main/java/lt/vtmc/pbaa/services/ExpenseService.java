@@ -138,4 +138,19 @@ public class ExpenseService {
     	
     	return page;
     }
+    //
+    public Page<Expense> findByUserAndDateAndExpensesCategory(String date1, String date2, String category, int offset, int pageSize){
+    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+    	Optional<User> user = Optional.of(user1);
+    	
+    	
+    	LocalDate start = LocalDate.parse(date1);
+    	LocalDate end = LocalDate.parse(date2);
+    	
+    	Page<Expense> page = expenseRepository.findByUserAndDateBetweenAndExpensesCategory(user, start, end, expensesCategoryRepository.findByName(category), PageRequest.of(offset, pageSize));
+
+    	
+		return page;
+	}
 }
