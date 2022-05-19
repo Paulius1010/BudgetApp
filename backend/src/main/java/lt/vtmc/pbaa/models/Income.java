@@ -2,6 +2,9 @@ package lt.vtmc.pbaa.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,6 +18,7 @@ public class Income {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @NotBlank
