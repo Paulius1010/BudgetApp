@@ -68,7 +68,7 @@ export default function Login() {
                                                 {errors?.password?.type === "required" && <p>Įveskite Slaptažodį</p>}
                                                 {message && message}  
                                                 <div style={{paddingTop: 10}}> 
-                                                <input type="checkbox" onClick={togglePassword}/> Show Password 
+                                                <input type="checkbox" onClick={togglePassword}/> Rodyti slaptažodį
                                                 </div>
                                             </div>
                                             

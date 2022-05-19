@@ -6,10 +6,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
-import EditIncomeModal from "./EditIncomeModal";
-import DeleteModal from "./DeleteModal";
-import ReactPaginate from "react-paginate";
-import Table from "react-bootstrap/Table";
+import EditIncomeModal from './EditIncomeModal';
+import DeleteModal from './DeleteModal';
+import ReactPaginate from 'react-paginate';
+import Table from 'react-bootstrap/Table';
+import moment from 'moment';
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -139,22 +140,20 @@ export default function Income() {
   const incomeSum = allIncome2.reduce((n, { amount }) => n + amount, 0);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `http://localhost:8080/api/income/user/${currentUser.id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${currentUser.accessToken}`,
-          },
-        }
-      );
-      const data = await response.json();
-      setAllIncome2(data);
+        const response = await fetch(`http://localhost:8080/api/income/user/${currentUser.id}`,
+            {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentUser.accessToken}`
+                }
+            });
+        const data = await response.json();
+        setAllIncome2(data);
     };
 
     fetchData();
-  }, [forceRender]);
+}, [forceRender]);
 
   //pagination..........................
 
