@@ -5,6 +5,7 @@ import lt.vtmc.pbaa.payload.requests.ExpenseLimitInsertRequest;
 import lt.vtmc.pbaa.payload.responses.ExpenseLimitResponse;
 import lt.vtmc.pbaa.services.ExpenseLimitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,10 @@ public class ExpensesLimitsController {
     @GetMapping("/user/{id}")
     public ResponseEntity<List<ExpenseLimit>> getAllExpensesLimitsByUserId(@PathVariable Long id) {
         return ResponseEntity.ok().body(this.expenseLimitService.getAllExpenseLimitsByUser(id));
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<Page<ExpenseLimit>> getAllExpensesLimitsByUserIdPage(@RequestParam("offset") int offset, @RequestParam("pageSize") int pageSize) {
+        return ResponseEntity.ok().body(this.expenseLimitService.getAllExpenseLimitsByUserPage(offset, pageSize));
     }
 }

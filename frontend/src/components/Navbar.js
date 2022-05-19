@@ -106,6 +106,12 @@ export default function Navbar() {
                                                 Išlaidos
                                             </NavLink>
                                         </li>
+                                        <li>
+                                            <NavLink to={"/limits"}
+                                                className={({ isActive }) => (isActive ? 'active' : 'inactive')} >
+                                                Limitai
+                                            </NavLink>
+                                        </li>
                                         {/* <li>
                                             <NavLink to={"/category"}
                                                 className={({ isActive }) => (isActive ? 'active' : 'inactive')} >

@@ -11,8 +11,8 @@ public class ExpenseLimitResponse {
     public ExpenseLimitResponse() {
     }
 
-    public ExpenseLimitResponse(Long expenseId, Long categoryId, String limit) {
-        this.limitId = expenseId;
+    public ExpenseLimitResponse(Long limitId, Long categoryId, String limit) {
+        this.limitId = limitId;
         this.categoryId = categoryId;
         this.limit = limit;
     }
@@ -21,7 +21,7 @@ public class ExpenseLimitResponse {
         return limitId;
     }
 
-    public void setLimitId(Long expenseId) {
+    public void setLimitId(Long limitId) {
         this.limitId = limitId;
     }
 
@@ -37,7 +37,7 @@ public class ExpenseLimitResponse {
         return limit;
     }
 
-    public void setLimit(String amount) {
+    public void setLimit(String limit) {
         this.limit = limit;
     }
 

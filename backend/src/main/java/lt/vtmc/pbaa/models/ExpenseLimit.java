@@ -3,7 +3,7 @@ package lt.vtmc.pbaa.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+
 
 @Entity
 @Table(name="limits")
