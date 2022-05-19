@@ -8,12 +8,19 @@ import lt.vtmc.pbaa.payload.responses.IncomeResponse;
 import lt.vtmc.pbaa.repositories.IncomeRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,4 +100,80 @@ public class IncomeService {
     	Optional<User> user = userRepository.findById(id);
     	return incomeRepository.findByUser(user);
     }
+    
+//    public List<Income> findByUserAndSort(String field){
+//    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+//    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+//    	Optional<User> user = Optional.of(user1);
+//    	
+//		return incomeRepository.findByUser(user, Sort.by(Sort.Direction.ASC, field));
+//	}
+    public Page<Income> getIncomeWithPagination(int offset, int pageSize){
+    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+    	Optional<User> user = Optional.of(user1);
+    	Page<Income> page = incomeRepository.findByUser(user, PageRequest.of(offset, pageSize));
+    	
+    	return page;
+
+    }
+    public List<Income> findByUserByDate(String date){
+    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+    	Optional<User> user = Optional.of(user1);
+    	LocalDate lDate = LocalDate.parse(date);
+    	
+    	List<Income> list = incomeRepository.findByUser(user);
+    	List<Income> sorted = new ArrayList<Income>();
+    	
+    	for (int i = 0; i < list.size(); i++) {
+    		if(YearMonth.from(list.get(i).getDate()).equals(YearMonth.from(lDate))) {
+    			sorted.add(list.get(i));
+    		}
+		}
+		return sorted;
+	}
+//    public Page<Income> findByUserAndDate(String date, int offset, int pageSize){
+//    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+//    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+//    	Optional<User> user = Optional.of(user1);
+//    	
+//    	LocalDate initial = LocalDate.parse(date);
+//    	LocalDate start = initial.withDayOfMonth(1);
+//    	LocalDate end = initial.withDayOfMonth(initial.getMonth().length(initial.isLeapYear()));
+//    	
+//    	LocalDate lDate = LocalDate.parse(date);
+//    	Pageable pageable = PageRequest.of(offset, pageSize);
+////    	List<Income> list = incomeRepository.findByUserAndDateBetween(user, start, end, pageable);
+////    	List<Income> sorted = new ArrayList<Income>();
+//    	List<Income> list = incomeRepository.findByUserAndDateBetween(user, start, end);
+//    	
+//    	final int startp = (int)pageable.getOffset();
+//    	final int endp = Math.min((startp + pageable.getPageSize()), list.size());
+//    	final Page<Income> pagep = new PageImpl<>(list.subList(startp, endp), pageable, list.size());
+//    	
+////    	for (int i = 0; i < list.size(); i++) {
+////    		if(YearMonth.from(list.get(i).getDate()).equals(YearMonth.from(lDate))) {
+////    			sorted.add(list.get(i));
+////    		}
+////		}
+//    	
+//		return pagep;
+//	}
+    
+    
+    public Page<Income> findByUserAndDate(String date, int offset, int pageSize){
+    	String currentPrincipalEmail = getCurrentPrincipalEmail();
+    	User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
+    	Optional<User> user = Optional.of(user1);
+    	
+    	LocalDate initial = LocalDate.parse(date);
+    	LocalDate start = initial.withDayOfMonth(1);
+    	LocalDate end = initial.withDayOfMonth(initial.getMonth().length(initial.isLeapYear()));
+    	
+    	Page<Income> page = incomeRepository.findByUserAndDateBetween(user, start, end, PageRequest.of(offset, pageSize));
+
+    	
+		return page;
+	}
 }
