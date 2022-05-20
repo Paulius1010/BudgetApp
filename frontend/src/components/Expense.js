@@ -230,13 +230,6 @@ export default function Expense() {
                 className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3"
               >
                 <input
-                  {...register("expenseName", { required: true, minLength: 3 })}
-                  type="text"
-                  className="form-control add__description"
-                  placeholder="Aprašymas"
-                />
-
-                <input
                   {...register("date", {
                     value: today,
                     required: true,
@@ -245,6 +238,13 @@ export default function Expense() {
                   type="date"
                   className="form-control add__date"
                   placeholder="Data"
+                />
+
+                <input
+                  {...register("expenseName", { required: true, minLength: 3 })}
+                  type="text"
+                  className="form-control add__description"
+                  placeholder="Aprašymas"
                 />
 
                 <select
