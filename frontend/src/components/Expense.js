@@ -225,17 +225,146 @@ export default function Expense() {
         <div className="container">
           <div className="add">
             <div className="row text-center add__container">
-              <form
+
+              <div className="accordion" id="accordionExample" style={{ paddingRight: 0 }}>
+                <div className="accordion-item">
+                  <h2 className="accordion-header" id="headingOne">
+                    <button style={{ backgroundColor: '#D3F4D4' }} className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Naujas įrašas
+                    </button>
+                  </h2>
+                  <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div style={{ backgroundColor: '#D3F4D4' }} className="accordion-body">
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="col-12 col-sm-12 col-md-12 col-lg-12 input-group"
+                        style={{ paddingRight: 0 }}
+                      >
+                        <input
+                          {...register("date", {
+                            value: today,
+                            required: true,
+                            max: today,
+                          })}
+                          type="date"
+                          className="form-control add__date"
+                          placeholder="Data"
+                        />
+
+                        <input
+                          {...register("expenseName", { required: true, minLength: 3 })}
+                          type="text"
+                          className="form-control add__description"
+                          placeholder="Aprašymas"
+                        />
+
+                        <select
+                          {...register("categoryId", {
+                            required: true,
+                          })}
+                          className="form-control add__description"
+                          type="text"
+                        >
+                          <option value={""}>--Pasirinkite kategoriją--</option>
+                          {allCategory.map((option) => (
+                            <option value={option.id}>{option.name}</option>
+                          ))}
+                        </select>
+
+                        <input
+                          {...register("amount", {
+                            required: true,
+                            min: 1,
+                          })}
+                          type="number"
+                          className="form-control add__value"
+                          placeholder="Kiekis"
+                          step="0.01"
+                        />
+
+                        <div className="input-group-append">
+                          <button className="btn" type="submit">
+                            <FontAwesomeIcon
+                              icon={faCirclePlus}
+                              className="add__btn__expense"
+                            />
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div className="accordion-item">
+                  <h2 className="accordion-header" id="headingTwo">
+                    <button style={{ backgroundColor: '#D3F4D4' }} className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Įrašų filtravimas
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div style={{ backgroundColor: '#D3F4D4' }} className="accordion-body">
+
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="col-12 col-sm-12 col-md-12 col-lg-12 input-group"
+                        style={{ paddingRight: 0 }}
+                      >
+                        <input
+                          {...register("date", {
+                            value: today,
+                            required: true,
+                            max: today,
+                          })}
+                          type="date"
+                          className="form-control add__date"
+                          placeholder="Data"
+                        />
+
+                        <input
+                          {...register("date", {
+                            value: today,
+                            required: true,
+                            max: today,
+                          })}
+                          type="date"
+                          className="form-control add__date"
+                          placeholder="Data"
+                        />
+
+                        <select
+                          {...register("categoryId", {
+                            required: true,
+                          })}
+                          className="form-control add__description"
+                          type="text"
+                        >
+                          <option value={""}>--Pasirinkite kategoriją--</option>
+                          {allCategory.map((option) => (
+                            <option value={option.id}>{option.name}</option>
+                          ))}
+                        </select>
+
+
+
+                        <div className="input-group-append">
+                          <button className="btn" type="submit">
+                            <FontAwesomeIcon
+                              icon={faCirclePlus}
+                              className="add__btn__expense"
+                            />
+                          </button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3"
               >
-                <input
-                  {...register("expenseName", { required: true, minLength: 3 })}
-                  type="text"
-                  className="form-control add__description"
-                  placeholder="Aprašymas"
-                />
-
                 <input
                   {...register("date", {
                     value: today,
@@ -245,6 +374,13 @@ export default function Expense() {
                   type="date"
                   className="form-control add__date"
                   placeholder="Data"
+                />
+
+                <input
+                  {...register("expenseName", { required: true, minLength: 3 })}
+                  type="text"
+                  className="form-control add__description"
+                  placeholder="Aprašymas"
                 />
 
                 <select
@@ -279,7 +415,7 @@ export default function Expense() {
                     />
                   </button>
                 </div>
-              </form>
+              </form> */}
             </div>
 
             <div className="row ">
@@ -444,7 +580,7 @@ export default function Expense() {
               </Table>
             </div>
             {/* pagination for the user items */}
-            
+
             <ReactPaginate
               previousLabel={"previous"}
               nextLabel={"next"}
@@ -464,7 +600,7 @@ export default function Expense() {
               breakLinkClassName={"page-link"}
               activeClassName={"active"}
             />
-            
+
           </div>
         </div>
         {/* </div> */}
