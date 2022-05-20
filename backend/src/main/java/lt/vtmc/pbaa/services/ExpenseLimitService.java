@@ -5,7 +5,10 @@ import lt.vtmc.pbaa.models.ExpenseLimit;
 import lt.vtmc.pbaa.models.ExpensesCategory;
 import lt.vtmc.pbaa.models.User;
 import lt.vtmc.pbaa.payload.requests.ExpenseLimitInsertRequest;
+import lt.vtmc.pbaa.payload.requests.ExpenseLimitUpdateRequest;
+import lt.vtmc.pbaa.payload.requests.ExpenseUpdateRequest;
 import lt.vtmc.pbaa.payload.responses.ExpenseLimitResponse;
+import lt.vtmc.pbaa.payload.responses.ExpenseResponse;
 import lt.vtmc.pbaa.repositories.ExpensesCategoryRepository;
 import lt.vtmc.pbaa.repositories.ExpensesLimitsRepository;
 import lt.vtmc.pbaa.repositories.UserRepository;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -53,7 +57,40 @@ public class ExpenseLimitService {
                 expenseLimitInsertRequest.getLimit());
     }
 
+    public ExpenseLimitResponse updateExpenseLimit(ExpenseLimitUpdateRequest expenseLimitUpdateRequest) {
+        String currentPrincipalEmail = getCurrentPrincipalEmail();
+        Optional<User> user = userRepository.findByEmail(currentPrincipalEmail);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User does not exist");
+        }
+        List<ExpenseLimit> userExpenses = getAllExpenseLimitsByUser(user.get().getId());
+        ExpenseLimit updatingExpenseLimit = expensesLimitsRepository.getById(expenseLimitUpdateRequest.getId());
+        if (!userExpenses.contains(updatingExpenseLimit)) {
+            throw new RuntimeException("User has not this income");
+        }
+        updatingExpenseLimit.setExpensesCategory(expensesCategoryRepository.getById(expenseLimitUpdateRequest.getCategoryId()));
+        updatingExpenseLimit.setAmount(BigDecimal.valueOf(Double.parseDouble(expenseLimitUpdateRequest.getLimit())));
+        expensesLimitsRepository.save(updatingExpenseLimit);
+        return new ExpenseLimitResponse(
+                updatingExpenseLimit.getId(),
+                expenseLimitUpdateRequest.getCategoryId(),
+                expenseLimitUpdateRequest.getLimit());
+    }
 
+    public ExpenseLimitResponse deleteExpenseLimit(Long id) {
+        String currentPrincipalEmail = getCurrentPrincipalEmail();
+        Optional<User> user = userRepository.findByEmail(currentPrincipalEmail);
+        if (user.isEmpty()) {
+            throw new RuntimeException("User does not exist");
+        }
+        List<ExpenseLimit> userExpenses = getAllExpenseLimitsByUser(user.get().getId());
+        ExpenseLimit deletingExpenseLimit = expensesLimitsRepository.getById(id);
+        if (!userExpenses.contains(deletingExpenseLimit)) {
+            throw new RuntimeException("User has not this expense limit");
+        }
+        expensesLimitsRepository.delete(deletingExpenseLimit);
+        return null;
+    }
 
     private String getCurrentPrincipalEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -70,9 +107,6 @@ public class ExpenseLimitService {
         User user1 = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
         Optional<User> user = Optional.of(user1);
         List<ExpenseLimit> expenseLimitslist = expensesLimitsRepository.findByUser(user);
-        System.out.println(expenseLimitslist.toString());
-        System.out.println(expenseLimitslist);
-        System.out.println(expenseLimitslist.size());
 
         Collections.sort(expenseLimitslist, new Comparator() {
 

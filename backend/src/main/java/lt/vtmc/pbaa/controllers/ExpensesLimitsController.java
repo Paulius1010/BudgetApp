@@ -2,7 +2,10 @@ package lt.vtmc.pbaa.controllers;
 
 import lt.vtmc.pbaa.models.ExpenseLimit;
 import lt.vtmc.pbaa.payload.requests.ExpenseLimitInsertRequest;
+import lt.vtmc.pbaa.payload.requests.ExpenseLimitUpdateRequest;
+import lt.vtmc.pbaa.payload.requests.ExpenseUpdateRequest;
 import lt.vtmc.pbaa.payload.responses.ExpenseLimitResponse;
+import lt.vtmc.pbaa.payload.responses.ExpenseResponse;
 import lt.vtmc.pbaa.services.ExpenseLimitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +31,18 @@ public class ExpensesLimitsController {
     @ResponseStatus(HttpStatus.CREATED)
     public ExpenseLimitResponse insertExpenseLimit(@RequestBody ExpenseLimitInsertRequest expenseLimitInsertRequest) {
         return this.expenseLimitService.saveExpenseLimit(expenseLimitInsertRequest);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ExpenseLimitResponse updateExpenseLimit(@RequestBody ExpenseLimitUpdateRequest expenseLimitUpdateRequest) {
+        return this.expenseLimitService.updateExpenseLimit(expenseLimitUpdateRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExpenseLimitResponse deleteExpenseLimit(@PathVariable Long id) {
+        return this.expenseLimitService.deleteExpenseLimit(id);
     }
 
     @GetMapping("/user/{id}")
