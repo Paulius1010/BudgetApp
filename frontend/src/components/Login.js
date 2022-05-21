@@ -56,16 +56,16 @@ export default function Login() {
 
                                             <p className="text-center h1 fw-normal mb-5 mx-1 mx-md-4 mt-4">Prisijungimas</p>
 
-                                            <div className="form-outline mb-4" >
+                                            <div className="form-outline mb-4">
                                                 <label className="form-label" htmlFor="form3Example3">El. paštas</label>
-                                                <input {...register("email", { required: true })} className="form-control"/>
-                                                {errors?.email?.type === "required" && <p style={{color: 'red'}}>Įveskite el. paštą</p>}
+                                                <input {...register("email", { required: true })} className="form-control" />
+                                                {errors?.email?.type === "required" && <p>Įveskite el. paštą</p>}
                                             </div>
 
                                             <div className="form-outline mb-3">                                           
                                                 <label className="form-label" htmlFor="form3Example4">Slaptažodis</label>                                                                                
                                                 <input {...register("password", { required: true })} type={passwordShown ? "text" : "password"} id='password' className='form-control'  />
-                                                {errors?.password?.type === "required" && <p style={{color: 'red'}}>Įveskite Slaptažodį</p>}
+                                                {errors?.password?.type === "required" && <p>Įveskite Slaptažodį</p>}
                                                 {message && message}  
                                                 <div style={{paddingTop: 10}}> 
                                                 <input type="checkbox" onClick={togglePassword}/> Rodyti slaptažodį

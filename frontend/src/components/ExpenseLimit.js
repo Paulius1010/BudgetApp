@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthService from "../services/auth.service";
 import { useForm } from "react-hook-form";
-import EditExpenseModal from "./EditExpenseModal";
+import EditExpenseLimitModal from "./EditExpenseLimitModal";
 import DeleteModal from "./DeleteModal";
 
 import ReactPaginate from "react-paginate";
@@ -16,7 +16,7 @@ import { Pagination } from "react-bootstrap";
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
 export default function ExpenseLimit() {
-  const [allExpense, setAllExpense] = useState([]);
+  const [allExpenseLimit, setAllExpenseLimit] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [forceRender, setForceRender] = useState(false);
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
@@ -64,9 +64,7 @@ export default function ExpenseLimit() {
         Authorization: `Bearer ${currentUser.accessToken}`,
       },
       body: JSON.stringify({
-        // expenseName: data.expenseName,
         categoryId: data.categoryId,
-        // date: data.date,
         limit: data.amount,
       }),
     });
@@ -75,7 +73,7 @@ export default function ExpenseLimit() {
       successMessage("Pridėta");
       reset();
     } else {
-      errorMessage("Klaida!");
+      errorMessage("Klaida! Išliadų limitas šiai kategorijai jau nustatytas.");
     }
     setForceRender(!forceRender);
   };
@@ -101,8 +99,8 @@ export default function ExpenseLimit() {
     });
   };
 
-  const removeExpense = async (id) => {
-    const response = await fetch(`http://localhost:8080/api/expense/${id}`, {
+  const removeExpenseLimit = async (id) => {
+    const response = await fetch(`http://localhost:8080/api/limits/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -130,13 +128,13 @@ export default function ExpenseLimit() {
   };
 
   // Fetch all user's expense from database to display
-  const [allExpense2, setAllExpense2] = useState([]);
+  const [allExpenseLimit2, setAllExpenseLimit2] = useState([]);
   // Sums user's expense
-  const expenseLimitsSum = allExpense2.reduce((n, { amount }) => n + amount, 0);
+  const expenseLimitsSum = allExpenseLimit2.reduce((n, { amount }) => n + amount, 0);
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:8080/api/expense/user/${currentUser.id}`,
+        `http://localhost:8080/api/limits/user/${currentUser.id}`,
         {
           method: "GET",
           headers: {
@@ -146,7 +144,7 @@ export default function ExpenseLimit() {
         }
       );
       const data = await response.json();
-      setAllExpense2(data);
+      setAllExpenseLimit2(data);
     };
     fetchData();
   }, [forceRender]);
@@ -171,7 +169,7 @@ export default function ExpenseLimit() {
         }
       );
       const data = await response.json();
-      setAllExpense(data.content);
+      setAllExpenseLimit(data.content);
       const total = data.totalPages;
 
       setpageCount(total);
@@ -180,7 +178,7 @@ export default function ExpenseLimit() {
     fetchData();
   }, [forceRender, limit]);
 
-  const fetchExpense = async (currentPage) => {
+  const fetchExpenseLimit = async (currentPage) => {
     const res = await fetch(
       `http://localhost:8080/api/limits/user?offset=${currentPage}&pageSize=${limit}`,
       {
@@ -201,9 +199,9 @@ export default function ExpenseLimit() {
 
     let currentPage = data.selected;
 
-    const expenseFormServer = await fetchExpense(currentPage);
+    const expenseLimitFormServer = await fetchExpenseLimit(currentPage);
 
-    setAllExpense(expenseFormServer);
+    setAllExpenseLimit(expenseLimitFormServer);
     // scroll to the top
     //window.scrollTo(0, 0)
   };
@@ -229,24 +227,7 @@ export default function ExpenseLimit() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="col-12 col-sm-6 col-md-6 col-lg-6 input-group my-3"
               >
-                {/* <input
-                  {...register("expenseName", { required: true, minLength: 3 })}
-                  type="text"
-                  className="form-control add__description"
-                  placeholder="Aprašymas"
-                />
-
-                <input
-                  {...register("date", {
-                    value: today,
-                    required: true,
-                    max: today,
-                  })}
-                  type="date"
-                  className="form-control add__date"
-                  placeholder="Data"
-                /> */}
-
+               
                 <select
                   {...register("categoryId", {
                     required: true,
@@ -283,22 +264,6 @@ export default function ExpenseLimit() {
             </div>
 
             <div className="row ">
-              {/* <div className="col-sm-3 col-3">
-                {errors?.expenseName?.type === "required" && (
-                  <p>Šis laukas yra privalomas</p>
-                )}
-                {errors?.expenseName?.type === "minLength" && (
-                  <p>Aprašymas turi būti bent 3 simbolių ilgio</p>
-                )}
-              </div>
-              <div className="col-sm-3 col-3">
-                {errors?.date?.type === "required" && (
-                  <p>Šis laukas yra privalomas</p>
-                )}
-                {errors?.date?.type === "max" && (
-                  <p>Naujesnių nei šiandien įrašų negali būti</p>
-                )}
-              </div> */}
               <div className="col-sm-3 col-3">
                 {errors?.categoryId?.type === "required" && (
                   <p>Šis laukas yra privalomas</p>
@@ -340,61 +305,10 @@ export default function ExpenseLimit() {
                 </thead>
                 <tbody>
                   {/* Display user's expense on the page */}
-                  {allExpense.map((expenseLimit) => {
+                  {allExpenseLimit.map((expenseLimit) => {
                     return (
-                      // <div key={expense.id}>
-                      //   <div className="row">
-                      //     <div className="col-3" style={{ paddingLeft: 0 }}>
-                      //       {expense.expenseName}&nbsp;
-                      //     </div>
-                      //     <div className="col-3" style={{ paddingLeft: 0 }}>
-                      //       {expense.date}&nbsp;
-                      //     </div>
-
-                      //     <div className="col-2" style={{ paddingLeft: 0 }}>
-                      //       {expense.expensesCategory.name}&nbsp;
-                      //     </div>
-                      //     <div className="col-2" style={{ paddingLeft: "6%" }}>
-                      //       {expense.amount}&euro;&nbsp;
-                      //     </div>
-
-                      //     <div
-                      //       className="col-2"
-                      //       style={{
-                      //         textAlign: "right",
-                      //         paddingLeft: 0,
-                      //         paddingRight: 0,
-                      //       }}
-                      //     >
-                      //       <EditExpenseModal
-                      //         id={expense.id}
-                      //         expenseName={expense.expenseName}
-                      //         date={expense.date}
-                      //         amount={expense.amount}
-                      //         category={expense.expensesCategory.name}
-                      //         forceRender={forceRender}
-                      //         setForceRender={setForceRender}
-                      //         allCategory={allCategory}
-                      //       />
-
-                      //       <button
-                      //         onClick={() => showDeleteModal(expense.id)}
-                      //         className="btn"
-                      //         type="button"
-                      //         style={{ paddingTop: 0, paddingBottom: 10 }}
-                      //       >
-                      //         <FontAwesomeIcon
-                      //           icon="trash"
-                      //           className="add__btn__expense"
-                      //           style={{ width: "20px" }}
-                      //         />
-                      //       </button>
-                      //     </div>
-                      //   </div>
-                      // </div>
+                    
                       <tr key={expenseLimit.id}>
-                        {/* <td>{expense.expenseName}&nbsp;</td>
-                        <td>{expense.date}&nbsp;</td> */}
                         <td>{expenseLimit.expensesCategory.name}&nbsp;</td>
                         <td>{expenseLimit.amount}&euro;&nbsp;</td>
 
@@ -407,19 +321,17 @@ export default function ExpenseLimit() {
                             paddingRight: 0,
                           }}
                         >
-                          <EditExpenseModal
+                          <EditExpenseLimitModal
                             id={expenseLimit.id}
-                            // expenseName={expenseLimit.expenseName}
-                            // date={expenseLimit.date}
                             amount={expenseLimit.amount}
-                            category={expenseLimit.expensesCategory.name}
+                            categoryId={expenseLimit.expensesCategory.id}
                             forceRender={forceRender}
                             setForceRender={setForceRender}
                             allCategory={allCategory}
                           />
 
                           <button
-                            onClick={() => showDeleteModal(limit.id)}
+                            onClick={() => showDeleteModal(expenseLimit.id)}
                             className="btn"
                             type="button"
                             style={{ paddingTop: 0, paddingBottom: 10 }}
@@ -438,7 +350,7 @@ export default function ExpenseLimit() {
                 <DeleteModal
                   showModal={displayDeleteModal}
                   hideModal={hideDeleteModal}
-                  confirmModal={removeExpense}
+                  confirmModal={removeExpenseLimit}
                   id={deleteId}
                 />
               </Table>

@@ -231,7 +231,14 @@ export default function Income() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="input-group my-3"
               >
-                <input                
+                <input
+                  {...register("incomeName", { required: true, minLength: 3 })}
+                  type="text"
+                  className="form-control add__description"
+                  placeholder="Aprašymas"
+                />
+
+                <input
                   {...register("date", {
                     value: today,
                     required: true,
@@ -240,13 +247,6 @@ export default function Income() {
                   type="date"
                   className="form-control add__date"
                   // placeholder="Data"
-                />
-
-                <input
-                  {...register("incomeName", { required: true, minLength: 3 })}
-                  type="text"
-                  className="form-control add__description"
-                  placeholder="Aprašymas"
                 />
 
                 <input

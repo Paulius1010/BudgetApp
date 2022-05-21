@@ -65,7 +65,7 @@ export default function Register() {
                                                         {...register("username", { required: true, minLength: 2 })}
                                                         className="form-control"
                                                     />
-                                                    {errors?.username?.type === "required" && <p style={{color: 'red'}}>Vardas yra būtinas</p>}
+                                                    {errors?.username?.type === "required" && <p>Vardas yra būtinas</p>}
                                                     {errors?.username?.type === "minLength" && <p>Vardas turi būti bent 2 simbolių ilgio</p>}
                                                 </div>
                                             </div>
@@ -82,7 +82,7 @@ export default function Register() {
                                                             })}
                                                         className="form-control"
                                                     />
-                                                    {errors?.email?.type === "required" && <p style={{color: 'red'}}>El. paštas būtinas</p>}
+                                                    {errors?.email?.type === "required" && <p>El. paštas būtinas</p>}
                                                     {errors?.email?.type === "pattern" && <p>El. paštas turi būti galiojantis</p>}
                                                     {usedLogin === 31 && <p>El. paštas jau yra naudojamas</p>}
                                                 </div >
@@ -102,7 +102,7 @@ export default function Register() {
                                                         type="password"
                                                         className='form-control'
                                                     />
-                                                    {errors?.password?.type === "required" && <p style={{color: 'red'}}>Slaptažodis būtinas</p>}
+                                                    {errors?.password?.type === "required" && <p>Slaptažodis būtinas</p>}
                                                     {errors?.password?.type === "minLength" && <p>Slaptažodis turi būti bent 6 raidžiu ilgumo</p>}
                                                 </div>
                                             </div>
