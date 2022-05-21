@@ -65,9 +65,9 @@ public class ExpenseService {
         if (user.isEmpty()) {
             throw new RuntimeException("User does not exist");
         }
-        List<Expense> userIncomes = getAllExpenseByUser(user.get().getId());
+        List<Expense> userExpenses = getAllExpenseByUser(user.get().getId());
         Expense updatingExpense = expenseRepository.getById(expenseUpdateRequest.getExpenseId());
-        if (!userIncomes.contains(updatingExpense)) {
+        if (!userExpenses.contains(updatingExpense)) {
             throw new RuntimeException("User has not this income");
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
