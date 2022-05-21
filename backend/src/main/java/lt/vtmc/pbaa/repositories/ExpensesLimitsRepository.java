@@ -1,6 +1,7 @@
 package lt.vtmc.pbaa.repositories;
 
 import lt.vtmc.pbaa.models.ExpenseLimit;
+import lt.vtmc.pbaa.models.ExpensesCategory;
 import lt.vtmc.pbaa.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -43,12 +43,18 @@ public class ExpenseLimitService {
     }
 
     public ExpenseLimitResponse saveExpenseLimit(ExpenseLimitInsertRequest expenseLimitInsertRequest) {
+        ExpensesCategory expenseCategoryForNewInsertingLimit = expensesCategoryRepository.getById(expenseLimitInsertRequest.getCategoryId());
         String currentPrincipalEmail = getCurrentPrincipalEmail();
-        User user = userRepository.findByEmail(currentPrincipalEmail).orElse(null);
-        ExpensesCategory expenseCategory = expensesCategoryRepository.getById(expenseLimitInsertRequest.getCategoryId());
+        Optional<User> user = userRepository.findByEmail(currentPrincipalEmail);
+        List<ExpenseLimit> expenseLimitList = expensesLimitsRepository.findByUser(user);
+
+        Optional<ExpenseLimit> existingLimit = expenseLimitList.stream().filter(expenseLimit -> expenseLimit.getExpensesCategory().equals(expenseCategoryForNewInsertingLimit)).findFirst();
+        if (existingLimit.isPresent()) {
+            throw new RuntimeException("Limit with this expense category already exists");
+        }
         ExpenseLimit expenseLimit = new ExpenseLimit(
-                user,
-                expenseCategory,
+                user.get(),
+                expenseCategoryForNewInsertingLimit,
                 BigDecimal.valueOf(Double.parseDouble(expenseLimitInsertRequest.getLimit())));
         expensesLimitsRepository.save(expenseLimit);
         return new ExpenseLimitResponse(
@@ -63,12 +69,19 @@ public class ExpenseLimitService {
         if (user.isEmpty()) {
             throw new RuntimeException("User does not exist");
         }
-        List<ExpenseLimit> userExpenses = getAllExpenseLimitsByUser(user.get().getId());
+        List<ExpenseLimit> expenseLimitList = getAllExpenseLimitsByUser(user.get().getId());
         ExpenseLimit updatingExpenseLimit = expensesLimitsRepository.getById(expenseLimitUpdateRequest.getId());
-        if (!userExpenses.contains(updatingExpenseLimit)) {
-            throw new RuntimeException("User has not this income");
+        if (!expenseLimitList.contains(updatingExpenseLimit)) {
+            throw new RuntimeException("User has not this expense limit");
         }
-        updatingExpenseLimit.setExpensesCategory(expensesCategoryRepository.getById(expenseLimitUpdateRequest.getCategoryId()));
+        ExpensesCategory expenseCategoryForUpdatingLimit = expensesCategoryRepository.getById(expenseLimitUpdateRequest.getCategoryId());
+        Optional<ExpenseLimit> existingLimit = expenseLimitList.stream().filter(expenseLimit -> expenseLimit.getExpensesCategory().equals(expenseCategoryForUpdatingLimit)).findFirst();
+        if (existingLimit.isPresent()) {
+            if (!updatingExpenseLimit.getExpensesCategory().getId().equals(expenseCategoryForUpdatingLimit.getId())) {
+                throw new RuntimeException("Limit with this expense category already exists");
+            }
+        }
+        updatingExpenseLimit.setExpensesCategory(expenseCategoryForUpdatingLimit);
         updatingExpenseLimit.setAmount(BigDecimal.valueOf(Double.parseDouble(expenseLimitUpdateRequest.getLimit())));
         expensesLimitsRepository.save(updatingExpenseLimit);
         return new ExpenseLimitResponse(
