@@ -32,7 +32,6 @@ public class StatisticsService {
         List<ExpenseUnitStatistic> expenseUnitStatisticList = new ArrayList<>();
         for (ExpenseLimit limit : limits) {
             BigDecimal sumOfExpenseCategory = thisMonthExpenses.stream().filter(expense -> expense.getExpensesCategory().equals(limit.getExpensesCategory())).map(expense -> expense.getAmount()).reduce(BigDecimal.ZERO, BigDecimal::add);
-            System.out.println(sumOfExpenseCategory);
             expenseUnitStatisticList.add(new ExpenseUnitStatistic(limit.getExpensesCategory(), sumOfExpenseCategory, limit.getAmount()));
         }
     return expenseUnitStatisticList;
