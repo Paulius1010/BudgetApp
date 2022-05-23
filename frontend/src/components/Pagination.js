@@ -5,6 +5,7 @@ import ReactPaginate from "react-paginate";
 function Pagination(props) {
     // let {pageCount} = props;
     // let {handlePageClick} = props;
+    console.log(props.onPageChange);
   return (
     <div>
         <ReactPaginate
