@@ -21,6 +21,9 @@ export default function HomeLoggedIn() {
     const chartLimitAmount = statistics.map(x => x.limit);
     const chartLimitNames = statistics.map(x => x.category.name);
 
+    const chartExpenseAmount = statistics.map(x => x.amount);
+    const chartExpenseNames = statistics.map(x => x.category.name);
+
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
     const chartIncomeColors = [];
     const chartIncomeColorsBorder = [];
@@ -122,6 +125,20 @@ export default function HomeLoggedIn() {
         ],
     };
 
+    ChartJS.register(ArcElement, Tooltip, Legend);
+    const expenseData = {
+        labels: chartExpenseNames,
+        datasets: [
+            {
+                label: 'Šio mėnesio išlaidos:',
+                data: chartExpenseAmount,
+                backgroundColor: chartIncomeColors,
+                borderColor: chartIncomeColorsBorder,
+                borderWidth: 1,
+            },
+        ],
+    };
+
     return (
         // <>
         //     <div>
@@ -144,6 +161,7 @@ export default function HomeLoggedIn() {
 
         <div className="container">
             <div className="row">
+                <div className="col">
                 <p>Šio mėnesio pajamos:</p>
 
                 <div className="col-6">
@@ -153,6 +171,21 @@ export default function HomeLoggedIn() {
                         height={400}
                         options={{ maintainAspectRatio: false }}
                     />
+                </div>
+                </div>
+
+                <div className="col">
+                <p>Šio mėnesio Išlaidos:</p>
+
+                <div className="col-6">
+                    <Doughnut
+                        data={expenseData}
+                        width={400}
+                        height={400}
+                        options={{ maintainAspectRatio: false }}
+                    />
+                                    </div>
+
                 </div>
 
                 <p>Limitai:</p>
@@ -173,7 +206,6 @@ export default function HomeLoggedIn() {
                             <div>
                                 <p>{categoryStatisics.category.name}</p>
                                 <ProgressBar completed={Math.round((categoryStatisics.amount) / (categoryStatisics.limit) * 100)} maxCompleted={100} />
-
                             </div>
                         )
                     })}
