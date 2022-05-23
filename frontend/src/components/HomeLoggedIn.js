@@ -12,14 +12,14 @@ export default function HomeLoggedIn() {
     const currentUser = AuthService.getCurrentUser();
 
     const [income, setIncome] = useState([]);
-    const [limits, setLimits] = useState([]);
+    const [statistics, setStatistics] = useState([]);
 
 
     const chartIncomeAmount = income.map(x => x.amount);
     const chartIncomeNames = income.map(x => x.incomeName);
 
-    const chartLimitAmount = limits.map(x => x.amount);
-    const chartLimitNames = limits.map(x => x.expensesCategory.name);
+    const chartLimitAmount = statistics.map(x => x.limit);
+    const chartLimitNames = statistics.map(x => x.category.name);
 
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
     const chartIncomeColors = [];
@@ -91,8 +91,8 @@ export default function HomeLoggedIn() {
     };
 
     useEffect(() => {
-        const fetchLimits = async () => {
-            const response = await fetch(`http://localhost:8080/api/limits/user/${currentUser.id}`,
+        const fetchStatistics = async () => {
+            const response = await fetch(`http://localhost:8080/api/statistics/user/${currentUser.id}`,
                 {
                     method: "GET",
                     headers: {
@@ -102,10 +102,10 @@ export default function HomeLoggedIn() {
                 });
 
             const data = await response.json();
-            setLimits(data);
+            setStatistics(data);
         };
 
-        fetchLimits();
+        fetchStatistics();
     }, []);
 
     // ChartJS.register(ArcElement, Tooltip, Legend);
@@ -167,8 +167,17 @@ export default function HomeLoggedIn() {
 
                 </div>
                 <p>Limitų išnaudojimas:</p>
+                <div>
+                    {statistics.map((categoryStatisics) => {
+                        return (
+                            <div>
+                                <p>{categoryStatisics.category.name}</p>
+                                <ProgressBar completed={categoryStatisics.amount} maxCompleted={categoryStatisics.limit} />
 
-                <ProgressBar completed={60} />
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </div>
 
