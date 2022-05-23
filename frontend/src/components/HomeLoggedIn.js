@@ -12,14 +12,17 @@ export default function HomeLoggedIn() {
     const currentUser = AuthService.getCurrentUser();
 
     const [income, setIncome] = useState([]);
-    const [limits, setLimits] = useState([]);
+    const [statistics, setStatistics] = useState([]);
 
 
     const chartIncomeAmount = income.map(x => x.amount);
     const chartIncomeNames = income.map(x => x.incomeName);
 
-    const chartLimitAmount = limits.map(x => x.amount);
-    const chartLimitNames = limits.map(x => x.expensesCategory.name);
+    const chartLimitAmount = statistics.map(x => x.limit);
+    const chartLimitNames = statistics.map(x => x.category.name);
+
+    const chartExpenseAmount = statistics.map(x => x.amount);
+    const chartExpenseNames = statistics.map(x => x.category.name);
 
     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
     const chartIncomeColors = [];
@@ -91,8 +94,8 @@ export default function HomeLoggedIn() {
     };
 
     useEffect(() => {
-        const fetchLimits = async () => {
-            const response = await fetch(`http://localhost:8080/api/limits/user/${currentUser.id}`,
+        const fetchStatistics = async () => {
+            const response = await fetch(`http://localhost:8080/api/statistics/user/${currentUser.id}`,
                 {
                     method: "GET",
                     headers: {
@@ -102,10 +105,10 @@ export default function HomeLoggedIn() {
                 });
 
             const data = await response.json();
-            setLimits(data);
+            setStatistics(data);
         };
 
-        fetchLimits();
+        fetchStatistics();
     }, []);
 
     // ChartJS.register(ArcElement, Tooltip, Legend);
@@ -115,6 +118,20 @@ export default function HomeLoggedIn() {
             {
                 label: 'Limitai:',
                 data: chartLimitAmount,
+                backgroundColor: chartIncomeColors,
+                borderColor: chartIncomeColorsBorder,
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    ChartJS.register(ArcElement, Tooltip, Legend);
+    const expenseData = {
+        labels: chartExpenseNames,
+        datasets: [
+            {
+                label: 'Šio mėnesio išlaidos:',
+                data: chartExpenseAmount,
                 backgroundColor: chartIncomeColors,
                 borderColor: chartIncomeColorsBorder,
                 borderWidth: 1,
@@ -144,6 +161,7 @@ export default function HomeLoggedIn() {
 
         <div className="container">
             <div className="row">
+                <div className="col">
                 <p>Šio mėnesio pajamos:</p>
 
                 <div className="col-6">
@@ -153,6 +171,21 @@ export default function HomeLoggedIn() {
                         height={400}
                         options={{ maintainAspectRatio: false }}
                     />
+                </div>
+                </div>
+
+                <div className="col">
+                <p>Šio mėnesio Išlaidos:</p>
+
+                <div className="col-6">
+                    <Doughnut
+                        data={expenseData}
+                        width={400}
+                        height={400}
+                        options={{ maintainAspectRatio: false }}
+                    />
+                                    </div>
+
                 </div>
 
                 <p>Limitai:</p>
@@ -167,8 +200,16 @@ export default function HomeLoggedIn() {
 
                 </div>
                 <p>Limitų išnaudojimas:</p>
-
-                <ProgressBar completed={60} />
+                <div>
+                    {statistics.map((categoryStatisics) => {
+                        return (
+                            <div>
+                                <p>{categoryStatisics.category.name}</p>
+                                <ProgressBar completed={Math.round((categoryStatisics.amount) / (categoryStatisics.limit) * 100)} maxCompleted={100} />
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         </div>
 
