@@ -172,7 +172,7 @@ export default function HomeLoggedIn() {
                         return (
                             <div>
                                 <p>{categoryStatisics.category.name}</p>
-                                <ProgressBar completed={categoryStatisics.amount} maxCompleted={categoryStatisics.limit} />
+                                <ProgressBar completed={Math.round((categoryStatisics.amount) / (categoryStatisics.limit) * 100)} maxCompleted={100} />
 
                             </div>
                         )
