@@ -12,6 +12,7 @@ import DeleteModal from "./DeleteModal";
 import ReactPaginate from "react-paginate";
 import Table from "react-bootstrap/Table";
 import { Pagination } from "react-bootstrap";
+import ReactCSV from "./ReactCSV";
 
 // This code copypasted from: https://codepen.io/fido123/pen/xzvxNw
 // JavaScript is not included in this code, only html and css
@@ -156,7 +157,7 @@ export default function Expense() {
 
   const [pageCount, setpageCount] = useState(0);
   //limit of how many items per page to see
-  let limit = 9;
+  let limit = 8;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -443,8 +444,9 @@ export default function Expense() {
                 />
               </Table>
             </div>
+
             {/* pagination for the user items */}
-            
+
             <ReactPaginate
               previousLabel={"previous"}
               nextLabel={"next"}
@@ -464,8 +466,13 @@ export default function Expense() {
               breakLinkClassName={"page-link"}
               activeClassName={"active"}
             />
-            
+
           </div>
+          {/* This section is CSV export button */}
+          <button type="submit" className="btn btn-lg" style={{ float: "right", backgroundColor: "#74bdee" }}>
+            <ReactCSV />
+          </button>
+
         </div>
         {/* </div> */}
       </div>
